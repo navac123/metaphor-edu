@@ -70,6 +70,24 @@ h1,h2,h3,h4{font-family:'Assistant',sans-serif;font-weight:700}
 .think-box{background:rgba(201,168,76,.08);border:1px solid rgba(201,168,76,.3);border-radius:8px;padding:1rem;margin:1rem 0}
 .think-box summary{cursor:pointer;font-weight:600;color:var(--p);font-size:.92rem}
 .think-box .answer{margin-top:.5rem;font-size:.9rem;color:var(--tl);line-height:1.7}
+/* ===== QUIZ ===== */
+.quiz-box{background:var(--bg);border:1px solid var(--b);border-radius:var(--r);padding:1.5rem;margin:1.5rem 0}
+.quiz-box h3{color:var(--p);font-size:1.1rem;margin-bottom:1rem}
+.quiz-q{margin-bottom:1.3rem;font-size:.93rem;font-weight:500;line-height:1.8}
+.quiz-q-num{color:var(--tl);font-size:.82rem;font-weight:400;margin-right:.3rem}
+.quiz-opts{margin-top:.4rem}
+.quiz-opts label{display:flex;align-items:flex-start;gap:.5rem;padding:.45rem .7rem;border-radius:6px;cursor:pointer;font-size:.88rem;line-height:1.6;transition:background .15s;margin-bottom:.2rem}
+.quiz-opts label:hover{background:rgba(46,107,94,.07)}
+.quiz-opts input[type=radio]{margin-top:.2rem;accent-color:var(--p);min-width:16px}
+.quiz-score{font-size:1.1rem;font-weight:700;padding:.9rem 1.2rem;border-radius:10px;text-align:center;margin:1rem 0}
+.quiz-score.pass{background:rgba(74,140,111,.12);color:var(--s);border:1px solid rgba(74,140,111,.3)}
+.quiz-score.fail{background:rgba(196,80,80,.08);color:var(--e);border:1px solid rgba(196,80,80,.2)}
+.quiz-explain{font-size:.83rem;color:var(--tl);margin:.25rem 0 .5rem .4rem;line-height:1.5}
+.quiz-btn{padding:.55rem 1.6rem;background:var(--p);color:#fff;border:none;border-radius:8px;font-family:'Heebo',sans-serif;font-size:.92rem;font-weight:600;cursor:pointer;transition:background .2s;margin-top:.8rem}
+.quiz-btn:hover{background:var(--pl)}
+.quiz-retry{display:inline-flex;align-items:center;gap:.4rem;margin-top:.5rem;padding:.4rem .9rem;border:1px solid var(--p);border-radius:8px;color:var(--p);background:none;font-family:'Heebo',sans-serif;font-size:.85rem;cursor:pointer}
+.tq-score{display:inline-block;padding:.25rem .7rem;border-radius:20px;font-size:.82rem;font-weight:600;margin-right:.5rem}
+.tq-score.pass{background:rgba(74,140,111,.12);color:var(--s)}.tq-score.fail{background:rgba(196,80,80,.08);color:var(--e)}
 /* ===== APP WRAPPER ===== */
 #appWrap{display:none}#appWrap.show{display:block}
 .hdr{background:linear-gradient(135deg,#1a4a3e,var(--p),#3d8b7a);color:#fff;padding:2rem 1rem 1.8rem;text-align:center;position:relative;overflow:hidden;border-bottom:3px solid rgba(201,168,76,.3)}
@@ -283,22 +301,46 @@ h1,h2,h3,h4{font-family:'Assistant',sans-serif;font-weight:700}
 <div class="iu-ch">
 <button class="slide-toggle" onclick="toggleSlides('ch1')">📊 הצג כמצגת</button>
 <div class="slide-viewer" id="sv_ch1"><div class="sl-content"><div class="sl-title" id="sl_t_ch1"></div><div class="sl-body" id="sl_b_ch1"></div></div><div class="sl-nav"><button class="sl-btn" id="sl_p_ch1" onclick="slideNav('ch1',-1)">→ הקודם</button><span class="sl-counter" id="sl_c_ch1"></span><button class="sl-btn" id="sl_n_ch1" onclick="slideNav('ch1',1)">הבא ←</button></div></div>
-<h2>📖 פרק 1: מהי מטפורה?</h2>
-<p>מטפורה היא תופעה שבה אנו מבינים תחום מושגי אחד (תחום היעד) באמצעות תחום מושגי אחר (תחום המקור). למשל, כאשר אומרים "המורה הוא גנן", אנו מבינים את ההוראה (תחום היעד) דרך עולם הגננות (תחום המקור).</p>
-<p>המטפורה אינה רק כלי רטורי — היא מבנה מחשבתי עמוק שמעצב את הדרך שבה אנו תופסים, חושבים ופועלים. בהקשר של הוראה, המטפורות שבהן מורים משתמשים מכתיבות את ההתנהגות שלהם בכיתה, את יחסם לתלמידים ואת תפיסתם את תהליך הלמידה.</p>
+<h2>📖 פרק 1: מהי מטפורה? — מריצ'ארדס ועד לייקוף וג'ונסון</h2>
+<p>חקר המטפורה חווה מהפכה קוגניטיבית במאה ה-20: מ"קישוט שפתי" ל<strong>מנגנון חשיבה יסודי</strong>. שלוש תחנות מרכזיות:</p>
+<h3>I.A. ריצ'ארדס (1936) — Tenor ו-Vehicle</h3>
+<p>ריצ'ארדס הציע: כל מטפורה מורכבת מ<strong>נושא (Tenor)</strong> — מה שרוצים לתאר — ו<strong>רכב (Vehicle)</strong> — הדימוי. ב"המורה הוא גנן": <em>המורה</em> = נושא, <em>גנן</em> = רכב. המשמעות אינה "מקור" ואינה "יעד" בנפרד — היא נולדת מ<strong>האינטראקציה ביניהם</strong>.</p>
+<h3>מקס בלק (1954) — "מרכיבים משותפים"</h3>
+<p>בלק הוסיף: כל "רכב" מביא עמו <strong>ידע תרבותי מוסכם</strong> (<em>associated commonplaces</em>) — תפיסות שיתופיות על הגנן: סבלנות, טיפוח, המתנה לצמיחה, תנאים מיטביים. ה"מסנן" הזה הוא מה שמעצב את אופן ראיית הנושא. הגנן ה"מסנן" יאיר היבטים מסוימים של ההוראה — ויסתיר אחרים.</p>
+<h3>לייקוף וג'ונסון (1980) — "Metaphors We Live By"</h3>
+<p>ג'ורג' לייקוף (בלשן) ומארק ג'ונסון (פילוסוף) חוללו מהפכה: <strong>מטפורות אינן קישוט — הן האופן שבו אנו חושבים.</strong> "ויכוח הוא מלחמה", "זמן הוא כסף", "ידע הוא מזון" — אלה אינן "אמירות יפות" אלא <strong>מבנים קוגניטיביים</strong> שמעצבים פעולה.</p>
+<p>לייקוף וג'ונסון הבחינו בין שלושה סוגים:</p>
+<ul>
+<li><strong>מטפורות מבניות (Structural):</strong> תחום שלם ממפה על תחום שלם — "הוראה היא גננות", "ויכוח הוא מלחמה"</li>
+<li><strong>מטפורות אוריינטציה (Orientational):</strong> מבוססות על כיווניות גופנית — "מצב רוח <strong>גבוה</strong>", "ירד <strong>נמוך</strong>", "מסתכל <strong>קדימה</strong>"</li>
+<li><strong>מטפורות אונטולוגיות (Ontological):</strong> מופשטות הופכות לישויות — "האינפלציה <strong>תוקפת</strong>", "זמן <strong>עובר</strong>"</li>
+</ul>
+<p><strong>עיקרון הגילמות (Embodiment):</strong> מטפורות אינן אקראיות — הן נובעות מניסיוננו הגופני. "הבנה = ראייה" — כי אנו ממש רואים את העולם בעינינו. "חמימות = אהבה" — כי חמימות פיזית קשורה לחמימות רגשית מגיל הינקות. המטפורות שאנו בוחרים לתאר הוראה גם הן מגולמות בגוף ובניסיון.</p>
 </div>
 <div class="iu-ch">
 <button class="slide-toggle" onclick="toggleSlides('ch2')">📊 הצג כמצגת</button>
 <div class="slide-viewer" id="sv_ch2"><div class="sl-content"><div class="sl-title" id="sl_t_ch2"></div><div class="sl-body" id="sl_b_ch2"></div></div><div class="sl-nav"><button class="sl-btn" id="sl_p_ch2" onclick="slideNav('ch2',-1)">→ הקודם</button><span class="sl-counter" id="sl_c_ch2"></span><button class="sl-btn" id="sl_n_ch2" onclick="slideNav('ch2',1)">הבא ←</button></div></div>
-<h2>📖 פרק 2: תיאוריית המטפורה המושגית</h2>
-<p>בשנת 1980 חוללו ג'ורג' לייקוף ומארק ג'ונסון מהפכה בהבנת המטפורה בספרם "מטפורות שאנו חיים בהן" (Metaphors We Live By). הם טענו שמטפורות אינן רק כלי שפתי — אלא מבני חשיבה בסיסיים (Conceptual Metaphor Theory — CMT).</p>
+<h2>📖 פרק 2: תיאוריית המטפורה המושגית (CMT) — שלושה עקרונות</h2>
+<p>לייקוף וג'ונסון הגדירו <strong>מטפורה מושגית</strong> כמערכת מיפויים שיטתית (systematic mapping) בין שני תחומים. שלושה עקרונות יסוד:</p>
+<h3>1. חד-כיווניות (Unidirectionality)</h3>
+<p>מטפורות הולכות תמיד מ<strong>מוחשי → מופשט</strong>. אנו מבינים <em>הוראה</em> (מופשטת) דרך <em>גננות</em> (מוחשית) — לא להיפך. הסיבה: אנו זקוקים לנקודת עוגן מוחשית כדי להבין דבר מופשט. "גנן מלמד" לא עובד כמטפורה כי הוראה לא מאירה את הגננות.</p>
+<h3>2. חלקיות (Partiality)</h3>
+<p>לא כל מה שקיים בתחום המקור ממופה. גנן גם מוכר פרחים, חופר בוצות, מתמודד עם מזיקים — אלה לא ממופים על ההוראה. רק <strong>המרכיבים הרלוונטיים</strong> — טיפוח, צמיחה, תנאים — ממופים. זו חלקיות מובנית.</p>
+<h3>3. הארה והסתרה (Highlighting and Hiding) — העיקרון המרכזי</h3>
+<p>כל מטפורה <strong>מאירה</strong> היבטים מסוימים — ובכך <strong>מסתירה</strong> היבטים אחרים:</p>
+<table>
+<tr><th>מטפורה</th><th>מאירה</th><th>מסתירה</th></tr>
+<tr><td>מורה כגנן</td><td>טיפוח, צמיחה, סבלנות, תנאים</td><td>מבחנים, ציונים, לוחות זמנים</td></tr>
+<tr><td>מורה כמנצח</td><td>תיאום, ניהול, דיוק, ביצוע</td><td>אמפתיה, טיפוח אישי, גמישות</td></tr>
+<tr><td>מורה כמאמן</td><td>אתגר, תרגול, שיפור, תוצאות</td><td>הנאה מהתהליך, יצירתיות</td></tr>
+</table>
 <h3>מרכיבי המטפורה המושגית</h3>
 <ul>
-<li><strong>תחום מקור (Source Domain):</strong> התחום המוכר — למשל: גן, מסע, בנייה, מכונה</li>
-<li><strong>תחום יעד (Target Domain):</strong> התחום המופשט שאותו מנסים להבין — למשל: הוראה, למידה, שכל</li>
-<li><strong>מיפויים (Mappings):</strong> ההתאמות בין מרכיבי תחום המקור לתחום היעד</li>
+<li><strong>תחום מקור (Source Domain):</strong> המוחשי והמוכר — גן, מסע, בנייה, מכונה, תזמורת</li>
+<li><strong>תחום יעד (Target Domain):</strong> המופשט שאותו מבינים — הוראה, למידה, שכל, זהות מקצועית</li>
+<li><strong>מיפויים (Mappings):</strong> ההתאמות השיטתיות — גנן ↔ מורה, צמח ↔ תלמיד, השקיה ↔ הוראה, פריחה ↔ הצלחה</li>
 </ul>
-<p>לדוגמה, במטפורה "הוראה היא גננות": הגנן ↔ המורה, הצמחים ↔ התלמידים, ההשקיה ↔ ההזנה האינטלקטואלית, הפריחה ↔ הלמידה המוצלחת.</p>
+<p>זיהוי המיפויים + שאלת "מה מואר ומה מוסתר?" — זה לב עבודת הניתוח שלכם.</p>
 </div>
 <div class="iu-ch">
 <button class="slide-toggle" onclick="toggleSlides('ch3')">📊 הצג כמצגת</button>
@@ -318,11 +360,16 @@ h1,h2,h3,h4{font-family:'Assistant',sans-serif;font-weight:700}
 <div class="iu-ch">
 <button class="slide-toggle" onclick="toggleSlides('ch4')">📊 הצג כמצגת</button>
 <div class="slide-viewer" id="sv_ch4"><div class="sl-content"><div class="sl-title" id="sl_t_ch4"></div><div class="sl-body" id="sl_b_ch4"></div></div><div class="sl-nav"><button class="sl-btn" id="sl_p_ch4" onclick="slideNav('ch4',-1)">→ הקודם</button><span class="sl-counter" id="sl_c_ch4"></span><button class="sl-btn" id="sl_n_ch4" onclick="slideNav('ch4',1)">הבא ←</button></div></div>
-<h2>📖 פרק 4: מטפורות ויזואליות וכוחן הפדגוגי</h2>
-<p>מחקר של אוניברסיטת BYU (2020) הראה שמטפורות ויזואליות מעצימות למידה. תהליך תרגום מטפורה לתמונה — ואף יותר לאנימציה — דורש הבנה עמוקה של תחום המקור ותחום היעד.</p>
-<p>התהליך שנעבור באפליקציה זו מבוסס על הרעיון ש<strong>יצירת תמונה מתוך מטפורה</strong> היא פעולה קוגניטיבית עשירה: היא מחייבת לזהות את המיפויים, לבחור פרטים חזותיים שמייצגים אותם, ולקבל החלטות על מה להדגיש ומה להשמיט.</p>
-<h3>למה "תמונה שווה אלף מילים"?</h3>
-<p>כי התהליך של הפיכת מטפורה מילולית לתמונה חזותית מחייב אתכם "לפרוט" את המטפורה לרכיביה, לחשוב על כל מיפוי בנפרד, ולהחליט כיצד לייצג אותו ויזואלית. התוצאה — תמונה שמגלמת הבנה עמוקה של המטפורה.</p>
+<h2>📖 פרק 4: ארבע עדשות לניתוח מטפורה ויזואלית</h2>
+<p>מחקר BYU (2020) הראה שתרגום מטפורה לתמונה מעמיק הבנה מושגית. אך כדי לנתח תמונה שנוצרה ממטפורה — נדרש מסגרת ניתוח. <strong>ארבע עדשות</strong> הניתוח הן כלי מפורש לניתוח עמוק:</p>
+<h3>עדשה 1: מיפוי — בדיקת נאמנות</h3>
+<p>האם כל מיפוי שזיהיתם בטבלה מיוצג ויזואלית? בדקו: כל רכיב מתחום המקור — האם הוא <em>נמצא</em> בתמונה? האם הרכיבים מתחום היעד? חוסר ייצוג עשוי לחשוף <strong>מטפורה מתחרה</strong> שנכנסה לתוצאת ה-AI.</p>
+<h3>עדשה 2: הארה והסתרה</h3>
+<p>מה <strong>הודגש</strong> בתמונה — גדול, במרכז, מואר? ומה <strong>נעדר</strong>? ה-AI לא "יודע" מה לכלול — הוא מחקה שפה ויזואלית של מאגרי תמונות. מה זה אומר על ההנחות הסמויות של הכלי?</p>
+<h3>עדשה 3: מיזוג (Blending)</h3>
+<p>פאוקוניה וטרנר (2002) הציעו: בתהליך המטפורי לעיתים נולדת <strong>ישות "שלישית"</strong> שאינה לא המורה-בחיים ולא הגנן האמיתי, אלא ישות חדשה עם תכונות של שניהם. שאלו: האם בתמונה שלכם יש ישות כזו? מה היא מוסיפה שאינו קיים בשום צד?</p>
+<h3>עדשה 4: יחסי כוח</h3>
+<p>ניתוח ביקורתי: מה <strong>מיקום</strong> הדמויות? מי <strong>גדול</strong> יותר? מי <strong>מחזיק</strong>, מי מקבל, מי <strong>מעל</strong>? כל בחירה ויזואלית היא גם בחירה פוליטית — מה היא אומרת על תפיסת יחסי הכוח בין מורה לתלמיד? האם המטפורה שבחרתם מחזקת יחסי כוח שווים או היררכיים?</p>
 </div>
 <div class="iu-ch">
 <button class="slide-toggle" onclick="toggleSlides('ch5')">📊 הצג כמצגת</button>
@@ -382,9 +429,16 @@ h1,h2,h3,h4{font-family:'Assistant',sans-serif;font-weight:700}
 <p>Teaching Metaphors: Supporting Professional Growth. (2021). <em>ResearchGate</em>.</p>
 </div>
 </div>
+<div class="iu-ch" id="introQuizBox">
+<h2>📝 מבחן מבוא</h2>
+<p style="color:var(--tl);font-size:.92rem;margin-bottom:1.5rem">ענו על 10 שאלות על תיאורית המטפורה המושגית. נדרשים <strong>7/10</strong> להמשך. ניתן לנסות שוב כמה פעמים שרוצים.</p>
+<div id="iqQs"></div>
+<button class="quiz-btn" id="iqSubmitBtn" onclick="submitIntroQuiz()" style="display:none">בדוק תשובות</button>
+<div id="iqResult" style="margin-top:1rem"></div>
+</div>
 <div class="iu-nav">
 <button class="btn bs-btn" onclick="backToLanding()">→ חזרה</button>
-<button class="btn bp" onclick="enterAppFromIntro()">← התחילו לעבוד</button>
+<button class="btn bp" id="startWorkBtn" onclick="enterAppFromIntro()">← התחילו לעבוד</button>
 </div>
 </div>
 <!-- ANALYSES MODAL -->
@@ -458,6 +512,10 @@ h1,h2,h3,h4{font-family:'Assistant',sans-serif;font-weight:700}
 <details class="exp-panel" id="topicArticlesPanel">
 <summary>📖 מאמרים רלוונטיים לנושא שנבחר</summary>
 <div class="exp-body" id="topicArticlesList"><p style="color:var(--tl);font-style:italic">בחרו נושא בתפריט למעלה כדי לראות מאמרים רלוונטיים.</p></div>
+</details>
+<details class="exp-panel" id="topicQuizPanel" style="display:none">
+<summary>✏️ בחן את עצמך — שאלות על הנושא</summary>
+<div class="exp-body" id="topicQuizContent"></div>
 </details>
 </div>
 </div>
@@ -665,8 +723,9 @@ function startApp(){
   else{document.getElementById('consentOv').classList.add('show');}
 }
 function acceptConsent(){localStorage.setItem('edu_meta_consent','1');document.getElementById('consentOv').classList.remove('show');showIntro();}
-function showIntro(){document.getElementById('landing').style.display='none';document.getElementById('introUnit').classList.add('show');window.scrollTo({top:0});}
+function showIntro(){document.getElementById('landing').style.display='none';document.getElementById('introUnit').classList.add('show');window.scrollTo({top:0});initIntroQuiz();}
 function enterAppFromIntro(){
+  if(!introQuizPassed()){showIntroQuizRequired();return;}
   track('intro-complete');
   document.getElementById('introUnit').classList.remove('show');document.getElementById('introUnit').style.display='none';
   document.getElementById('appWrap').classList.add('show');document.getElementById('nbFab').style.display='flex';
@@ -1092,6 +1151,9 @@ function showTopicArticles(){
     h+='<p style="margin:4px 0 0;font-size:0.85em;color:var(--tl)">'+eh(a.desc)+'</p></div>';
   });
   c.innerHTML=h;p.open=true;
+  // Topic quiz
+  const qp=document.getElementById('topicQuizPanel');
+  if(qp){qp.style.display='';showTopicQuiz(v);}
 }
 // Event listeners
 document.addEventListener('DOMContentLoaded',function(){
@@ -1117,28 +1179,28 @@ document.addEventListener('DOMContentLoaded',function(){
 /* ===== SLIDE DATA ===== */
 const slidesData={
   ch1:[
-    {t:'מהי מטפורה?',b:'<p>מטפורה היא <strong>מבנה חשיבה</strong>, לא רק כלי ספרותי.</p><p style="margin-top:.8rem">כשאומרים "המורה הוא גנן" — זה לא קישוט לשון. זה תיאור של <strong>האופן שבו אנו מבינים הוראה</strong> כולה.</p>'},
-    {t:'מטפורה = ראייה + הסתרה',b:'<p>כל מטפורה <strong>מאירה</strong> היבטים מסוימים של המציאות — ובמקביל <strong>מסתירה</strong> היבטים אחרים.</p><p style="margin-top:.8rem">מטפורת "המורה כגנן" מאירה: טיפוח, צמיחה, סבלנות.<br>היא מסתירה: מבחנים, ציונים, לוחות זמנים.</p>'},
-    {t:'מטפורה בשפה היומיומית',b:'<p>רוב המטפורות <strong>שקופות</strong> — איננו מודעים להן:</p><ul><li>״אני <strong>מזין</strong> את הכיתה בידע״</li><li>״אנחנו <strong>בונים</strong> הבנה״</li><li>״ה<strong>מסע</strong> שלנו בחומר הלימוד״</li></ul><p style="margin-top:.6rem">כל פועל כזה — מטפורה שלמה.</p>'},
-    {t:'למה זה חשוב?',b:'<p>המטפורה שבה משתמש מורה <strong>מכתיבה את ההתנהגות שלו</strong> בכיתה:</p><ul><li>גנן → יסבול, יחכה, יטפח</li><li>מנצח תזמורת → ינהל, יתאם, יתבע</li><li>מאמן ספורט → ידרוש, יאמן, ימדוד</li></ul>'}
+    {t:'ציר הזמן: מריצ\'ארדס ועד לייקוף',b:'<ul><li><strong>1936 — ריצ\'ארדס:</strong> Tenor (נושא) + Vehicle (רכב) — מטפורה כאינטראקציה</li><li><strong>1954 — בלק:</strong> "מרכיבים משותפים" — מסנן תרבותי על הנושא</li><li><strong>1980 — לייקוף וג\'ונסון:</strong> מטפורה כמבנה חשיבה, לא כלי שפתי</li><li><strong>2002 — פאוקוניה וטרנר:</strong> תיאורית ה-Blending — מרחב מיזוג</li></ul>'},
+    {t:'ריצ\'ארדס: Tenor ו-Vehicle',b:'<p>"המורה הוא גנן" — שני רכיבים:</p><ul><li><strong>Tenor (נושא):</strong> מה שרוצים לתאר = <em>המורה</em></li><li><strong>Vehicle (רכב):</strong> הדימוי = <em>הגנן</em></li></ul><p style="margin-top:.8rem">המשמעות נולדת מ<strong>האינטראקציה</strong> בין השניים — לא מכל אחד בנפרד.</p>'},
+    {t:'לייקוף וג\'ונסון — שלוש תובנות',b:'<p><strong>"Metaphors We Live By" (1980) — המהפכה:</strong></p><ul><li>מטפורות <strong>מעצבות חשיבה</strong> — לא רק שפה</li><li>הן <strong>חלקיות</strong> — לא כל המיפויים מועברים</li><li>הן <strong>גילמות (Embodied)</strong> — נולדות מהניסיון הגופני</li></ul>'},
+    {t:'שלושה סוגי מטפורות',b:'<ul><li><strong>מבניות (Structural):</strong> "הוראה היא גננות" — תחום שלם על תחום</li><li><strong>אוריינטציה (Orientational):</strong> "מצב רוח <em>גבוה</em>", "ירד <em>נמוך</em>" — כיוון פיזי</li><li><strong>אונטולוגיות (Ontological):</strong> "האינפלציה <em>תוקפת</em>" — הפשטות כישויות</li></ul><p style="margin-top:.7rem">בהוראה — בעיקר מטפורות <strong>מבניות ואוריינטציה</strong>.</p>'}
   ],
   ch2:[
-    {t:'לייקוף וג\'ונסון — 1980',b:'<p>בספרם <strong>"Metaphors We Live By"</strong> (מטפורות שאנו חיים בהן) טענו ג\'ורג\' לייקוף ומארק ג\'ונסון:</p><p style="margin-top:.8rem"><strong>מטפורות אינן רק שפה — הן מבנים קוגניטיביים יסודיים שמעצבים חשיבה ופעולה.</strong></p>'},
-    {t:'שני המרכיבים',b:'<p><strong>תחום מקור (Source Domain):</strong><br>התחום המוכר והמוחשי — גן, מסע, בנייה, מכונה.</p><p style="margin-top:.8rem"><strong>תחום יעד (Target Domain):</strong><br>התחום המופשט שאנו מנסים להבין — הוראה, למידה, שכל, זהות.</p>'},
-    {t:'מיפויים — הלב של המטפורה',b:'<p>בין תחום המקור לתחום היעד קיימים <strong>מיפויים (Mappings)</strong>:</p><ul><li>גנן ↔ המורה</li><li>צמח ↔ התלמיד</li><li>גינה ↔ הכיתה</li><li>השקיה ↔ הוראה</li><li>פריחה ↔ הצלחה בלמידה</li></ul>'},
-    {t:'דוגמה: הוראה היא גננות',b:'<p>המטפורה המושגית: <strong>הוראה היא גננות</strong></p><p style="margin-top:.6rem">מה נובע מזה?</p><ul><li>תלמידים זקוקים <strong>לתנאים מתאימים</strong> לגדול</li><li>הצמיחה <strong>אורגנית</strong> — לא ניתן לאלץ אותה</li><li>המורה <strong>מקנה</strong>, לא מחדיר</li></ul>'}
+    {t:'שלושה עקרונות יסוד של CMT',b:'<ul><li><strong>חד-כיווניות:</strong> תמיד מוחשי → מופשט</li><li><strong>חלקיות:</strong> רק חלק מהמיפויים מועברים</li><li><strong>הארה והסתרה:</strong> המטפורה מדגישה — וממילא מסתירה</li></ul>'},
+    {t:'עקרון ההארה וההסתרה',b:'<table style="width:100%;font-size:.82rem;border-collapse:collapse"><tr><th style="padding:5px;background:rgba(255,255,255,.2)">מטפורה</th><th style="padding:5px;background:rgba(255,255,255,.2)">מאירה</th><th style="padding:5px;background:rgba(255,255,255,.2)">מסתירה</th></tr><tr><td style="padding:4px;border-bottom:1px solid rgba(255,255,255,.15)">מורה כגנן</td><td style="padding:4px;border-bottom:1px solid rgba(255,255,255,.15)">טיפוח, סבלנות</td><td style="padding:4px;border-bottom:1px solid rgba(255,255,255,.15)">מבחנים, ציונים</td></tr><tr><td style="padding:4px;border-bottom:1px solid rgba(255,255,255,.15)">מורה כמנצח</td><td style="padding:4px;border-bottom:1px solid rgba(255,255,255,.15)">ניהול, תיאום</td><td style="padding:4px;border-bottom:1px solid rgba(255,255,255,.15)">אמפתיה, גמישות</td></tr><tr><td style="padding:4px">מורה כמאמן</td><td style="padding:4px">אתגר, ביצוע</td><td style="padding:4px">הנאה, יצירה</td></tr></table>'},
+    {t:'מיפויים — הלב של המטפורה',b:'<p>"הוראה היא גננות" — מיפויים שיטתיים:</p><ul><li>גנן ↔ המורה</li><li>צמח ↔ התלמיד</li><li>גינה ↔ הכיתה</li><li>השקיה ↔ הוראה</li><li>פריחה ↔ הצלחה</li><li>מזיקים ↔ ?</li></ul>'},
+    {t:'Blending — מיזוג מושגי',b:'<p>פאוקוניה וטרנר (2002): לפעמים נולדת <strong>ישות שלישית</strong> — לא מורה ולא גנן, אלא ישות חדשה עם תכונות של שניהם.</p><p style="margin-top:.8rem">שאלו את עצמכם: <strong>האם בתמונה שלכם יש ישות כזו?</strong> מה היא מוסיפה שאינו קיים בנפרד?</p>'}
   ],
   ch3:[
-    {t:'6 קטגוריות מטפורות למורה',b:'<ul><li><strong>ספק ידע:</strong> מעיין, ספר, כלי קיבול</li><li><strong>בעל מלאכה:</strong> פסלן, אדריכל, אומן</li><li><strong>מנחה:</strong> מלווה, מורה דרך, פנס</li><li><strong>מטפח:</strong> גנן, הורה, רועה</li><li><strong>יועץ:</strong> מראה, רופא, מאזין</li><li><strong>מנהיג:</strong> קפטן, מנצח, מצביא</li></ul>'},
-    {t:'ספארד — שתי מטפורות ללמידה',b:'<p><strong>מטפורת הרכישה (Acquisition):</strong><br>למידה = צבירת ידע. התלמיד כ"כלי" שמתמלא.</p><p style="margin-top:.8rem"><strong>מטפורת ההשתתפות (Participation):</strong><br>למידה = כניסה לקהילת פרקטיקה. התלמיד כ"חבר" שמשתלב.</p>'},
-    {t:'מה מגלה כל מטפורה?',b:'<p>לפי ספארד — <strong>כל מטפורה חד-צדדית</strong>:</p><ul><li>רכישה מניחה ידע ניתן להעברה — מתעלמת מהקשר חברתי</li><li>השתתפות מניחה כיתה כקהילה — מתעלמת ממידע ניתן-להעברה</li></ul><p style="margin-top:.7rem"><strong>פתרון:</strong> לעבור בין המטפורות לפי הצורך.</p>'},
-    {t:'המשמעות המחקרית',b:'<p>מחקרים הראו ש<strong>המטפורה שמורה משתמש בה</strong> משפיעה על:</p><ul><li>דרך הניהול שלו בכיתה</li><li>היחס לתלמידים מתקשים</li><li>תחושת המסוגלות המקצועית שלו</li><li>הזהות המקצועית לאורך הקריירה</li></ul>'}
+    {t:'שש קטגוריות מטפורות למורה',b:'<ul><li><strong>ספק ידע:</strong> מעיין, ספר, כלי קיבול</li><li><strong>בעל מלאכה:</strong> פסלן, אדריכל, אומן</li><li><strong>מנחה:</strong> מלווה, מורה דרך, פנס</li><li><strong>מטפח:</strong> גנן, הורה, רועה</li><li><strong>יועץ:</strong> מראה, רופא, מאזין</li><li><strong>מנהיג:</strong> קפטן, מנצח, מצביא</li></ul>'},
+    {t:'ספארד — שתי מטפורות ללמידה',b:'<p><strong>מטפורת הרכישה:</strong><br>למידה = צבירת ידע. תלמיד = כלי שמתמלא.<br>→ מדגישה: תוצאה, מדידה, הצלחה/כישלון.</p><p style="margin-top:.8rem"><strong>מטפורת ההשתתפות:</strong><br>למידה = כניסה לקהילת פרקטיקה.<br>→ מדגישה: תהליך, שייכות, שיתוף.</p><p style="margin-top:.6rem;font-size:.85rem;opacity:.85">ספארד: אל תבחרו רק אחת — כל מטפורה חד-צדדית.</p>'},
+    {t:'מטפורות וזהות מקצועית',b:'<p>בולו וסטוקס (Bullough & Stokes) הראו:</p><ul><li>המטפורה שמורה בוחר לעצמו <strong>מעצבת את זהותו המקצועית</strong></li><li>מורים שמשנים מטפורה — <strong>משנים פרקטיקה</strong></li><li>בחינת מטפורות אישיות = <strong>התפתחות מקצועית</strong></li></ul>'},
+    {t:'מה מגלה המחקר?',b:'<p>ממצאי מחקרים מרכזיים:</p><ul><li>המטפורות שמורה בוחר משפיעות על <strong>יחסי הכוח</strong> בכיתה</li><li>מטפורות יכולות לתמוך ב<strong>שחיקה</strong> (שליח/נביא) או ב<strong>צמיחה</strong> (חוקר)</li><li>ביטויי שפה יומיומיים חושפים מטפורה <strong>סמויה</strong></li><li>מודעות למטפורה = <strong>כוח לשנות</strong> פרקטיקה</li></ul>'}
   ],
   ch4:[
-    {t:'מחקר BYU — 2020',b:'<p>מחקר מאוניברסיטת BYU הראה:</p><p style="margin-top:.7rem"><strong>מטפורות ויזואליות מעמיקות הבנה מושגית</strong> יותר ממטפורות מילוליות בלבד.</p><p style="margin-top:.7rem">תרגום מטפורה לתמונה דורש להפוך ידע <em>משתמע</em> לידע <em>מפורש</em>.</p>'},
-    {t:'מה דורש תרגום מטפורה לתמונה?',b:'<ul><li><strong>זיהוי המיפויים</strong> — איזה אלמנט מייצג מה?</li><li><strong>קבלת החלטות ויזואליות</strong> — מה להדגיש?</li><li><strong>הבנת מה נסתר</strong> — מה אי אפשר לתאר?</li><li><strong>פרשנות אישית</strong> — איך אני רואה את המטפורה?</li></ul>'},
-    {t:'למה "תמונה שווה אלף מילים"?',b:'<p>כי תהליך ה<strong>הדמיה</strong> (visualization) של מטפורה:</p><ul><li>מחייב "לפרוט" אותה לרכיבים</li><li>מגלה מיפויים שלא היו ברורים</li><li>יוצר <strong>זיכרון קוגניטיבי</strong> עמוק יותר</li><li>מאפשר <strong>שיח פרשני</strong> עם אחרים</li></ul>'},
-    {t:'7 שלבי האפליקציה',b:'<ol style="text-align:right"><li>בחירת מטפורה</li><li>חשיפת המטפורה (מיפויים)</li><li>בניית פרומפט</li><li>תמונה ראשונית</li><li>פרשנות ומשוב</li><li>רפלקציה</li><li>סיכום וייצוא</li></ol>'}
+    {t:'ארבע עדשות — סקירה',b:'<ol style="text-align:right"><li><strong>עדשת המיפוי</strong> — האם התמונה מייצגת את המיפויים שזיהיתם?</li><li><strong>עדשת ההארה/הסתרה</strong> — מה נראה? מה נעדר?</li><li><strong>עדשת המיזוג</strong> — מה נולד מהפגישה?</li><li><strong>עדשת יחסי הכוח</strong> — מה אומרת התמונה על כוח?</li></ol>'},
+    {t:'עדשה 1: מיפוי | עדשה 2: הארה/הסתרה',b:'<p><strong>עדשה 1 — נאמנות המיפוי:</strong><br>כל מיפוי שרשמתם — האם הוא מוצג? חוסר ייצוג עשוי לחשוף מטפורה מתחרה שנכנסה ל-AI.</p><p style="margin-top:.8rem"><strong>עדשה 2 — הארה/הסתרה:</strong><br>מה גדול? מה במרכז? מה מואר? מה חסר? ה-AI מחקה שפה ויזואלית מוסכמת — מה ההנחות הסמויות שלו?</p>'},
+    {t:'עדשה 3: מיזוג',b:'<p>האם נוצרה ישות "שלישית" בתמונה?</p><p style="margin-top:.7rem">לא המורה-בחיים ולא הגנן האמיתי — אלא <strong>ישות היברידית</strong> עם תכונות של שניהם.</p><p style="margin-top:.7rem">מה התכונות שנוצרו? האם הן מוסיפות לניתוח שלכם?</p>'},
+    {t:'עדשה 4: יחסי כוח',b:'<p>ניתוח ביקורתי — שאלו:</p><ul><li>מי <strong>גדול/מרכזי</strong> בתמונה?</li><li>מי <strong>מחזיק</strong>, מי מקבל?</li><li>מי <strong>מעל</strong>? מי לצד?</li><li>האם הדמויות <strong>שוות</strong> או היררכיות?</li></ul><p style="margin-top:.7rem">כל בחירה ויזואלית = בחירה פוליטית על מה ראוי להיות בהוראה.</p>'}
   ],
   ch5:[
     {t:'מטפורה מושגית (CMT)',b:'<p><strong>חוקר:</strong> Lakoff & Johnson</p><p><strong>עיקרון:</strong> מטפורות הן מבני חשיבה בסיסיים</p><p><strong>יישום בהוראה:</strong> זיהוי מטפורות סמויות בשיח חינוכי</p>'},
@@ -1178,6 +1240,171 @@ function slideNav(ch,dir){
   renderSlide(ch);
 }
 
+/* ===== QUIZ DATA ===== */
+const introQuizData=[
+  {q:'לפי לייקוף וג\'ונסון — מהי מטפורה?',opts:['כלי רטורי לייפוי השפה','מבנה חשיבה שמאפשר הבנת תחום מופשט דרך תחום מוכר','השוואה ישירה בין שני דברים','ביטוי שגוי בשפה היומיומית'],a:1,ex:'לפי לייקוף וג\'ונסון (1980), מטפורות הן מבני חשיבה יסודיים — לא רק כלים שפתיים.'},
+  {q:'מה הוא "תחום מקור" במטפורה מושגית?',opts:['הנושא המופשט שרוצים להבין','הביטוי המילולי של המטפורה','התחום המוכר והמוחשי שממנו לוקחים את הדימוי','המחבר שיצר את המטפורה'],a:2,ex:'תחום המקור הוא הצד המוחשי — גן, מסע, בנייה. הוא עוגן את ההבנה של תחום היעד המופשט.'},
+  {q:'במטפורה "המורה הוא גנן" — מה הוא תחום המקור?',opts:['המורה','ההוראה','הגננות','הכיתה'],a:2,ex:'הגננות היא תחום המקור — המוחשי. ההוראה היא תחום היעד — המופשט שאנו מנסים להבין דרכו.'},
+  {q:'מה עיקרון החד-כיווניות (Unidirectionality)?',opts:['מטפורה יכולה לנוע בשני כיוונים','מטפורות הולכות תמיד מתחום מוחשי לתחום מופשט','מטפורה חייבת להיות חד-משמעית','כל מטפורה פועלת רק בתרבות אחת'],a:1,ex:'מטפורות תמיד הולכות מהמוחשי אל המופשט. "גנן → מורה" עובד; "מורה → גנן" לא מואר באותו אופן.'},
+  {q:'מה עיקרון "הארה והסתרה" (Highlighting and Hiding)?',opts:['מטפורה מאירה חלקים ממציאות ומסתירה אחרים','כדאי להסתיר מטפורות בטקסט','מטפורות עובדות טוב יותר כשלא מודעים אליהן','יש לגלות מטפורות סמויות תמיד'],a:0,ex:'"מורה כגנן" מאיר: טיפוח, סבלנות, צמיחה — ומסתיר: מבחנים, ציונים, לוחות זמנים. כל מטפורה חד-צדדית.'},
+  {q:'מה הציגה ספארד (Sfard) לגבי מטפורות למידה?',opts:['שלמידה היא תמיד פעילות קבוצתית','שתי מטפורות ללמידה — רכישה והשתתפות — כל אחת חושפת ומסתירה','שאין מטפורות ללמידה','שלמידה היא מסע בלבד'],a:1,ex:'ספארד (1998) הציגה מטפורת הרכישה (ידע כנכס) ומטפורת ההשתתפות (כניסה לקהילה). היא הזהירה מבחירה בלעדית.'},
+  {q:'מה "מסתירה" מטפורת "מורה כגנן" שמטפורת "מורה כמנצח תזמורת" מאירה?',opts:['את חשיבות הטיפוח האישי','את חשיבות הסביבה','היבטי תיאום, ניהול ודרישה מדויקת','את אהבת המקצוע'],a:2,ex:'מטפורת המנצח מאירה: תיאום, דיוק, ניהול קבוצה. אלה נעדרים ממטפורת הגנן.'},
+  {q:'אילו שלושה סוגי מטפורות מושגיות הגדירו לייקוף וג\'ונסון?',opts:['שפתיות, ויזואליות ומוזיקליות','מבניות, אוריינטציה ואונטולוגיות','חינוכיות, מחקריות ויישומיות','מחקריות, אינטואיטיביות ומורכבות'],a:1,ex:'מבניות (תחום על תחום), אוריינטציה (כיווניות גופנית: גבוה/נמוך), אונטולוגיות (הפשטות כישויות).'},
+  {q:'מורה אומר: "אנחנו בונים ביחד את הידע". איזו מטפורה מושגית כאן?',opts:['הוראה כגננות','הוראה כמלחמה','ידע/למידה כבנייה','הוראה כמחקר'],a:2,ex:'"בנייה" היא המטפורה — ידע ולמידה כתהליך של הנחת יסודות ובנייה שכבה על שכבה.'},
+  {q:'מדוע חשוב לנתח מטפורות שמורים משתמשים בהן?',opts:['כי מטפורות מאפשרות כתיבה יפה יותר','כי המטפורות שמורה בוחר מעצבות את הפרקטיקה שלו ואת תפיסת תפקידו','כי ניתוח מטפורות הוא חלק מדקדוק עברי','כי זו דרישה בתוכנית הלימודים'],a:1,ex:'בולו וסטוקס הראו שהמטפורה שמורה בוחר משפיעה על יחסיו עם תלמידים, על ניהול הכיתה ועל זהותו המקצועית.'}
+];
+const topicQuizData={
+  'נושא 1 — מטפורת המורה':[
+    {q:'אילו שש קטגוריות מטפורות למורה זוהו במחקר?',opts:['גנן, מנצח, ספורטאי, אמן, מדען, רופא','ספק ידע, בעל מלאכה, מנחה, מטפח, יועץ, מנהיג','מורה, מחנך, מרצה, פדגוג, מדריך, מאמן','פאסיבי, אקטיבי, חברתי, אינטלקטואלי, רגשי, מוסרי'],a:1,ex:'שש הקטגוריות: ספק ידע (מעיין), בעל מלאכה (פסלן), מנחה (מלווה), מטפח (גנן), יועץ (מראה), מנהיג (מנצח).'},
+    {q:'מה "מסתירה" מטפורת "מורה כגנן" שמטפורת "מורה כמנצח תזמורת" מאירה?',opts:['חשיבות הטיפוח האישי','חשיבות הסביבה','היבטי ניהול, תיאום ודרישה מדויקת','אהבת המקצוע'],a:2,ex:'מנצח תזמורת מאיר: ניהול מדויק, תיאום, ביצוע משותף — כולם נסתרים אצל הגנן.'},
+    {q:'לפי בולו וסטוקס — כיצד מטפורות קשורות לזהות מקצועית?',opts:['לא קשורות — זהות נקבעת על ידי ניסיון בלבד','המטפורה שמורה בוחר מעצבת זהותו המקצועית ופרקטיקתו','משפיעות רק בשנים הראשונות','משפיעות על שפה, לא על פעולה'],a:1,ex:'בולו וסטוקס (1994) הראו: מורים שמשנים את המטפורה שלהם — משנים את הדרך שבה הם מלמדים.'},
+    {q:'מה ההבדל בין "מורה כספק ידע" לבין "מורה כמנחה"?',opts:['אין הבדל מהותי','ספק ידע = ידע זורם ממורה לתלמיד; מנחה = תלמיד פעיל בגילוי','ספק ידע מלמד חומר, מנחה מלמד כישורים חיים','שניהם מחזיקים בידע, הם רק שונים בסגנון'],a:1,ex:'ספק ידע = תלמיד פאסיבי "מתמלא". מנחה = תלמיד אקטיבי, המורה מלווה ולא מעביר.'},
+    {q:'מה ייחודה של "מטפורה מכוונת" (Deliberate Metaphor) לפי Steen?',opts:['מטפורה שמורה בחר בה במודע לצורך פדגוגי ספציפי','כל מטפורה שמשתמשים בה בכוונה תחילה','מטפורה שמופיעה בחוזר מנהל','מטפורה שנולדת מניסיון לא מודע'],a:0,ex:'Steen (2008): מטפורה מכוונת = המשתמש בה בחר בה באופן מודע להזמין את המאזין לחשוב דרך הדימוי.'}
+  ],
+  'נושא 2 — מטפורת התלמיד':[
+    {q:'לפי ספארד — מהי "מטפורת הרכישה"?',opts:['למידה כמסע שבו התלמיד נוסע','למידה כצבירת ידע — התלמיד כ"כלי שמתמלא"','למידה כהשתתפות בקהילה','למידה כמחקר עצמאי'],a:1,ex:'מטפורת הרכישה: ידע הוא נכס שניתן להעברה, התלמיד "צובר" אותו. מדגישה: תוצאות, הצלחה, מדידה.'},
+    {q:'מה מסתיר הדימוי "תלמיד כספוג"?',opts:['יכולת הספיגה של התלמיד','שהדימוי מניח ידע אחיד שניתן להעברה','יכולת הבחירה, היצירה, הספקנות והשאלות של התלמיד','שהמורה אינו רלוונטי'],a:2,ex:'"ספוג" מסתיר: שתלמידים בוחרים מה לקלוט, שואלים שאלות, ספקנים, יוצרים — הם לא פאסיביים.'},
+    {q:'מה ההבדל בין "תלמיד כחוקר" ל"תלמיד כנוסע"?',opts:['אין הבדל מהותי','חוקר = פעיל/שאלות/ספקנות מובנית; נוסע = גילוי/הרפתקה/הכוונה חיצונית יותר','נוסע = שואל; חוקר = מגלה','חוקר = עצמאי; נוסע = קבוצתי'],a:1,ex:'חוקר = פועל שיטתית, בוחן השערות, ספקן. נוסע = מגלה, יש לו יעד, מודרך על ידי מפה חיצונית.'},
+    {q:'מה "מסתירה" מטפורת "תלמיד כנוסע"?',opts:['את הדרך הארוכה','את החשיבות של שגיאות','את המערכת המוסדית — ציונים, דרישות, קורסים — שבתוכה הנסיעה מתרחשת','צורך בהכוונה'],a:2,ex:'הנסיעה מרגישה חופשית וסקרנית — אך מסתירה שהנסיעה מתרחשת בתוך מוסד עם כללים, ציונים וקורסים.'},
+    {q:'לפי ספארד — מדוע מסוכן לבחור רק אחת מהמטפורות ללמידה?',opts:['כי הן סותרות זו את זו לחלוטין','כי כל מטפורה מאירה ומסתירה — בחירה בלעדית יוצרת פרקטיקה חסרה','כי אף אחת מהן לא מדויקת','כי מורים לא מסוגלים ליישם שתיהן'],a:1,ex:'ספארד: רכישה בלי השתתפות מייצרת תחרות ומדידה. השתתפות בלי רכישה מתעלמת מתכנים. יש לגלות בין שתיהן.'}
+  ],
+  'נושא 3 — מטפורת תהליך הלמידה':[
+    {q:'מה מדגישה מטפורת "הלמידה היא מסע"?',opts:['שלמידה היא קלה ונעימה','שלמידה יש התחלה, דרך ויעד — ומכשולים לאורך הדרך','שמסעות חינוכיים','שלמידה מתרחשת רק בשטח'],a:1,ex:'מסע מדגיש: יש כיוון, יש אתגרים בדרך, יש התפתחות תוך כדי. מסתיר: לוחות זמנים, מוסד, ציונים.'},
+    {q:'מה ההבדל בין "למידה כבנייה" ל"למידה כמסע"?',opts:['אין הבדל — שתיהן מדגישות התקדמות','בנייה = תהליך שמצטבר שכבה על שכבה; מסע = הגעה ליעד חיצוני','בנייה = קבוצתית; מסע = אינדיווידואלי','מסע = מהיר; בנייה = איטית'],a:1,ex:'בנייה מדגישה: הידע הקיים הוא יסוד לידע חדש. מסע מדגיש: כיוון, ניווט, אתגרים, יעד.'},
+    {q:'מחקר BYU (2020) הראה ש:',opts:['מטפורות ויזואליות עדיפות על מילוליות לכל גיל','תרגום מטפורה לתמונה מעמיק הבנה מושגית','AI אינו יכול לייצג מטפורות','ילדים מבינים מטפורות טוב יותר ממבוגרים'],a:1,ex:'המחקר הראה שתהליך ה-visualization — הפיכת מטפורה מילולית לתמונה — מחייב הפיכת ידע משתמע למפורש ומעמיק הבנה.'},
+    {q:'מה "מסתירה" מטפורת "למידה כגדילת צמח"?',opts:['שלמידה היא תהליך','שלומדים זקוקים לתנאים מתאימים','מנגנוני הערכה, ציונים, תחרות ולוחות זמנים מוסדיים','שגדילה לוקחת זמן'],a:2,ex:'גדילה מסתירה: בית ספר הוא מוסד עם ציונים, תחרות, השוואה, לוחות זמנים — לא גן עדן אורגני.'},
+    {q:'מה מייחד את "מטפורת ההשתתפות" של ספארד בהשוואה ל"מטפורת הרכישה"?',opts:['רכישה מדגישה ידע; השתתפות מדגישה תהליך חברתי ושייכות','השתתפות מדגישה מבחנים','רכישה מדגישה עבודה קבוצתית','אין הבדל מהותי'],a:0,ex:'הרכישה = ידע כנכס אינדיווידואלי. ההשתתפות = להיות חלק מקהילת פרקטיקה, ידע הוא חברתי ומשותף.'}
+  ],
+  'נושא 4 — מטפורות להבנה ולשכל':[
+    {q:'מה מרמזת מטפורת "השכל הוא מחשב"?',opts:['שבני אדם חשובים כמו מחשבים','שחשיבה היא עיבוד מידע, הזיכרון הוא אחסון, ולמידה היא תכנות','שמחשבים יחליפו מורים','שניתן לתכנת תלמידים'],a:1,ex:'מחשב מאיר: עיבוד מידע, אחסון, שליפה, קיבולת. מסתיר: רגש, הקשר, סקרנות, יצירתיות.'},
+    {q:'מה מייצגת המטפורה "נדלקה הנורה"?',opts:['שחדר כיתה צריך תאורה טובה','הבנה פתאומית (insight) שמגיעה כחוויה פיזית של אור','שהסביבה הפיזית משפיעה על למידה','שמורים צריכים להשתמש בנורות'],a:1,ex:'הנורה = Aha moment — הבנה פתאומית. מטפורת "הבנה = אור" נובעת מגילמות: אנו ממש "רואים" בעיניים.'},
+    {q:'מה "ידע הוא מזון" מסתיר?',opts:['שידע יכול להיות לא בריא','שניתן לחנוק ב"כמויות גדולות"','שהבנה היא תהליך פעיל — לא רק "אכילה" פסיבית, אלא עיבוד ויצירה','שידע מתעכל לאט'],a:2,ex:'"מזון" מסתיר: שתלמידים לא "אוכלים" פאסיבית — הם עיבוד, שאלה, יצירה. למידה היא פעילות, לא קבלה.'},
+    {q:'לפי לייקוף וג\'ונסון — מאיפה מגיעות מטפורות של הבנה וחשיבה?',opts:['מניסיון חינוכי','מהניסיון הגופני — "הבנה = ראייה" כי אנו ממש רואים את העולם','מהתרבות ומהשפה בלבד','מגנטיקה'],a:1,ex:'עיקרון הגילמות (Embodiment): מטפורות נובעות מהגוף. "הבנה = ראייה" — כי עיניים הן אמצעי ההבנה הפיזי שלנו.'},
+    {q:'מה ההבדל בין "הבנה = אור" ל"הבנה = ראייה"?',opts:['אין הבדל','אור = ביטוי ויזואלי; ראייה = הבנה כפעולה גופנית פעילה — לא רק קבלת אור','ראייה = חיצונית; אור = פנימי','שתיהן מדגישות את אותו עניין'],a:1,ex:'"הבנה = ראייה" היא מטפורה גילמות: ראייה היא מנגנון גופני. "הבנה = אור" היא יישום שלה: אנחנו "רואים" הבנה כאור.'}
+  ],
+  'נושא 5 — זהות מקצועית וחזון':[
+    {q:'כיצד משפיעה המטפורה שמורה בוחר לעצמו על הזהות המקצועית?',opts:['לא משפיעה — זהות נקבעת על ידי ניסיון ותוכנית לימודים','מעצבת ציפיות עצמיות, יחסים עם תלמידים ופרקטיקה כיתתית','משפיעה רק בשנים הראשונות','משפיעה רק על שפה, לא על פעולה'],a:1,ex:'בולו וסטוקס: מורה שרואה עצמו "גנן" → ימתין, יטפח, יסבול. מורה שרואה עצמו "מנצח" → ינהל, ידרוש, יתאם.'},
+    {q:'מה הסכנה שבמטפורת "מורה כשליח/נביא"?',opts:['שתלמידים לא יכבדו את המורה','שהמורה יחוש גדלות יתר','שהציפיות הנשגבות מובילות לשחיקה כשהמציאות לא מתאימה','שהמשמעות הדתית מוסיפה בעיות'],a:2,ex:'שליח/נביא = ייעוד נשגב. כשהמציאות — בירוקרטיה, ציונים, לחץ — לא מתאימה לנשגב, נוצרת שחיקה.'},
+    {q:'מה מאפשרת מטפורת "מורה כחוקר רפלקטיבי"?',opts:['ביקורת בלתי פוסקת של הוראה','זהות גמישה שמתעדכנת ומתחדשת, פתוחה לשינוי','מחקר אקדמי במקביל להוראה','ניהול תיעוד פדגוגי מפורט'],a:1,ex:'חוקר = בוחן, מעדכן, מקבל ספקנות. זהות כחוקר = לא קשיחה — גמישה, מודעת ומתחדשת.'},
+    {q:'מה ההבדל בין "מורה כאמן" ל"מורה כמנהיג" מבחינת יחסי כוח?',opts:['אין הבדל — שניהם בעלי כוח','אמן = כוח הנובע מיצירה/ייחודיות אישית; מנהיג = כוח מוסדי/היררכי','מנהיג = כוח; אמן = חוסר כוח','אמן = כוח על התוכן; מנהיג = כוח על התהליך'],a:1,ex:'כוח האמן = אישי ויצירתי. כוח המנהיג = מוסדי, מכוח תפקיד. שתי מקורות כוח שונים לחלוטין.'},
+    {q:'מדוע בחינת המטפורה האישית שלנו היא רגע חינוכי משמעותי?',opts:['כי אנו לומדים שפה חדשה','כי מודעות למטפורה מאפשרת בחירה מודעת — ומשם שינוי פרקטיקה','כי מטפורות מעניינות לשיתוף','כי הן חלק מדרישות הקורס'],a:1,ex:'מודעות = ראיית "המסנן" שלנו. ברגע שרואים אותו — אפשר לבחור אחר. זו ההזדמנות לשינוי אמיתי.'}
+  ]
+};
+let introQuizScore=null;
+function introQuizPassed(){return introQuizScore!==null&&introQuizScore>=7;}
+function initIntroQuiz(){
+  const c=document.getElementById('iqQs');if(!c)return;
+  let h='';
+  introQuizData.forEach((q,i)=>{
+    h+='<div class="quiz-q"><span class="quiz-q-num">'+(i+1)+'.</span> '+eh(q.q)+'<div class="quiz-opts">';
+    q.opts.forEach((o,j)=>{h+='<label><input type="radio" name="iq'+i+'" value="'+j+'"> <span>'+eh(o)+'</span></label>';});
+    h+='</div></div>';
+  });
+  c.innerHTML=h;
+  // Show submit button when all answered
+  c.addEventListener('change',function(){
+    const answered=introQuizData.every((_,i)=>document.querySelector('input[name="iq'+i+'"]:checked'));
+    document.getElementById('iqSubmitBtn').style.display=answered?'inline-block':'none';
+  });
+}
+function submitIntroQuiz(){
+  let score=0;const results=[];
+  introQuizData.forEach((q,i)=>{
+    const sel=document.querySelector('input[name="iq'+i+'"]:checked');
+    const correct=sel&&parseInt(sel.value)===q.a;
+    if(correct)score++;
+    results.push({correct,a:q.a,explain:q.ex});
+  });
+  introQuizScore=score;
+  // Render results with color feedback
+  const qs=document.querySelectorAll('#iqQs .quiz-q');
+  qs.forEach((qEl,i)=>{
+    const r=results[i];
+    qEl.style.background=r.correct?'rgba(74,140,111,.08)':'rgba(196,80,80,.06)';
+    qEl.style.borderRadius='8px';qEl.style.padding='.6rem .8rem';qEl.style.marginBottom='.8rem';
+    // Mark correct answer
+    const opts=qEl.querySelectorAll('.quiz-opts label');
+    opts[introQuizData[i].a].style.fontWeight='700';opts[introQuizData[i].a].style.color='var(--s)';
+    const expEl=document.createElement('div');expEl.className='quiz-explain';
+    expEl.textContent='💡 '+r.explain;qEl.appendChild(expEl);
+  });
+  const res=document.getElementById('iqResult');
+  const pass=score>=7;
+  res.innerHTML='<div class="quiz-score '+(pass?'pass':'fail')+'">'+
+    (pass?'✅ עברתם את המבחן! ':'❌ ')+score+' / 10'+
+    (pass?' — ניתן להמשיך לאפליקציה.'
+          :' — נדרשים 7. <button class="quiz-retry" onclick="retryIntroQuiz()">↺ נסו שוב</button>')+'</div>';
+  document.getElementById('iqSubmitBtn').style.display='none';
+  if(pass){
+    const btn=document.getElementById('startWorkBtn');
+    if(btn){btn.textContent='✅ התחילו לעבוד ←';btn.style.background='var(--s)';}
+  }
+  track('intro-quiz-score-'+score);
+}
+function retryIntroQuiz(){
+  introQuizScore=null;
+  document.getElementById('iqResult').innerHTML='';
+  document.querySelectorAll('#iqQs .quiz-q').forEach(el=>{el.style.background='';el.style.padding='';el.style.borderRadius='';el.style.marginBottom='';});
+  document.querySelectorAll('.quiz-explain').forEach(el=>el.remove());
+  document.querySelectorAll('#iqQs input[type=radio]').forEach(el=>el.checked=false);
+  document.getElementById('iqSubmitBtn').style.display='none';
+  window.scrollTo({top:document.getElementById('introQuizBox').offsetTop-80,behavior:'smooth'});
+  const btn=document.getElementById('startWorkBtn');
+  if(btn){btn.textContent='← התחילו לעבוד';btn.style.background='';}
+}
+function showIntroQuizRequired(){
+  showT('יש לעבור את מבחן המבוא (7/10) לפני הכניסה לאפליקציה');
+  window.scrollTo({top:document.getElementById('introQuizBox').offsetTop-80,behavior:'smooth'});
+  document.getElementById('introQuizBox').style.animation='none';
+  document.getElementById('introQuizBox').offsetHeight;
+  document.getElementById('introQuizBox').style.animation='spFadeUp .4s ease';
+}
+function showTopicQuiz(topicKey){
+  const panel=document.getElementById('topicQuizPanel');
+  const content=document.getElementById('topicQuizContent');
+  if(!topicKey||!topicQuizData[topicKey]){if(panel)panel.style.display='none';return;}
+  if(panel)panel.style.display='';
+  const qs=topicQuizData[topicKey];
+  let h='<p style="color:var(--tl);font-size:.88rem;margin-bottom:1rem">5 שאלות על נושא זה. ניתן לנסות שוב.</p>';
+  qs.forEach((q,i)=>{
+    h+='<div class="quiz-q" id="tq_'+i+'"><span class="quiz-q-num">'+(i+1)+'.</span> '+eh(q.q)+'<div class="quiz-opts">';
+    q.opts.forEach((o,j)=>{h+='<label><input type="radio" name="tq'+i+'" value="'+j+'" onchange="checkTQReady()"> <span>'+eh(o)+'</span></label>';});
+    h+='</div></div>';
+  });
+  h+='<div id="tqBtnRow"><button class="quiz-btn" id="tqSubmitBtn" style="display:none" onclick="submitTopicQuiz(\''+topicKey.replace(/'/g,"\\'")+'\')" >בדוק תשובות</button></div>';
+  h+='<div id="tqResult"></div>';
+  content.innerHTML=h;
+  content.dataset.topic=topicKey;
+}
+function checkTQReady(){
+  const n=topicQuizData[document.getElementById('topicQuizContent').dataset.topic||'']?.length||5;
+  const done=Array.from({length:n},(_,i)=>document.querySelector('input[name="tq'+i+'"]:checked')).every(Boolean);
+  const btn=document.getElementById('tqSubmitBtn');if(btn)btn.style.display=done?'inline-block':'none';
+}
+function submitTopicQuiz(topicKey){
+  const qs=topicQuizData[topicKey];if(!qs)return;
+  let score=0;
+  qs.forEach((q,i)=>{
+    const sel=document.querySelector('input[name="tq'+i+'"]:checked');
+    const correct=sel&&parseInt(sel.value)===q.a;if(correct)score++;
+    const qEl=document.getElementById('tq_'+i);if(qEl){
+      qEl.style.background=correct?'rgba(74,140,111,.08)':'rgba(196,80,80,.06)';
+      qEl.style.borderRadius='8px';qEl.style.padding='.5rem .7rem';
+      const opts=qEl.querySelectorAll('.quiz-opts label');
+      if(opts[q.a])opts[q.a].style.fontWeight='700';
+      const ex=document.createElement('div');ex.className='quiz-explain';ex.textContent='💡 '+q.ex;qEl.appendChild(ex);
+    }
+  });
+  const pass=score>=4;
+  const res=document.getElementById('tqResult');
+  if(res)res.innerHTML='<div class="quiz-score '+(pass?'pass':'fail')+'"><span class="tq-score '+(pass?'pass':'fail')+'">'+score+'/5</span>'+(pass?'כל הכבוד! ✅':'עוד לא. <button class="quiz-retry" onclick="retryTopicQuiz()">↺ נסו שוב</button>')+'</div>';
+  const btn=document.getElementById('tqSubmitBtn');if(btn)btn.style.display='none';
+  track('topic-quiz-'+topicKey.slice(0,15)+'-score-'+score);
+}
+function retryTopicQuiz(){
+  const topicKey=document.getElementById('topicQuizContent').dataset.topic;
+  showTopicQuiz(topicKey);
+}
 /* ===== MULTIPLE ANALYSES ===== */
 const AN_KEY='edu_meta_analyses';
 let savedAnalyses=[];
@@ -1214,6 +1441,7 @@ function clearAnalysis(){
   document.getElementById('topicArticlesPanel').open=false;
   document.getElementById('topicExList').innerHTML='<p style="color:var(--tl);font-style:italic">בחרו נושא בתפריט למעלה כדי לראות דוגמאות.</p>';
   document.getElementById('topicExPanel').open=false;
+  const tqp=document.getElementById('topicQuizPanel');if(tqp){tqp.style.display='none';document.getElementById('topicQuizContent').innerHTML='';}
   document.getElementById('summaryContent').innerHTML='';
   go(1);saveL();up();upp();closeAnModal();showT('ניתוח חדש!');
 }
