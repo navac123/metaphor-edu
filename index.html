@@ -293,6 +293,9 @@ h1,h2,h3,h4{font-family:'Assistant',sans-serif;font-weight:700}
 <input type="text" id="landingName" placeholder="הקלידו את שמכם..." style="text-align:center" oninput="document.getElementById('studentName').value=this.value">
 </div>
 <button class="ln-start" onclick="startApp()">🎨 התחילו את המסע ←</button>
+<div style="margin-top:.8rem">
+  <button onclick="skipToApp()" style="background:none;border:none;color:var(--tl);font-family:'Heebo',sans-serif;font-size:.88rem;cursor:pointer;text-decoration:underline;opacity:.7">דלג על המבוא ←</button>
+</div>
 <div class="ln-credit">פותח עבור קורס מטפורות בהוראה — ד״ר נאוה כהן</div>
 </div>
 </div>
@@ -706,6 +709,11 @@ function startApp(){
   if(localStorage.getItem('edu_meta_consent')){showIntro();}
   else{document.getElementById('consentOv').classList.add('show');}
 }
+function skipToApp(){
+  const name=document.getElementById('landingName').value.trim();
+  if(!name){showT('אנא הקלידו את שמכם לפני ההתחלה');document.getElementById('landingName').focus();return;}
+  skipIntro();
+}
 function acceptConsent(){localStorage.setItem('edu_meta_consent','1');document.getElementById('consentOv').classList.remove('show');showIntro();}
 function showIntro(){
   document.getElementById('landing').style.display='none';
@@ -719,10 +727,9 @@ function showIntro(){
     if(qb){const sc=qb.querySelector('#iqResult');if(sc&&!sc.innerHTML)sc.innerHTML='<div class="quiz-score pass">✅ עברתם את המבחן בעבר — ניתן להמשיך לאפליקציה.</div>';}
   }
 }
-function enterAppFromIntro(){
-  if(!introQuizPassed()){showIntroQuizRequired();return;}
-  track('intro-complete');
+function enterApp(){
   document.getElementById('introUnit').classList.remove('show');document.getElementById('introUnit').style.display='none';
+  document.getElementById('landing').style.display='none';
   document.getElementById('appWrap').classList.add('show');document.getElementById('nbFab').style.display='flex';
   document.getElementById('homeBtn').style.display='flex';
   const ln=document.getElementById('landingName').value.trim();
@@ -730,6 +737,15 @@ function enterAppFromIntro(){
   loadSavedAnalyses();updAnBtn();
   initNav();up();
   try{const r=localStorage.getItem('edu_meta_data');if(r)rd(JSON.parse(r));}catch(e){}
+}
+function enterAppFromIntro(){
+  if(!introQuizPassed()){showIntroQuizRequired();return;}
+  track('intro-complete');
+  enterApp();
+}
+function skipIntro(){
+  track('intro-skip');
+  enterApp();
 }
 function backToLanding(){
   document.getElementById('introUnit').classList.remove('show');document.getElementById('introUnit').style.display='none';
