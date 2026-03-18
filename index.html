@@ -4,33 +4,36 @@
 *{margin:0;padding:0;box-sizing:border-box}body{font-family:'Heebo',sans-serif;background:var(--bg);color:var(--t);line-height:1.7;min-height:100vh}
 h1,h2,h3,h4{font-family:'Assistant',sans-serif;font-weight:700}
 /* ===== SPLASH ===== */
-#splash{position:fixed;top:0;left:0;width:100%;height:100%;background:linear-gradient(135deg,#1a4a3e 0%,var(--p) 40%,#3d8b7a 100%);z-index:9999;display:flex;align-items:center;justify-content:center;flex-direction:column;transition:opacity .8s ease,visibility .8s ease}
+#splash{position:fixed;top:0;left:0;width:100%;height:100%;background:#F5F0EB;z-index:9999;display:flex;align-items:center;justify-content:center;flex-direction:column;transition:opacity .8s ease,visibility .8s ease;overflow:hidden}
 #splash.hide{opacity:0;visibility:hidden;pointer-events:none}
-#splash .sp-title{font-family:'Assistant',sans-serif;font-size:3.2rem;font-weight:800;color:#fff;margin-bottom:.5rem;opacity:0;animation:spFadeUp .8s .3s forwards}
-#splash .sp-sub{font-size:1.15rem;color:var(--al);font-weight:300;opacity:0;animation:spFadeUp .8s .6s forwards}
-#splash .sp-line{width:60px;height:3px;background:var(--a);border-radius:3px;margin:1.5rem 0;opacity:0;animation:spGrow .8s .9s forwards}
-#splash .sp-dots{display:flex;gap:.5rem;margin-top:1rem}
-#splash .sp-dot{width:8px;height:8px;background:rgba(255,255,255,.3);border-radius:50%;animation:spPulse 1.2s infinite}
+#splash .sp-art{width:min(340px,75vw);opacity:0;animation:spFadeUp .9s .2s forwards;margin-bottom:-.5rem}
+#splash .sp-title{font-family:'Assistant',sans-serif;font-size:2.4rem;font-weight:800;color:var(--p);margin-bottom:.25rem;opacity:0;animation:spFadeUp .8s .5s forwards;text-align:center}
+#splash .sp-sub{font-size:1rem;color:var(--tl);font-weight:400;opacity:0;animation:spFadeUp .8s .7s forwards;text-align:center}
+#splash .sp-line{width:60px;height:2px;background:var(--a);border-radius:3px;margin:1rem 0;opacity:0;animation:spGrow .8s .9s forwards}
+#splash .sp-dots{display:flex;gap:.5rem;margin-top:.5rem}
+#splash .sp-dot{width:7px;height:7px;background:var(--p);opacity:.25;border-radius:50%;animation:spPulse 1.2s infinite}
 #splash .sp-dot:nth-child(2){animation-delay:.2s}#splash .sp-dot:nth-child(3){animation-delay:.4s}
 @keyframes spFadeUp{0%{opacity:0;transform:translateY(20px)}100%{opacity:1;transform:translateY(0)}}
 @keyframes spGrow{0%{opacity:0;width:0}100%{opacity:1;width:60px}}
-@keyframes spPulse{0%,100%{opacity:.3;transform:scale(1)}50%{opacity:1;transform:scale(1.3)}}
+@keyframes spPulse{0%,100%{opacity:.25;transform:scale(1)}50%{opacity:.8;transform:scale(1.3)}}
 /* ===== LANDING ===== */
-#landing{display:none;min-height:100vh;background:linear-gradient(180deg,#1a4a3e 0%,var(--p) 50%,#3d8b7a 100%);color:#fff;text-align:center;overflow:hidden}
-#landing.show{display:flex;flex-direction:column;align-items:center;justify-content:center;animation:fi .6s ease}
-.ln-wrap{max-width:700px;padding:2rem 1.5rem}
-.ln-title{font-family:'Assistant',sans-serif;font-size:2.8rem;font-weight:800;margin-bottom:.6rem;background:linear-gradient(135deg,#fff 0%,var(--al) 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
-.ln-sub{font-size:1.1rem;color:var(--al);font-weight:300;margin-bottom:2rem}
-.ln-desc{font-size:1rem;line-height:2;color:rgba(255,255,255,.85);margin-bottom:2.5rem;max-width:560px;margin-left:auto;margin-right:auto}
-.ln-features{display:flex;gap:1.5rem;justify-content:center;flex-wrap:wrap;margin-bottom:2.5rem}
-.ln-feat{background:rgba(255,255,255,.08);backdrop-filter:blur(10px);border:1px solid rgba(255,255,255,.12);border-radius:12px;padding:1.2rem 1rem;width:140px;text-align:center;transition:transform .3s,background .3s}
-.ln-feat:hover{transform:translateY(-4px);background:rgba(255,255,255,.14)}
-.lf-ic{width:44px;height:44px;border-radius:50%;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.2);display:flex;align-items:center;justify-content:center;margin:0 auto .6rem}
-.lf-ic svg{width:22px;height:22px;stroke:var(--al);fill:none;stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round}
-.ln-feat .lf-txt{font-size:.82rem;font-weight:400;color:rgba(255,255,255,.8)}
-.ln-start{display:inline-flex;align-items:center;gap:.6rem;padding:1rem 3rem;background:linear-gradient(135deg,var(--a),#e0c96a);color:#2d332a;font-family:'Assistant',sans-serif;font-size:1.2rem;font-weight:700;border:none;border-radius:50px;cursor:pointer;transition:all .3s;box-shadow:0 4px 25px rgba(201,168,76,.4)}
-.ln-start:hover{transform:translateY(-2px);box-shadow:0 6px 30px rgba(201,168,76,.6)}
-.ln-credit{margin-top:2.5rem;font-size:.82rem;color:rgba(255,255,255,.45)}
+#landing{display:none;min-height:100vh;background:#F5F0EB;color:var(--t);text-align:center;overflow:hidden}
+#landing.show{display:flex;flex-direction:column;align-items:center;justify-content:flex-start;animation:fi .6s ease}
+.ln-art-wrap{width:100%;background:linear-gradient(180deg,#fff 0%,#F5F0EB 100%);display:flex;justify-content:center;padding:2rem 0 0}
+.ln-art-wrap img{width:min(300px,65vw)}
+.ln-wrap{max-width:700px;padding:1.5rem 1.5rem 2rem}
+.ln-title{font-family:'Assistant',sans-serif;font-size:2.4rem;font-weight:800;margin-bottom:.4rem;color:var(--p)}
+.ln-sub{font-size:1rem;color:var(--tl);font-weight:400;margin-bottom:1.5rem}
+.ln-desc{font-size:.95rem;line-height:2;color:var(--tl);margin-bottom:2rem;max-width:560px;margin-left:auto;margin-right:auto}
+.ln-features{display:flex;gap:1rem;justify-content:center;flex-wrap:wrap;margin-bottom:2rem}
+.ln-feat{background:#fff;border:1px solid var(--b);border-radius:12px;padding:1rem .8rem;width:130px;text-align:center;transition:transform .3s,box-shadow .3s}
+.ln-feat:hover{transform:translateY(-4px);box-shadow:0 6px 20px rgba(46,107,94,.12)}
+.lf-ic{width:40px;height:40px;border-radius:50%;background:rgba(46,107,94,.08);border:1px solid rgba(46,107,94,.15);display:flex;align-items:center;justify-content:center;margin:0 auto .6rem}
+.lf-ic svg{width:20px;height:20px;stroke:var(--p);fill:none;stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round}
+.ln-feat .lf-txt{font-size:.8rem;font-weight:500;color:var(--tl)}
+.ln-start{display:inline-flex;align-items:center;gap:.6rem;padding:.9rem 2.5rem;background:var(--p);color:#fff;font-family:'Assistant',sans-serif;font-size:1.1rem;font-weight:700;border:none;border-radius:50px;cursor:pointer;transition:all .3s;box-shadow:0 4px 20px rgba(46,107,94,.3)}
+.ln-start:hover{transform:translateY(-2px);background:var(--pl);box-shadow:0 6px 28px rgba(46,107,94,.4)}
+.ln-credit{margin-top:2rem;font-size:.82rem;color:var(--tl);opacity:.7}
 /* ===== CONSENT ===== */
 .consent-ov{position:fixed;inset:0;background:rgba(0,0,0,.55);z-index:10000;display:flex;align-items:center;justify-content:center;opacity:0;transition:opacity .4s;pointer-events:none}
 .consent-ov.show{opacity:1;pointer-events:auto}
@@ -213,13 +216,15 @@ h1,h2,h3,h4{font-family:'Assistant',sans-serif;font-weight:700}
 
 <!-- SPLASH -->
 <div id="splash">
+<img class="sp-art" src="splash-art.png" alt="מטפורות בהוראה">
 <div class="sp-title">תמונה שווה אלף מילים</div>
-<div class="sp-sub">מטפורות בהוראה — ניתוח ויזואלי</div>
+<div class="sp-sub">מטפורות בהוראה</div>
 <div class="sp-line"></div>
 <div class="sp-dots"><div class="sp-dot"></div><div class="sp-dot"></div><div class="sp-dot"></div></div>
 </div>
 <!-- LANDING -->
 <div id="landing">
+<div class="ln-art-wrap"><img src="splash-art.png" alt="מטפורות בהוראה"></div>
 <div class="ln-wrap">
 <div class="ln-title">תמונה שווה אלף מילים</div>
 <div class="ln-sub">ניתוח מטפורות בהוראה באמצעות בינה מלאכותית</div>
@@ -231,8 +236,8 @@ h1,h2,h3,h4{font-family:'Assistant',sans-serif;font-weight:700}
 <div class="ln-feat"><div class="lf-ic"><svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/></svg></div><div class="lf-txt">ייצוא וגיבוי</div></div>
 </div>
 <div class="fg" style="max-width:320px;margin:0 auto 1.5rem">
-<label style="color:var(--al);font-size:.9rem">שם התלמיד/ה:</label>
-<input type="text" id="landingName" placeholder="הקלידו את שמכם..." style="background:rgba(255,255,255,.1);border-color:rgba(255,255,255,.2);color:#fff;text-align:center" oninput="document.getElementById('studentName').value=this.value">
+<label style="color:var(--tl);font-size:.9rem">שם התלמיד/ה:</label>
+<input type="text" id="landingName" placeholder="הקלידו את שמכם..." style="text-align:center" oninput="document.getElementById('studentName').value=this.value">
 </div>
 <button class="ln-start" onclick="startApp()">🎨 התחילו את המסע ←</button>
 <div class="ln-credit">פותח עבור קורס מטפורות בהוראה — ד״ר נאוה כהן</div>
