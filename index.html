@@ -1,0 +1,983 @@
+<!DOCTYPE html><html lang="he" dir="rtl"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0"><title>תמונה שווה אלף מילים — מטפורות בהוראה</title><style>
+@import url('https://fonts.googleapis.com/css2?family=Assistant:wght@400;600;700;800&family=Heebo:wght@300;400;500;700&display=swap');
+:root{--p:#2e6b5e;--pl:#3d8b7a;--a:#c9a84c;--al:#f0dfa0;--bg:#f5f7f4;--c:#fff;--t:#2d332a;--tl:#6b7060;--b:#d5ddd0;--s:#4a8c6f;--e:#c45050;--r:12px}
+*{margin:0;padding:0;box-sizing:border-box}body{font-family:'Heebo',sans-serif;background:var(--bg);color:var(--t);line-height:1.7;min-height:100vh}
+h1,h2,h3,h4{font-family:'Assistant',sans-serif;font-weight:700}
+/* ===== SPLASH ===== */
+#splash{position:fixed;top:0;left:0;width:100%;height:100%;background:linear-gradient(135deg,#1a4a3e 0%,var(--p) 40%,#3d8b7a 100%);z-index:9999;display:flex;align-items:center;justify-content:center;flex-direction:column;transition:opacity .8s ease,visibility .8s ease}
+#splash.hide{opacity:0;visibility:hidden;pointer-events:none}
+#splash .sp-title{font-family:'Assistant',sans-serif;font-size:3.2rem;font-weight:800;color:#fff;margin-bottom:.5rem;opacity:0;animation:spFadeUp .8s .3s forwards}
+#splash .sp-sub{font-size:1.15rem;color:var(--al);font-weight:300;opacity:0;animation:spFadeUp .8s .6s forwards}
+#splash .sp-line{width:60px;height:3px;background:var(--a);border-radius:3px;margin:1.5rem 0;opacity:0;animation:spGrow .8s .9s forwards}
+#splash .sp-dots{display:flex;gap:.5rem;margin-top:1rem}
+#splash .sp-dot{width:8px;height:8px;background:rgba(255,255,255,.3);border-radius:50%;animation:spPulse 1.2s infinite}
+#splash .sp-dot:nth-child(2){animation-delay:.2s}#splash .sp-dot:nth-child(3){animation-delay:.4s}
+@keyframes spFadeUp{0%{opacity:0;transform:translateY(20px)}100%{opacity:1;transform:translateY(0)}}
+@keyframes spGrow{0%{opacity:0;width:0}100%{opacity:1;width:60px}}
+@keyframes spPulse{0%,100%{opacity:.3;transform:scale(1)}50%{opacity:1;transform:scale(1.3)}}
+/* ===== LANDING ===== */
+#landing{display:none;min-height:100vh;background:linear-gradient(180deg,#1a4a3e 0%,var(--p) 50%,#3d8b7a 100%);color:#fff;text-align:center;overflow:hidden}
+#landing.show{display:flex;flex-direction:column;align-items:center;justify-content:center;animation:fi .6s ease}
+.ln-wrap{max-width:700px;padding:2rem 1.5rem}
+.ln-title{font-family:'Assistant',sans-serif;font-size:2.8rem;font-weight:800;margin-bottom:.6rem;background:linear-gradient(135deg,#fff 0%,var(--al) 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.ln-sub{font-size:1.1rem;color:var(--al);font-weight:300;margin-bottom:2rem}
+.ln-desc{font-size:1rem;line-height:2;color:rgba(255,255,255,.85);margin-bottom:2.5rem;max-width:560px;margin-left:auto;margin-right:auto}
+.ln-features{display:flex;gap:1.5rem;justify-content:center;flex-wrap:wrap;margin-bottom:2.5rem}
+.ln-feat{background:rgba(255,255,255,.08);backdrop-filter:blur(10px);border:1px solid rgba(255,255,255,.12);border-radius:12px;padding:1.2rem 1rem;width:140px;text-align:center;transition:transform .3s,background .3s}
+.ln-feat:hover{transform:translateY(-4px);background:rgba(255,255,255,.14)}
+.lf-ic{width:44px;height:44px;border-radius:50%;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.2);display:flex;align-items:center;justify-content:center;margin:0 auto .6rem}
+.lf-ic svg{width:22px;height:22px;stroke:var(--al);fill:none;stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round}
+.ln-feat .lf-txt{font-size:.82rem;font-weight:400;color:rgba(255,255,255,.8)}
+.ln-start{display:inline-flex;align-items:center;gap:.6rem;padding:1rem 3rem;background:linear-gradient(135deg,var(--a),#e0c96a);color:#2d332a;font-family:'Assistant',sans-serif;font-size:1.2rem;font-weight:700;border:none;border-radius:50px;cursor:pointer;transition:all .3s;box-shadow:0 4px 25px rgba(201,168,76,.4)}
+.ln-start:hover{transform:translateY(-2px);box-shadow:0 6px 30px rgba(201,168,76,.6)}
+.ln-credit{margin-top:2.5rem;font-size:.82rem;color:rgba(255,255,255,.45)}
+/* ===== CONSENT ===== */
+.consent-ov{position:fixed;inset:0;background:rgba(0,0,0,.55);z-index:10000;display:flex;align-items:center;justify-content:center;opacity:0;transition:opacity .4s;pointer-events:none}
+.consent-ov.show{opacity:1;pointer-events:auto}
+.consent-box{background:#fff;border-radius:14px;max-width:540px;width:92%;padding:2rem;box-shadow:0 20px 60px rgba(0,0,0,.3);transform:scale(.92);transition:transform .35s}
+.consent-ov.show .consent-box{transform:scale(1)}
+.consent-box h3{font-family:'Assistant',sans-serif;color:var(--p);font-size:1.3rem;margin-bottom:.5rem;text-align:center}
+.consent-box .cb-sub{text-align:center;font-size:.88rem;color:var(--a);margin-bottom:1rem}
+.consent-box p{font-size:.9rem;color:var(--t);line-height:1.7;margin-bottom:.5rem}
+.consent-box .cb-list{margin:.5rem 0 1rem;font-size:.86rem;color:var(--tl);line-height:1.9}
+.consent-box .cb-list div{padding:.15rem 0}.consent-box .cb-list div::before{content:"• ";color:var(--a);font-weight:700}
+.consent-lbl{display:flex;align-items:flex-start;gap:.6rem;margin:1rem 0;font-size:.88rem;line-height:1.6;cursor:pointer;background:var(--bg);padding:.8rem;border-radius:8px;border:1px solid var(--b)}
+.consent-lbl input{margin-top:.25rem;min-width:18px;min-height:18px;accent-color:var(--p)}
+.consent-btn{display:block;margin:1rem auto 0;background:var(--p);color:#fff;border:none;padding:.7rem 2.2rem;border-radius:8px;font-size:1rem;font-family:'Assistant',sans-serif;font-weight:700;cursor:pointer;opacity:.4;pointer-events:none;transition:opacity .3s,transform .15s}
+.consent-btn.enabled{opacity:1;pointer-events:auto}.consent-btn.enabled:hover{transform:scale(1.03)}
+.consent-box .cb-note{text-align:center;font-size:.78rem;color:var(--tl);margin-top:.8rem}
+/* ===== INTRO UNIT ===== */
+.intro-unit{display:none;max-width:860px;margin:0 auto;padding:2rem 1rem 4rem}
+.intro-unit.show{display:block;animation:fi .5s ease}
+.iu-ch{background:var(--c);border-radius:var(--r);padding:2rem;margin-bottom:1.5rem;box-shadow:0 2px 12px rgba(46,107,94,.08);border:1px solid var(--b)}
+.iu-ch h2{color:var(--p);font-size:1.3rem;margin-bottom:.8rem;display:flex;align-items:center;gap:.5rem}
+.iu-ch h3{color:var(--pl);font-size:1.05rem;margin:1rem 0 .5rem}
+.iu-ch p{font-size:.95rem;line-height:1.8;margin-bottom:.8rem}
+.iu-ch ul{margin:.5rem 0 1rem 1.5rem;font-size:.92rem;line-height:2}
+.iu-ch table{width:100%;border-collapse:collapse;margin:1rem 0;font-size:.88rem}
+.iu-ch th{background:var(--p);color:#fff;padding:.6rem .8rem;text-align:right;font-weight:600}
+.iu-ch td{padding:.5rem .8rem;border-bottom:1px solid var(--b);vertical-align:top}
+.iu-ch tr:nth-child(even) td{background:rgba(46,107,94,.03)}
+.iu-nav{display:flex;justify-content:center;gap:1rem;margin:2rem 0}
+.iu-nav .btn{padding:.7rem 2rem;border:none;border-radius:8px;font-family:'Heebo',sans-serif;font-size:.95rem;font-weight:500;cursor:pointer;transition:all .2s}
+.iu-bib{font-size:.85rem;line-height:2;color:var(--tl)}
+.iu-bib p{margin-bottom:.3rem;padding-right:1.5rem;text-indent:-1.5rem}
+.think-box{background:rgba(201,168,76,.08);border:1px solid rgba(201,168,76,.3);border-radius:8px;padding:1rem;margin:1rem 0}
+.think-box summary{cursor:pointer;font-weight:600;color:var(--p);font-size:.92rem}
+.think-box .answer{margin-top:.5rem;font-size:.9rem;color:var(--tl);line-height:1.7}
+/* ===== APP WRAPPER ===== */
+#appWrap{display:none}#appWrap.show{display:block}
+.hdr{background:linear-gradient(135deg,#1a4a3e,var(--p),#3d8b7a);color:#fff;padding:2rem 1rem 1.8rem;text-align:center;position:relative;overflow:hidden;border-bottom:3px solid rgba(201,168,76,.3)}
+.hdr::before{content:'';position:absolute;top:-50%;right:-20%;width:300px;height:300px;background:radial-gradient(circle,rgba(201,168,76,.12) 0%,transparent 70%);border-radius:50%}
+.hdr::after{content:'';position:absolute;bottom:-40%;left:-15%;width:250px;height:250px;background:radial-gradient(circle,rgba(74,140,111,.1) 0%,transparent 70%);border-radius:50%}
+.hdr h1{font-size:2rem;font-weight:800;margin-bottom:.2rem;position:relative;z-index:1}.hdr .sub{font-size:1rem;font-weight:300;color:var(--al);position:relative;z-index:1}
+.hdr .hdr-line{width:80px;height:2px;background:linear-gradient(90deg,transparent,rgba(201,168,76,.4),var(--al),rgba(74,140,111,.4),transparent);margin:.8rem auto 0;position:relative;z-index:1}
+.sbar{background:var(--c);border-bottom:1px solid var(--b);padding:1rem 1.5rem;display:flex;gap:1.5rem;align-items:center;flex-wrap:wrap;justify-content:center;box-shadow:0 2px 12px rgba(46,107,94,.08)}
+.sbar label{font-size:.88rem;font-weight:500;color:var(--tl)}.sbar input,.sbar select{padding:.45rem .75rem;border:1px solid var(--b);border-radius:8px;font-family:'Heebo',sans-serif;font-size:.92rem;background:var(--bg);margin-right:.4rem}
+.pcon{background:var(--c);padding:1rem 1.5rem;border-bottom:1px solid var(--b);position:sticky;top:0;z-index:100;box-shadow:0 2px 8px rgba(0,0,0,.06)}
+.snav{display:flex;justify-content:center;gap:.3rem;flex-wrap:wrap;max-width:950px;margin:0 auto}
+.sbtn{display:flex;align-items:center;gap:.35rem;padding:.4rem .7rem;border:2px solid #c8cfc5;border-radius:25px;background:0 0;color:#c8cfc5;font-family:'Heebo',sans-serif;font-size:.78rem;font-weight:500;cursor:pointer;transition:all .3s;white-space:nowrap}
+.sbtn:hover{border-color:var(--s);color:var(--s)}
+.sbtn.act{background:var(--s);border-color:var(--s);color:#fff}
+.sbtn.done{background:var(--s);border-color:var(--s);color:#fff;opacity:.85}
+.nav-btn{display:flex;align-items:center;justify-content:center;width:32px;height:32px;border:2px solid #c8cfc5;border-radius:50%;background:0 0;color:#c8cfc5;font-family:'Heebo',sans-serif;font-size:.82rem;font-weight:600;cursor:pointer;transition:all .3s}
+.nav-btn:hover{border-color:var(--s);color:var(--s)}
+.nav-btn.active{background:var(--s);border-color:var(--s);color:#fff}
+.nav-btn.done{background:var(--pl);border-color:var(--pl);color:#fff;opacity:.85}
+.sn{width:22px;height:22px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:.72rem;font-weight:700;background:rgba(255,255,255,.2)}
+.opr{max-width:950px;margin:.6rem auto 0;display:flex;align-items:center;gap:.8rem;font-size:.82rem;color:var(--tl)}
+.pbg{flex:1;height:6px;background:var(--b);border-radius:3px;overflow:hidden}.pfl{height:100%;background:linear-gradient(90deg,var(--a),var(--s));border-radius:3px;transition:width .5s;width:0}
+/* ===== CONTENT SECTIONS ===== */
+.mc{max-width:860px;margin:0 auto;padding:1.5rem 1rem 4rem}
+.ss{display:none;animation:fi .4s ease}.ss.active{display:block}@keyframes fi{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:translateY(0)}}
+.sc{background:var(--c);border-radius:var(--r);padding:2rem;margin-bottom:1.5rem;box-shadow:0 2px 12px rgba(46,107,94,.08);border:1px solid var(--b);position:relative;overflow:hidden}
+.sc::before{content:'';position:absolute;top:0;right:0;width:100px;height:100px;background:radial-gradient(circle,rgba(201,168,76,.06) 0%,transparent 70%);border-radius:50%}
+.st2{font-size:1.3rem;color:var(--p);margin-bottom:.3rem;display:flex;align-items:center;gap:.5rem;position:relative;z-index:1}
+.sd{color:var(--tl);font-size:.92rem;margin-bottom:1.5rem;border-bottom:1px solid var(--b);padding-bottom:1rem}
+.fg{margin-bottom:1.3rem}.fg label{display:block;font-weight:500;font-size:.92rem;margin-bottom:.35rem;color:var(--t)}
+.fg .hn{font-size:.82rem;color:var(--tl);margin-bottom:.35rem}
+.fg textarea,.fg input[type="text"]{width:100%;padding:.7rem 1rem;border:1px solid var(--b);border-radius:8px;font-family:'Heebo',sans-serif;font-size:.95rem;background:var(--bg);transition:border-color .2s,box-shadow .2s;line-height:1.6;resize:vertical}
+.fg textarea{min-height:90px}
+.fg textarea:focus,.fg input:focus{outline:0;border-color:var(--pl);box-shadow:0 0 0 3px rgba(46,107,94,.1)}
+/* Mapping table */
+.map-tbl{width:100%;border-collapse:collapse;margin:1rem 0;font-size:.88rem}
+.map-tbl th{background:var(--p);color:#fff;padding:.6rem .8rem;text-align:right;font-weight:600}
+.map-tbl td{padding:.5rem .4rem;border-bottom:1px solid var(--b);vertical-align:top}
+.map-tbl input{width:100%;padding:.4rem .6rem;border:1px solid var(--b);border-radius:6px;font-family:'Heebo',sans-serif;font-size:.88rem;background:var(--bg)}
+.map-tbl .del-row{background:none;border:none;color:var(--e);cursor:pointer;font-size:1.1rem;padding:.2rem .4rem}
+.map-btns{display:flex;gap:.5rem;margin-top:.5rem}
+.map-btns button{padding:.3rem .8rem;border:1px solid var(--b);border-radius:6px;background:var(--bg);font-family:'Heebo',sans-serif;font-size:.82rem;cursor:pointer;transition:all .2s}
+.map-btns button:hover{background:var(--p);color:#fff;border-color:var(--p)}
+/* ===== RADIO OPTIONS ===== */
+.rad-group{display:flex;flex-wrap:wrap;gap:.5rem;margin:.5rem 0}
+.rad-group label{display:flex;align-items:center;gap:.4rem;padding:.4rem .8rem;border:1px solid var(--b);border-radius:20px;font-size:.85rem;cursor:pointer;transition:all .2s;background:var(--bg)}
+.rad-group label:hover{border-color:var(--p);background:rgba(46,107,94,.05)}
+.rad-group input[type="radio"]{accent-color:var(--p)}
+.rad-group input[type="radio"]:checked+span{color:var(--p);font-weight:600}
+/* Prompt preview */
+.prompt-prev{background:linear-gradient(135deg,rgba(46,107,94,.04),rgba(201,168,76,.04));border:1px dashed var(--a);border-radius:8px;padding:1rem;margin:1rem 0;font-size:.9rem;line-height:1.7;min-height:60px;color:var(--t);white-space:pre-wrap;direction:ltr;text-align:left}
+.copy-btn{display:inline-flex;align-items:center;gap:.4rem;padding:.4rem 1rem;background:var(--p);color:#fff;border:none;border-radius:6px;font-family:'Heebo',sans-serif;font-size:.85rem;cursor:pointer;transition:all .2s}
+.copy-btn:hover{background:var(--pl)}
+/* Upload zones */
+.up-zone{border:2px dashed var(--b);border-radius:var(--r);padding:2rem;text-align:center;margin:1rem 0;transition:all .3s;cursor:pointer;background:rgba(46,107,94,.02)}
+.up-zone:hover{border-color:var(--a);background:rgba(201,168,76,.04)}
+.up-zone.has-file{border-color:var(--s);border-style:solid;background:rgba(74,140,111,.04)}
+.up-zone .up-icon{font-size:2.5rem;margin-bottom:.5rem}
+.up-zone .up-txt{font-size:.9rem;color:var(--tl)}
+.up-zone .up-name{font-size:.85rem;color:var(--s);font-weight:600;margin-top:.3rem}
+.up-zone img{max-width:100%;max-height:300px;border-radius:8px;margin-top:.5rem}
+/* Article upload */
+.art-zone{border:2px dashed var(--b);border-radius:var(--r);padding:1.5rem;text-align:center;margin:1rem 0;transition:all .3s;cursor:pointer;background:rgba(46,107,94,.02)}
+.art-zone:hover{border-color:var(--a)}
+.art-list{margin-top:.8rem;text-align:right}
+.art-item{display:flex;align-items:center;gap:.5rem;padding:.4rem .6rem;background:var(--bg);border-radius:6px;margin-bottom:.3rem;font-size:.85rem}
+.art-item .art-del{background:none;border:none;color:var(--e);cursor:pointer;font-size:.9rem}
+/* ===== EXPANDABLE PANELS ===== */
+.exp-panel{background:var(--bg);border:1px solid var(--b);border-radius:var(--r);margin:1rem 0;overflow:hidden}
+.exp-panel summary{padding:1rem;cursor:pointer;font-weight:600;font-size:.92rem;color:var(--p);display:flex;align-items:center;gap:.5rem;list-style:none}
+.exp-panel summary::-webkit-details-marker{display:none}
+.exp-panel summary::before{content:'◀';font-size:.7rem;transition:transform .3s;display:inline-block}
+.exp-panel[open] summary::before{transform:rotate(-90deg)}
+.exp-panel .exp-body{padding:0 1rem 1rem}
+/* Tips panel */
+.tips-tbl{width:100%;border-collapse:collapse;font-size:.82rem;margin:.5rem 0}
+.tips-tbl th{background:rgba(46,107,94,.08);padding:.4rem .6rem;text-align:right;font-weight:600;color:var(--p)}
+.tips-tbl td{padding:.4rem .6rem;border-bottom:1px solid var(--b)}
+/* Reading list */
+.rl-cat{font-weight:600;color:var(--p);font-size:.9rem;margin:1rem 0 .3rem;padding-bottom:.2rem;border-bottom:1px solid var(--b)}
+.rl-item{padding:.5rem .8rem;margin-bottom:.4rem;background:rgba(46,107,94,.03);border-radius:8px;font-size:.85rem;line-height:1.6}
+.rl-item a{color:var(--a);text-decoration:none;font-size:.82rem}
+.rl-item a:hover{text-decoration:underline}
+/* Buttons */
+.btn{padding:.7rem 2rem;border:none;border-radius:8px;font-family:'Heebo',sans-serif;font-size:.95rem;font-weight:500;cursor:pointer;transition:all .2s;display:inline-flex;align-items:center;gap:.4rem}
+.bp{background:var(--p);color:#fff}.bp:hover{background:var(--pl)}
+.bs-btn{background:0 0;color:var(--p);border:1px solid var(--p)}.bs-btn:hover{background:var(--p);color:#fff}
+.baa{background:linear-gradient(135deg,var(--a),#e0c96a);color:#2d332a;font-weight:600;box-shadow:0 2px 10px rgba(201,168,76,.3)}.baa:hover{box-shadow:0 4px 16px rgba(201,168,76,.5)}
+.eb{display:flex;gap:.8rem;flex-wrap:wrap;margin-top:1.5rem}
+/* ===== NOTEBOOK ===== */
+.nb-fab{position:fixed;bottom:2rem;right:2rem;width:56px;height:56px;background:linear-gradient(135deg,var(--p),var(--pl));color:#fff;border:none;border-radius:50%;cursor:pointer;box-shadow:0 4px 20px rgba(46,107,94,.3);z-index:500;transition:all .3s;display:none;align-items:center;justify-content:center}
+.nb-fab:hover{transform:scale(1.1)}.nb-fab.has-notes{animation:nbPulse 2s infinite}
+.nb-badge{position:absolute;top:-4px;right:-4px;width:22px;height:22px;background:var(--e);color:#fff;border-radius:50%;font-size:.7rem;font-weight:700;display:none;align-items:center;justify-content:center}
+@keyframes nbPulse{0%,100%{box-shadow:0 4px 20px rgba(46,107,94,.3)}50%{box-shadow:0 4px 20px rgba(46,107,94,.3),0 0 0 8px rgba(46,107,94,.1)}}
+.nb-ov{position:fixed;inset:0;background:rgba(0,0,0,.3);z-index:550;opacity:0;pointer-events:none;transition:opacity .3s}
+.nb-ov.show{opacity:1;pointer-events:auto}
+.nb-panel{position:fixed;top:0;left:-420px;width:400px;height:100%;background:var(--c);z-index:600;box-shadow:4px 0 30px rgba(0,0,0,.15);transition:left .4s ease;display:flex;flex-direction:column}
+.nb-panel.open{left:0}
+.nb-hdr{background:linear-gradient(135deg,var(--p),var(--pl));color:#fff;padding:1rem 1.2rem;display:flex;align-items:center;justify-content:space-between}
+.nb-hdr h3{font-size:1.05rem;display:flex;align-items:center;gap:.5rem}
+.nb-close{background:none;border:none;color:#fff;font-size:1.5rem;cursor:pointer;padding:.2rem .5rem;opacity:.7}.nb-close:hover{opacity:1}
+.nb-tabs{display:flex;flex-wrap:wrap;gap:.3rem;padding:.8rem;background:var(--bg);border-bottom:1px solid var(--b)}
+.nb-tab{padding:.25rem .6rem;border-radius:15px;font-size:.75rem;cursor:pointer;background:var(--c);border:1px solid var(--b);transition:all .2s;white-space:nowrap}
+.nb-tab.active{background:var(--p);color:#fff;border-color:var(--p)}
+.nb-content{flex:1;overflow-y:auto;padding:1rem}
+.nb-entry{margin-bottom:.8rem;background:var(--bg);border-radius:8px;padding:.6rem;border-right:3px solid var(--a)}
+.nb-meta{display:flex;justify-content:space-between;font-size:.75rem;color:var(--tl);margin-bottom:.3rem}
+.nb-entry textarea{width:100%;border:none;background:transparent;font-family:'Heebo',sans-serif;font-size:.88rem;resize:vertical;min-height:40px;line-height:1.6}
+.nb-add{display:flex;gap:.5rem;padding:.8rem;border-top:1px solid var(--b);background:var(--bg)}
+.nb-add input{flex:1;padding:.5rem .8rem;border:1px solid var(--b);border-radius:8px;font-family:'Heebo',sans-serif;font-size:.88rem}
+.nb-add button{padding:.5rem 1rem;background:var(--p);color:#fff;border:none;border-radius:8px;font-family:'Heebo',sans-serif;cursor:pointer}
+/* ===== TOAST + SUMMARY + RESPONSIVE ===== */
+.toast{position:fixed;bottom:2rem;left:50%;transform:translateX(-50%) translateY(100px);background:var(--p);color:#fff;padding:.8rem 1.5rem;border-radius:10px;font-size:.9rem;z-index:1000;transition:transform .3s;box-shadow:0 4px 20px rgba(0,0,0,.2)}
+.toast.show{transform:translateX(-50%) translateY(0)}
+.sum-block{background:var(--bg);border:1px solid var(--b);border-radius:8px;padding:1.2rem;margin-bottom:1rem}
+.sum-block h4{color:var(--p);font-size:1rem;margin-bottom:.5rem;border-bottom:1px solid var(--b);padding-bottom:.3rem}
+.sum-block .fl{margin-bottom:.4rem;font-size:.9rem}.sum-block .fl strong{color:var(--p)}
+.home-btn{position:fixed;top:1rem;left:1rem;z-index:200;background:var(--c);border:1px solid var(--b);border-radius:8px;padding:.4rem .8rem;font-size:.8rem;cursor:pointer;display:none;align-items:center;gap:.3rem;font-family:'Heebo',sans-serif;color:var(--p);box-shadow:0 2px 8px rgba(0,0,0,.1)}
+.home-btn:hover{background:var(--p);color:#fff}
+@media(max-width:600px){
+.ln-title{font-size:2rem}.ln-features{gap:.8rem}.ln-feat{width:120px;padding:.8rem .6rem}
+.hdr h1{font-size:1.5rem}.sbtn{font-size:.7rem;padding:.3rem .5rem}
+.sc{padding:1.2rem}.mc{padding:1rem .6rem 3rem}
+.nb-panel{width:100%;left:-100%}.nb-panel.open{left:0}
+.map-tbl{font-size:.78rem}.map-tbl input{font-size:.78rem;padding:.3rem}
+}
+@media print{.pcon,.nb-fab,.nb-ov,.nb-panel,.toast,.home-btn{display:none!important}.hdr{padding:1rem;-webkit-print-color-adjust:exact;print-color-adjust:exact}}
+</style></head><body>
+<!-- CONSENT -->
+<div class="consent-ov" id="consentOv">
+<div class="consent-box">
+<h3>ברוכים הבאים!</h3>
+<div class="cb-sub">תמונה שווה אלף מילים — מטפורות בהוראה</div>
+<p>אפליקציה זו מלווה תהליך ניתוח מטפורות בהוראה באמצעות יצירת תמונות בכלי בינה מלאכותית. התהליך כולל 7 שלבים קבועים שחוזרים על עצמם בכל פעם שבוחרים מטפורה חדשה.</p>
+<div class="cb-list">
+<div>בחירת מטפורה מתוך נושאי ההוראה</div>
+<div>ניתוח תחום מקור, תחום יעד ומיפויים</div>
+<div>בניית פרומפט ויצירת תמונה באמצעות AI</div>
+<div>פרשנות, רפלקציה וסיכום אישי</div>
+</div>
+<label class="consent-lbl"><input type="checkbox" id="consentCb" onchange="document.getElementById('consentBtn').classList.toggle('enabled',this.checked)"><span>אני מסכים/ה שהנתונים יישמרו באופן מקומי בדפדפן שלי לצורך שמירת ההתקדמות. לא נשלח מידע לשום שרת חיצוני.</span></label>
+<button class="consent-btn" id="consentBtn" onclick="acceptConsent()">אישור והתחלה</button>
+<div class="cb-note">ניתן למחוק את הנתונים בכל עת דרך הגדרות הדפדפן</div>
+</div>
+</div>
+
+<!-- SPLASH -->
+<div id="splash">
+<div class="sp-title">תמונה שווה אלף מילים</div>
+<div class="sp-sub">מטפורות בהוראה — ניתוח ויזואלי</div>
+<div class="sp-line"></div>
+<div class="sp-dots"><div class="sp-dot"></div><div class="sp-dot"></div><div class="sp-dot"></div></div>
+</div>
+<!-- LANDING -->
+<div id="landing">
+<div class="ln-wrap">
+<div class="ln-title">תמונה שווה אלף מילים</div>
+<div class="ln-sub">ניתוח מטפורות בהוראה באמצעות בינה מלאכותית</div>
+<div class="ln-desc">בכל פעם תבחרו מטפורה אחת מעולם ההוראה — מטפורת המורה, התלמיד, תהליך הלמידה, השכל או הזהות המקצועית — ותעברו תהליך ניתוח אחדותי בן 7 שלבים: מזיהוי המטפורה, דרך בניית פרומפט ויצירת תמונה, ועד רפלקציה וסיכום.</div>
+<div class="ln-features">
+<div class="ln-feat"><div class="lf-ic"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4M12 8h.01"/></svg></div><div class="lf-txt">7 שלבי ניתוח</div></div>
+<div class="ln-feat"><div class="lf-ic"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg></div><div class="lf-txt">יצירת תמונות AI</div></div>
+<div class="ln-feat"><div class="lf-ic"><svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/></svg></div><div class="lf-txt">5 נושאי הוראה</div></div>
+<div class="ln-feat"><div class="lf-ic"><svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/></svg></div><div class="lf-txt">ייצוא וגיבוי</div></div>
+</div>
+<div class="fg" style="max-width:320px;margin:0 auto 1.5rem">
+<label style="color:var(--al);font-size:.9rem">שם התלמיד/ה:</label>
+<input type="text" id="landingName" placeholder="הקלידו את שמכם..." style="background:rgba(255,255,255,.1);border-color:rgba(255,255,255,.2);color:#fff;text-align:center" oninput="document.getElementById('studentName').value=this.value">
+</div>
+<button class="ln-start" onclick="startApp()">🎨 התחילו את המסע ←</button>
+<div class="ln-credit">פותח עבור קורס מטפורות בהוראה — ד״ר נאוה כהן</div>
+</div>
+</div>
+<!-- INTRO UNIT -->
+<div class="intro-unit" id="introUnit">
+<div class="iu-ch">
+<h2>📖 פרק 1: מהי מטפורה?</h2>
+<p>מטפורה היא תופעה שבה אנו מבינים תחום מושגי אחד (תחום היעד) באמצעות תחום מושגי אחר (תחום המקור). למשל, כאשר אומרים "המורה הוא גנן", אנו מבינים את ההוראה (תחום היעד) דרך עולם הגננות (תחום המקור).</p>
+<p>המטפורה אינה רק כלי רטורי — היא מבנה מחשבתי עמוק שמעצב את הדרך שבה אנו תופסים, חושבים ופועלים. בהקשר של הוראה, המטפורות שבהן מורים משתמשים מכתיבות את ההתנהגות שלהם בכיתה, את יחסם לתלמידים ואת תפיסתם את תהליך הלמידה.</p>
+</div>
+<div class="iu-ch">
+<h2>📖 פרק 2: תיאוריית המטפורה המושגית</h2>
+<p>בשנת 1980 חוללו ג'ורג' לייקוף ומארק ג'ונסון מהפכה בהבנת המטפורה בספרם "מטפורות שאנו חיים בהן" (Metaphors We Live By). הם טענו שמטפורות אינן רק כלי שפתי — אלא מבני חשיבה בסיסיים (Conceptual Metaphor Theory — CMT).</p>
+<h3>מרכיבי המטפורה המושגית</h3>
+<ul>
+<li><strong>תחום מקור (Source Domain):</strong> התחום המוכר — למשל: גן, מסע, בנייה, מכונה</li>
+<li><strong>תחום יעד (Target Domain):</strong> התחום המופשט שאותו מנסים להבין — למשל: הוראה, למידה, שכל</li>
+<li><strong>מיפויים (Mappings):</strong> ההתאמות בין מרכיבי תחום המקור לתחום היעד</li>
+</ul>
+<p>לדוגמה, במטפורה "הוראה היא גננות": הגנן ↔ המורה, הצמחים ↔ התלמידים, ההשקיה ↔ ההזנה האינטלקטואלית, הפריחה ↔ הלמידה המוצלחת.</p>
+</div>
+<div class="iu-ch">
+<h2>📖 פרק 3: מטפורות בהוראה — סקירת מחקר</h2>
+<p>מחקרים רבים בחנו את המטפורות שמורים משתמשים בהן לתיאור תפקידם. המחקרים מראים שש קטגוריות עיקריות של מטפורות למורה:</p>
+<ul>
+<li><strong>ספק ידע:</strong> המורה כמעיין, כספר פתוח, ככלי קיבול</li>
+<li><strong>בעל מלאכה:</strong> המורה כפסלן, כאדריכל, כאומן</li>
+<li><strong>מנחה:</strong> המורה כמלווה, כמורה דרך, כפנס</li>
+<li><strong>מטפח:</strong> המורה כגנן, כהורה, כרועה</li>
+<li><strong>יועץ:</strong> המורה כמראה, כרופא, כמאזין</li>
+<li><strong>מנהיג:</strong> המורה כקפטן, כמנצח, כמצביא</li>
+</ul>
+<p>אנה ספארד (Sfard, 1998) הציגה שתי מטפורות יסוד של למידה: <strong>מטפורת הרכישה</strong> (למידה כצבירת ידע) ו<strong>מטפורת ההשתתפות</strong> (למידה כהשתלבות בקהילה). היא טענה שכל מטפורה חושפת ומסתירה היבטים שונים של הלמידה.</p>
+</div>
+<div class="iu-ch">
+<h2>📖 פרק 4: מטפורות ויזואליות וכוחן הפדגוגי</h2>
+<p>מחקר של אוניברסיטת BYU (2020) הראה שמטפורות ויזואליות מעצימות למידה. תהליך תרגום מטפורה לתמונה — ואף יותר לאנימציה — דורש הבנה עמוקה של תחום המקור ותחום היעד.</p>
+<p>התהליך שנעבור באפליקציה זו מבוסס על הרעיון ש<strong>יצירת תמונה מתוך מטפורה</strong> היא פעולה קוגניטיבית עשירה: היא מחייבת לזהות את המיפויים, לבחור פרטים חזותיים שמייצגים אותם, ולקבל החלטות על מה להדגיש ומה להשמיט.</p>
+<h3>למה "תמונה שווה אלף מילים"?</h3>
+<p>כי התהליך של הפיכת מטפורה מילולית לתמונה חזותית מחייב אתכם "לפרוט" את המטפורה לרכיביה, לחשוב על כל מיפוי בנפרד, ולהחליט כיצד לייצג אותו ויזואלית. התוצאה — תמונה שמגלמת הבנה עמוקה של המטפורה.</p>
+</div>
+<div class="iu-ch">
+<h2>📖 פרק 5: טבלת השוואה — גישות לניתוח מטפורות</h2>
+<table>
+<tr><th>גישה</th><th>חוקר מרכזי</th><th>עיקרון מנחה</th><th>יישום בהוראה</th></tr>
+<tr><td>מטפורה מושגית (CMT)</td><td>Lakoff & Johnson</td><td>מטפורות הן מבני חשיבה</td><td>זיהוי מטפורות סמויות בשיח חינוכי</td></tr>
+<tr><td>מטפורה מכוונת</td><td>Steen</td><td>מטפורות יכולות להיות מודעות ומכוונות</td><td>בחירה מודעת של מטפורות בהוראה</td></tr>
+<tr><td>שתי מטפורות של למידה</td><td>Sfard</td><td>רכישה מול השתתפות</td><td>איזון בין גישות הוראה מגוונות</td></tr>
+<tr><td>מטפורות ויזואליות</td><td>BYU Research</td><td>תמונה מחדדת הבנה מושגית</td><td>הדמיית מטפורות בכלי AI</td></tr>
+<tr><td>זהות מקצועית</td><td>Bullough, Stokes</td><td>מטפורות מעצבות זהות</td><td>בחינה רפלקטיבית של מטפורות אישיות</td></tr>
+</table>
+</div>
+<div class="iu-ch">
+<h2>📖 פרק 6: עקרונות מעשיים — כן ולא</h2>
+<p><strong>✅ כן:</strong></p>
+<ul>
+<li>זהו את המטפורה הסמויה בשפה שלכם — "אני מזין את התלמידים" = מטפורת ההאכלה</li>
+<li>בחנו מה המטפורה חושפת ומה היא מסתירה</li>
+<li>נסו לחשוב על מטפורה חלופית — האם היא משנה את הפרקטיקה?</li>
+<li>השתמשו בויזואליזציה לחידוד ההבנה</li>
+</ul>
+<p><strong>❌ לא:</strong></p>
+<ul>
+<li>אל תתייחסו למטפורה כ"רק ביטוי" — היא מעצבת פעולה</li>
+<li>אל תישארו נאמנים למטפורה אחת בלבד — כל מטפורה מסתירה משהו</li>
+<li>אל תתעלמו ממטפורות שליליות — גם הן מעצבות</li>
+</ul>
+<details class="think-box"><summary>🤔 חשבו: מהי המטפורה שאתם משתמשים בה ביותר לתיאור ההוראה שלכם?</summary><div class="answer">אין תשובה אחת נכונה — המטרה היא מודעות. נסו לשים לב לשפה שלכם בימים הקרובים: האם אתם "מזינים" תלמידים? "בונים" ידע? "מובילים" כיתה? כל פועל מטפורי מגלה תפיסת עולם.</div></details>
+</div>
+<div class="iu-ch">
+<h2>📖 פרק 7: סיכום ומעבר לעבודה</h2>
+<p>באפליקציה זו תעברו תהליך ניתוח אחדותי בן 7 שלבים. בכל פעם תבחרו מטפורה אחרת מעולם ההוראה — אך מבנה העבודה יישאר זהה. כך תוכלו להעמיק בניתוח מטפורות מגוונות תוך שימוש בשיטה מוכרת ומסודרת.</p>
+<p><strong>7 השלבים:</strong></p>
+<ul>
+<li><strong>שלב 1 — בחירת מטפורה:</strong> בחרו נושא וזהו מטפורה ספציפית</li>
+<li><strong>שלב 2 — חשיפת המטפורה:</strong> נתחו תחום מקור, תחום יעד ומיפויים</li>
+<li><strong>שלב 3 — בניית פרומפט:</strong> תרגמו את הניתוח להנחיה לכלי AI</li>
+<li><strong>שלב 4 — תמונה ראשונית:</strong> צרו והעלו את התמונה</li>
+<li><strong>שלב 5 — פרשנות:</strong> קבלו משוב וצרו תמונה מתוקנת</li>
+<li><strong>שלב 6 — רפלקציה:</strong> חשבו על התהליך ועל מה שלמדתם</li>
+<li><strong>שלב 7 — סיכום:</strong> צפו בסיכום וייצאו את העבודה</li>
+</ul>
+</div>
+<div class="iu-ch">
+<h2>📚 ביבליוגרפיה</h2>
+<div class="iu-bib">
+<p>Lakoff, G., & Johnson, M. (1980). <em>Metaphors We Live By</em>. University of Chicago Press.</p>
+<p>Sfard, A. (1998). On two metaphors for learning and the dangers of choosing just one. <em>Educational Researcher</em>, 27(2), 4–13.</p>
+<p>Thibodeau, P. H., & Boroditsky, L. (2011). Metaphors we think by. <em>PLoS ONE</em>, 6(2), e16782.</p>
+<p>The Pedagogical Power of Metaphor. (2020). <em>Locutorium</em>, Brigham Young University.</p>
+<p>Teaching Metaphors: Supporting Professional Growth. (2021). <em>ResearchGate</em>.</p>
+</div>
+</div>
+<div class="iu-nav">
+<button class="btn bs-btn" onclick="backToLanding()">→ חזרה</button>
+<button class="btn bp" onclick="enterAppFromIntro()">← התחילו לעבוד</button>
+</div>
+</div>
+<!-- HOME BUTTON -->
+<button class="home-btn" id="homeBtn" onclick="backToLandingFromApp()">🏠 חזרה לדף הבית</button>
+
+<!-- MAIN APP -->
+<div id="appWrap">
+<div class="hdr">
+<h1>תמונה שווה אלף מילים</h1>
+<div class="sub">ניתוח מטפורות בהוראה באמצעות בינה מלאכותית</div>
+<div class="hdr-line"></div>
+</div>
+<div class="sbar">
+<label>שם: <input type="text" id="studentName" placeholder="שמכם..." onchange="saveL()"></label>
+<label>נושא:
+<select id="topicSelect" onchange="showTopicArticles()">
+<option value="">— בחרו נושא —</option>
+<optgroup label="מטפורות למורה">
+<option value="נושא 1 — מטפורת המורה">מטפורת המורה</option>
+</optgroup>
+<optgroup label="מטפורות לתלמיד">
+<option value="נושא 2 — מטפורת התלמיד">מטפורת התלמיד</option>
+</optgroup>
+<optgroup label="מטפורות לתהליך הלמידה">
+<option value="נושא 3 — מטפורת תהליך הלמידה">תהליך הלמידה</option>
+</optgroup>
+<optgroup label="מטפורות להבנה, לידע ולשכל">
+<option value="נושא 4 — מטפורות להבנה ולשכל">הבנה, ידע ושכל</option>
+</optgroup>
+<optgroup label="מטפורות, זהות מקצועית וחזון">
+<option value="נושא 5 — זהות מקצועית וחזון">זהות מקצועית וחזון</option>
+</optgroup>
+</select>
+</label>
+<span id="stuNameDisp" style="font-size:0.9em;color:var(--pl);margin-right:auto"></span>
+</div>
+<div class="pcon">
+<div class="snav" id="navBar"></div>
+<div class="opr"><span id="progTxt">0%</span><div class="pbg"><div class="pfl" id="progFill"></div></div></div>
+<div style="display:flex;justify-content:space-between;align-items:center;padding:.5rem 1rem 0;margin-top:.4rem;border-top:1px solid var(--b)">
+<button class="btn" id="prevBtn" onclick="go(cs-1)" style="padding:.4rem 1.2rem;font-size:.85rem">→ הקודם</button>
+<span style="font-size:.9rem"><strong id="stepLabel">בחירת מטפורה</strong> — <span id="stepNum">1 / 7</span></span>
+<button class="btn bp" id="nextBtn" onclick="go(cs+1)" style="padding:.4rem 1.2rem;font-size:.85rem">הבא ←</button>
+</div>
+</div>
+<div class="mc">
+<!-- STEP 1: Choose Metaphor -->
+<div class="ss active" id="step1">
+<div class="sc">
+<h2 class="st2">🔍 שלב 1: בחירת מטפורה</h2>
+<div class="sd">בחרו נושא מעולם ההוראה וזהו מטפורה ספציפית לניתוח</div>
+<div class="fg"><label>תחום המטפורה (בחרו למעלה בתפריט הנושאים)</label><textarea id="metaphorTopic" rows="2" placeholder="למשל: מטפורת המורה כגנן, התלמיד כספוג, הלמידה כמסע..."></textarea></div>
+<div class="fg"><label>מקור המטפורה</label><div class="hn">מאיפה מגיעה המטפורה? מאמר, שיח יומיומי, ספר לימוד?</div><textarea id="metaphorSource" rows="2" placeholder="למשל: שיח מורים נפוץ, מאמר של ספארד 1998..."></textarea></div>
+<div class="fg"><label>מדוע בחרתם במטפורה זו?</label><textarea id="metaphorWhy" rows="3" placeholder="מה מעניין או חשוב במטפורה הזו? מה היא מגלה על ההוראה?"></textarea></div>
+<details class="exp-panel" id="topicArticlesPanel">
+<summary>📖 מאמרים רלוונטיים לנושא שנבחר</summary>
+<div class="exp-body" id="topicArticlesList"><p style="color:var(--tl);font-style:italic">בחרו נושא בתפריט למעלה כדי לראות מאמרים רלוונטיים.</p></div>
+</details>
+</div>
+</div>
+
+<!-- STEP 2: Reveal Metaphor -->
+<div class="ss" id="step2">
+<div class="sc">
+<h2 class="st2">🔎 שלב 2: חשיפת המטפורה</h2>
+<div class="sd">נתחו את מרכיבי המטפורה — תחום מקור, תחום יעד ומיפויים</div>
+<div class="fg"><label>תחום המקור (Source Domain)</label><div class="hn">התחום המוכר שממנו נלקחה המטפורה</div><input type="text" id="sourceDomain" placeholder="למשל: גן, מסע, בנייה, מכונה..."></div>
+<div class="fg"><label>תחום היעד (Target Domain)</label><div class="hn">התחום המופשט שאותו המטפורה מאירה</div><input type="text" id="targetDomain" placeholder="למשל: הוראה, למידה, שכל, זהות מקצועית..."></div>
+<div class="fg"><label>המטפורה המושגית</label><div class="hn">נסחו את המטפורה כמשוואה: X הוא Y</div><input type="text" id="conceptualMetaphor" placeholder="למשל: ההוראה היא גננות / הלמידה היא מסע"></div>
+<div class="fg"><label>טבלת מיפויים</label><div class="hn">מפו את ההתאמות בין תחום המקור לתחום היעד</div></div>
+<table class="map-tbl" id="mapTbl">
+<thead><tr><th style="width:5%">#</th><th style="width:35%">מרכיב בתחום המקור</th><th style="width:35%">מרכיב בתחום היעד</th><th style="width:20%">הסבר קצר</th><th style="width:5%"></th></tr></thead>
+<tbody id="mapBody">
+<tr><td>1</td><td><input type="text" placeholder="למשל: הגנן"></td><td><input type="text" placeholder="למשל: המורה"></td><td><input type="text" placeholder="שניהם מטפחים"></td><td><button class="del-row" onclick="rr(this)">✕</button></td></tr>
+<tr><td>2</td><td><input type="text" placeholder="למשל: הצמח"></td><td><input type="text" placeholder="למשל: התלמיד"></td><td><input type="text" placeholder="שניהם גדלים"></td><td><button class="del-row" onclick="rr(this)">✕</button></td></tr>
+<tr><td>3</td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><button class="del-row" onclick="rr(this)">✕</button></td></tr>
+</tbody>
+</table>
+<div class="map-btns"><button onclick="ar()">+ הוסיפו שורה</button></div>
+<div class="fg" style="margin-top:1rem"><label>הסבר: מה המטפורה חושפת ומה היא מסתירה?</label><textarea id="mappingExplain" rows="4" placeholder="כל מטפורה מדגישה היבטים מסוימים ומסתירה אחרים. מה המטפורה שבחרתם חושפת? ומה היא מסתירה?"></textarea></div>
+<!-- Article upload zone -->
+<div class="fg"><label>העלאת מאמר אקדמי (PDF / תמונה)</label><div class="hn">אם יש לכם מאמר רלוונטי — העלו אותו כאן</div></div>
+<div class="art-zone" onclick="document.getElementById('artInp').click()">
+<input type="file" id="artInp" accept=".pdf,.jpg,.jpeg,.png,.gif,.webp" multiple style="display:none" onchange="handleArt(this)">
+<div class="up-icon">📎</div>
+<div class="up-txt">לחצו להעלאת מאמר (PDF או תמונה)</div>
+</div>
+<div class="art-list" id="articlesList"></div>
+<div class="fg"><label>ציטוט ביבליוגרפי</label><input type="text" id="artCite" placeholder="שם המחבר, שנה, כותרת המאמר..."></div>
+</div>
+</div>
+
+<!-- STEP 3: Build Prompt -->
+<div class="ss" id="step3">
+<div class="sc">
+<h2 class="st2">🎨 שלב 3: בניית פרומפט</h2>
+<div class="sd">תרגמו את הניתוח שלכם להנחיה (פרומפט) עבור כלי AI ליצירת תמונה</div>
+<div class="fg"><label>נושא התמונה</label><textarea id="promptSubject" rows="2" placeholder="מה התמונה צריכה להראות? למשל: גנן מטפח צמחים קטנים בחממה מוארת..." oninput="upp()"></textarea></div>
+<div class="fg"><label>אלמנטים ויזואליים</label><textarea id="promptElements" rows="2" placeholder="פרטו אלמנטים ספציפיים: דמויות, חפצים, סמלים..." oninput="upp()"></textarea></div>
+<div class="fg"><label>רקע וסביבה</label><textarea id="promptBg" rows="2" placeholder="תארו את הרקע: מקום, תאורה, אווירה..." oninput="upp()"></textarea></div>
+<div class="fg"><label>צבעים ואווירה</label><textarea id="promptColors" rows="2" placeholder="למשל: גוונים חמים, אור רך, אווירה מזמינה..." oninput="upp()"></textarea></div>
+<div class="fg"><label>סגנון אמנותי</label>
+<div class="rad-group" id="artStyleGroup">
+<label><input type="radio" name="artStyle" value="realistic photo" onchange="upp()"><span>צילום ריאליסטי</span></label>
+<label><input type="radio" name="artStyle" value="digital illustration" onchange="upp()" checked><span>איור דיגיטלי</span></label>
+<label><input type="radio" name="artStyle" value="watercolor painting" onchange="upp()"><span>צבעי מים</span></label>
+<label><input type="radio" name="artStyle" value="oil painting" onchange="upp()"><span>ציור שמן</span></label>
+<label><input type="radio" name="artStyle" value="pencil sketch" onchange="upp()"><span>רישום עיפרון</span></label>
+<label><input type="radio" name="artStyle" value="3D render" onchange="upp()"><span>תלת-ממד</span></label>
+<label><input type="radio" name="artStyle" value="collage mixed media" onchange="upp()"><span>קולאז׳</span></label>
+<label><input type="radio" name="artStyle" value="minimalist flat design" onchange="upp()"><span>מינימליסטי</span></label>
+<label><input type="radio" name="artStyle" value="surrealist art" onchange="upp()"><span>סוריאליסטי</span></label>
+<label><input type="radio" name="artStyle" value="children book illustration" onchange="upp()"><span>איור ספר ילדים</span></label>
+</div></div>
+<div class="fg"><label>תוספות</label><textarea id="promptExtras" rows="2" placeholder="פרטים נוספים: קומפוזיציה, זווית, טקסטורה..." oninput="upp()"></textarea></div>
+<div class="fg"><label>תצוגה מקדימה של הפרומפט</label></div>
+<div class="prompt-prev" id="promptPreview">הפרומפט ייבנה אוטומטית מהשדות למעלה...</div>
+<button class="copy-btn" onclick="cp()">📋 העתיקו פרומפט</button>
+<details class="exp-panel">
+<summary>💡 טיפים לכתיבת פרומפט מוצלח</summary>
+<div class="exp-body">
+<p style="margin-bottom:.5rem;font-size:.9rem">פרומפט טוב הוא ספציפי, ויזואלי ומפורט. הנה כמה טיפים:</p>
+<table class="tips-tbl">
+<tr><th>נושא</th><th>טיפ</th></tr>
+<tr><td>נושא</td><td>תארו את הסצנה המרכזית בבירור — מה קורה בתמונה?</td></tr>
+<tr><td>צבעים</td><td>ציינו פלטת צבעים: warm tones, cool blue, earthy green</td></tr>
+<tr><td>תאורה</td><td>soft lighting, golden hour, dramatic shadows, backlit</td></tr>
+<tr><td>זווית</td><td>bird's eye view, close-up, wide angle, eye level</td></tr>
+<tr><td>אווירה</td><td>peaceful, energetic, mysterious, hopeful, nurturing</td></tr>
+<tr><td>פרטים</td><td>הוסיפו פרטים סמליים שמייצגים את המיפויים שזיהיתם</td></tr>
+</table>
+</div>
+</details>
+</div>
+</div>
+
+<!-- STEP 4: Initial Image -->
+<div class="ss" id="step4">
+<div class="sc">
+<h2 class="st2">🖼️ שלב 4: תמונה ראשונית</h2>
+<div class="sd">צרו תמונה בכלי AI והעלו אותה כאן</div>
+<div class="up-zone" id="uploadZone1" onclick="document.getElementById('imgInp1').click()">
+<input type="file" id="imgInp1" accept="image/*" style="display:none" onchange="hu(this,'uploadZone1','image1')">
+<div class="up-icon">🖼️</div>
+<div class="up-txt">לחצו להעלאת התמונה שיצרתם</div>
+</div>
+<div class="fg"><label>הפרומפט שהשתמשתם בו</label><textarea id="usedPrompt" rows="3" placeholder="הדביקו את הפרומפט הסופי שהשתמשתם בו (ייתכן ששיניתם אותו)"></textarea></div>
+<div class="fg"><label>באיזה כלי AI השתמשתם?</label>
+<div class="rad-group">
+<label><input type="radio" name="aiTool" value="DALL-E"><span>DALL·E</span></label>
+<label><input type="radio" name="aiTool" value="Midjourney"><span>Midjourney</span></label>
+<label><input type="radio" name="aiTool" value="Stable Diffusion"><span>Stable Diffusion</span></label>
+<label><input type="radio" name="aiTool" value="Ideogram"><span>Ideogram</span></label>
+<label><input type="radio" name="aiTool" value="Leonardo"><span>Leonardo</span></label>
+<label><input type="radio" name="aiTool" value="other"><span>אחר</span></label>
+</div></div>
+<div class="fg"><label>כיצד התמונה מייצגת את המטפורה?</label><textarea id="imageRepresent" rows="3" placeholder="הסבירו אילו מרכיבים בתמונה מייצגים את תחום המקור ואילו את תחום היעד"></textarea></div>
+<div class="fg"><label>מה הפתיע אתכם?</label><textarea id="imageSurprise" rows="2" placeholder="האם התמונה חשפה משהו חדש? האם היא שונה ממה שציפיתם?"></textarea></div>
+<div class="fg"><label>תמונות נוספות (אופציונלי)</label><div class="hn">העלו ניסיונות נוספים שעשיתם</div></div>
+<div class="up-zone" id="extraImgZone" onclick="document.getElementById('exInp').click()" style="padding:1.2rem">
+<input type="file" id="exInp" accept="image/*" multiple style="display:none" onchange="hmu(this,'extraImgZone')">
+<div class="up-txt">📎 תמונות נוספות</div>
+</div>
+</div>
+</div>
+<!-- STEP 5: Commentary -->
+<div class="ss" id="step5">
+<div class="sc">
+<h2 class="st2">💬 שלב 5: פרשנות</h2>
+<div class="sd">קבלו משוב מעמית/ה או ממרצה, ושפרו את התמונה</div>
+<div class="fg"><label>שם המגיב/ה</label><input type="text" id="commentatorName" placeholder="שם העמית/ה או המרצה שנתנו משוב"></div>
+<div class="fg"><label>תוכן הפרשנות</label><textarea id="commentaryContent" rows="4" placeholder="מה נאמר על התמונה? אילו נקודות עלו?"></textarea></div>
+<div class="fg"><label>כיצד הפרשנות השפיעה על ההבנה שלכם?</label><textarea id="commentaryImpact" rows="3" placeholder="האם המשוב שינה את הדרך שבה אתם רואים את המטפורה?"></textarea></div>
+<div class="fg"><label>שינויים בפרומפט לאור הפרשנות</label><textarea id="commentaryChanges" rows="3" placeholder="מה שיניתם בפרומפט? מדוע?"></textarea></div>
+<div class="fg"><label>פרומפט מתוקן</label><textarea id="newPrompt" rows="3" placeholder="הדביקו את הפרומפט המתוקן"></textarea></div>
+<div class="fg"><label>תמונה מתוקנת</label></div>
+<div class="up-zone" id="uploadZone2" onclick="document.getElementById('imgInp2').click()">
+<input type="file" id="imgInp2" accept="image/*" style="display:none" onchange="hu(this,'uploadZone2','image2')">
+<div class="up-icon">🖼️</div>
+<div class="up-txt">לחצו להעלאת התמונה המתוקנת</div>
+</div>
+<div class="fg"><label>השוואה: מה השתנה בין שתי התמונות?</label><textarea id="comparison" rows="3" placeholder="השוו בין התמונה הראשונית לתמונה המתוקנת — מה השתנה ומדוע?"></textarea></div>
+</div>
+</div>
+
+<!-- STEP 6: Reflection -->
+<div class="ss" id="step6">
+<div class="sc">
+<h2 class="st2">🪞 שלב 6: רפלקציה</h2>
+<div class="sd">חשבו על התהליך שעברתם ועל מה שלמדתם</div>
+<div class="fg"><label>1. מה למדתם על המטפורה שבחרתם דרך תהליך ההדמיה?</label><textarea id="reflect1" rows="3" placeholder="האם ההדמיה חידדה את ההבנה שלכם? כיצד?"></textarea></div>
+<div class="fg"><label>2. מה המטפורה חושפת על יחסי הכוח בכיתה?</label><textarea id="reflect2" rows="3" placeholder="חשבו על תפקיד המורה, התלמיד ומבנה הכוח שהמטפורה יוצרת"></textarea></div>
+<div class="fg"><label>3. מה המטפורה מסתירה? אילו היבטים של ההוראה היא לא מכסה?</label><textarea id="reflect3" rows="3" placeholder="כל מטפורה מאירה חלק מהמציאות ומסתירה חלקים אחרים"></textarea></div>
+<div class="fg"><label>4. אם הייתם בוחרים מטפורה חלופית — מה הייתם בוחרים? מדוע?</label><textarea id="reflect4" rows="3" placeholder="חשבו על מטפורה אחרת שיכולה להאיר את אותו נושא אחרת"></textarea></div>
+<div class="fg"><label>5. כיצד ההבנה של המטפורה הזו תשפיע על העבודה שלכם כמורים?</label><textarea id="reflect5" rows="3" placeholder="קשרו את הניתוח לפרקטיקה — מה תעשו אחרת?"></textarea></div>
+</div>
+</div>
+<!-- STEP 7: Summary -->
+<div class="ss" id="step7">
+<div class="sc">
+<h2 class="st2">📋 שלב 7: סיכום</h2>
+<div class="sd">צפו בסיכום העבודה וייצאו אותה</div>
+<div id="summaryContent"></div>
+<div class="eb">
+<button class="btn bp" onclick="exH()">📄 ייצוא HTML</button>
+<button class="btn baa" onclick="exB()">💾 גיבוי JSON</button>
+<button class="btn bs-btn" onclick="document.getElementById('impInp').click()">📥 ייבוא גיבוי</button>
+<input type="file" id="impInp" accept=".json" style="display:none" onchange="imB(this)">
+</div>
+</div>
+</div>
+</div><!-- /mc -->
+
+<!-- READING LIST -->
+<details class="exp-panel" style="max-width:860px;margin:0 auto 2rem;padding:0">
+<summary style="padding:1rem 1.5rem">📚 רשימת קריאה מומלצת</summary>
+<div class="exp-body" style="padding:0 1.5rem 1.5rem">
+<div class="rl-cat">מטפורות בהוראה — כללי</div>
+<div class="rl-item">Lakoff, G., & Johnson, M. (1980). <em>Metaphors We Live By</em>. University of Chicago Press. <a href="https://scholar.google.com/scholar?q=Lakoff+Johnson+Metaphors+We+Live+By" target="_blank">🔍 חפש</a></div>
+<div class="rl-item">Sfard, A. (1998). On two metaphors for learning. <em>Educational Researcher</em>. <a href="https://avneyrosha.org.il/resources/article/learning-metaphors/" target="_blank">🔗 קרא</a></div>
+<div class="rl-cat">מטפורות למורה</div>
+<div class="rl-item">Teaching Metaphors: Supporting Professional Growth. (2021). ResearchGate. <a href="https://www.researchgate.net/publication/354147478_Teaching_Metaphors_Supporting_Professional_Growth_and_Shaping_Teacher_Identity" target="_blank">🔗 קרא</a></div>
+<div class="rl-cat">מטפורות לתהליך הלמידה</div>
+<div class="rl-item">The Pedagogical Power of Metaphor. (2020). Locutorium, BYU. <a href="https://locutorium.byu.edu/issues/volume-15-2020/the-pedagogical-power-of-metaphor/" target="_blank">🔗 קרא</a></div>
+<div class="rl-cat">מטפורות קוגניטיביות</div>
+<div class="rl-item">Thibodeau, P. & Boroditsky, L. (2011). Metaphors we think by. <em>PLoS ONE</em>. <a href="https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0016782" target="_blank">🔗 קרא</a></div>
+<div class="rl-cat">זהות מקצועית</div>
+<div class="rl-item">Teacher Identity and Metaphor. <em>Teaching and Teacher Education</em>. <a href="https://www.sciencedirect.com/journal/teaching-and-teacher-education" target="_blank">🔗 כתב העת</a></div>
+</div>
+</details>
+</div><!-- /appWrap -->
+<!-- NOTEBOOK -->
+<button class="nb-fab" id="nbFab" onclick="toggleNb()">
+<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 3h6a4 4 0 014 4v14a3 3 0 00-3-3H2z"/><path d="M22 3h-6a4 4 0 00-4 4v14a3 3 0 013-3h7z"/></svg>
+<span class="nb-badge" id="nbBadge">0</span>
+</button>
+<div class="nb-ov" id="nbOv" onclick="toggleNb()"></div>
+<div class="nb-panel" id="nbPnl">
+<div class="nb-hdr"><h3><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 3h6a4 4 0 014 4v14a3 3 0 00-3-3H2z"/><path d="M22 3h-6a4 4 0 00-4 4v14a3 3 0 013-3h7z"/></svg> פנקס רשימות</h3><button class="nb-close" onclick="toggleNb()">&times;</button></div>
+<div class="nb-tabs" id="nbTabs"></div>
+<div class="nb-content" id="nbCnt"></div>
+<div class="nb-add"><input type="text" id="nbInp" placeholder="הערה חדשה..." onkeydown="if(event.key==='Enter')addNote()"><button onclick="addNote()">הוסף</button></div>
+</div>
+<div class="toast" id="toast"></div>
+<script>
+/* ===== STATE ===== */
+let cs=1,ts=7,id={image1:null,image2:null,ex:[],articles:[]};
+const sn=['בחירת מטפורה','חשיפת המטפורה','בניית פרומפט','תמונה ראשונית','פרשנות','רפלקציה','סיכום'];
+
+/* ===== SPLASH & LANDING ===== */
+setTimeout(()=>{document.getElementById('splash').classList.add('hide');setTimeout(()=>{document.getElementById('landing').classList.add('show')},800)},2500);
+
+function startApp(){
+  const name=document.getElementById('landingName').value.trim();
+  if(!name){showT('אנא הקלידו את שמכם לפני ההתחלה');document.getElementById('landingName').focus();return;}
+  if(localStorage.getItem('edu_meta_consent')){showIntro();}
+  else{document.getElementById('consentOv').classList.add('show');}
+}
+function acceptConsent(){localStorage.setItem('edu_meta_consent','1');document.getElementById('consentOv').classList.remove('show');showIntro();}
+function showIntro(){document.getElementById('landing').style.display='none';document.getElementById('introUnit').classList.add('show');window.scrollTo({top:0});}
+function enterAppFromIntro(){
+  document.getElementById('introUnit').classList.remove('show');document.getElementById('introUnit').style.display='none';
+  document.getElementById('appWrap').classList.add('show');document.getElementById('nbFab').style.display='flex';
+  document.getElementById('homeBtn').style.display='flex';
+  const ln=document.getElementById('landingName').value.trim();
+  if(ln)document.getElementById('studentName').value=ln;
+  initNav();up();
+  try{const r=localStorage.getItem('edu_meta_data');if(r)rd(JSON.parse(r));}catch(e){}
+}
+function backToLanding(){
+  document.getElementById('introUnit').classList.remove('show');document.getElementById('introUnit').style.display='none';
+  document.getElementById('landing').style.display='';document.getElementById('landing').classList.add('show');
+}
+function backToLandingFromApp(){
+  if(!confirm('לחזור לדף הבית? ההתקדמות שלכם שמורה.'))return;
+  document.getElementById('appWrap').classList.remove('show');document.getElementById('nbFab').style.display='none';
+  document.getElementById('homeBtn').style.display='none';
+  document.getElementById('landing').style.display='';document.getElementById('landing').classList.add('show');
+  const stuName=document.getElementById('studentName').value.trim();
+  if(stuName)document.getElementById('landingName').value=stuName;
+}
+
+function initNav(){
+  const bar=document.getElementById('navBar');bar.innerHTML='';
+  for(let i=1;i<=ts;i++){const b=document.createElement('button');b.className='nav-btn';b.textContent=i;b.title=sn[i-1];b.onclick=()=>go(i);bar.appendChild(b);}
+  go(cs);
+}
+function go(n){
+  if(n<1||n>ts)return;saveL();cs=n;
+  for(let i=1;i<=ts;i++)document.getElementById('step'+i).classList.toggle('active',i===n);
+  const btns=document.querySelectorAll('.nav-btn');btns.forEach((b,i)=>{b.classList.toggle('active',i+1===n);b.classList.toggle('done',i+1<n);});
+  document.getElementById('stepLabel').textContent=sn[n-1];
+  document.getElementById('stepNum').textContent=n+' / '+ts;
+  document.getElementById('prevBtn').disabled=n===1;document.getElementById('nextBtn').disabled=n===ts;
+  up();sf(n);window.scrollTo({top:0,behavior:'smooth'});
+}
+function usb(){
+  const v=document.getElementById('studentName').value.trim();
+  document.getElementById('stuNameDisp').textContent=v?'שלום, '+v:'';
+}
+function gfc(){
+  let f=0,t=0;
+  document.querySelectorAll('#appWrap textarea, #appWrap input[type=text], #appWrap select').forEach(el=>{
+    if(el.closest('.nb-panel')||el.id==='studentName'||el.id==='topicSelect')return;
+    t++;if(el.value&&el.value.trim())f++;
+  });
+  const radioNames=new Set();
+  document.querySelectorAll('#appWrap input[type=radio]').forEach(el=>radioNames.add(el.name));
+  radioNames.forEach(name=>{
+    t++;
+    if(document.querySelector('#appWrap input[name="'+name+'"]:checked'))f++;
+  });
+  return{filled:f,total:t};
+}
+function up(){
+  const{filled,total}=gfc();const p=total?Math.round(filled/total*100):0;
+  document.getElementById('progFill').style.width=p+'%';document.getElementById('progTxt').textContent=p+'%';
+  usb();
+}
+function sf(n){
+  if(n===2){
+    const tb=document.querySelector('#step2 .map-tbl tbody');
+    if(!tb.querySelector('tr')){ar();ar();}
+  }
+  if(n===7){
+    const sc=document.getElementById('summaryContent');
+    const d=cd();let h='<h3>סיכום הניתוח</h3>';
+    h+='<p><strong>שם:</strong> '+(d.studentName||'—')+'</p>';
+    h+='<p><strong>נושא:</strong> '+(d.topicSelect||'—')+'</p>';
+    h+='<p><strong>מטפורה:</strong> '+(d.metaphorTopic||'—')+'</p>';
+    h+='<p><strong>מקור:</strong> '+(d.metaphorSource||'—')+'</p>';
+    h+='<p><strong>סיבה:</strong> '+(d.metaphorWhy||'—')+'</p>';
+    h+='<hr><p><strong>תחום המקור:</strong> '+(d.sourceDomain||'—')+'</p>';
+    h+='<p><strong>תחום היעד:</strong> '+(d.targetDomain||'—')+'</p>';
+    h+='<p><strong>המטפורה המושגית:</strong> '+(d.conceptualMetaphor||'—')+'</p>';
+    if(d.mappings&&d.mappings.length){h+='<table border="1" style="border-collapse:collapse;width:100%;margin:8px 0"><tr><th style="padding:6px">מקור</th><th style="padding:6px">יעד</th><th style="padding:6px">הסבר</th></tr>';d.mappings.forEach(m=>{h+='<tr><td style="padding:6px">'+eh(m[0])+'</td><td style="padding:6px">'+eh(m[1])+'</td><td style="padding:6px">'+eh(m[2]||'')+'</td></tr>';});h+='</table>';}
+    h+='<p><strong>הסבר:</strong> '+(d.mappingExplain||'—')+'</p>';
+    h+='<hr><p><strong>פרומפט:</strong> '+(d.promptPreviewText||d.usedPrompt||'—')+'</p>';
+    if(d.image1)h+='<p><strong>תמונה ראשונית:</strong><br><img src="'+d.image1+'" style="max-width:300px;border-radius:8px"></p>';
+    h+='<p><strong>כלי AI:</strong> '+(d.aiTool||'—')+'</p>';
+    h+='<p><strong>ייצוג:</strong> '+(d.imageRepresent||'—')+'</p>';
+    h+='<p><strong>הפתעה:</strong> '+(d.imageSurprise||'—')+'</p>';
+    h+='<hr><p><strong>פרשן:</strong> '+(d.commentatorName||'—')+'</p>';
+    h+='<p><strong>תוכן הפרשנות:</strong> '+(d.commentaryContent||'—')+'</p>';
+    h+='<p><strong>השפעה:</strong> '+(d.commentaryImpact||'—')+'</p>';
+    if(d.image2)h+='<p><strong>תמונה מעודכנת:</strong><br><img src="'+d.image2+'" style="max-width:300px;border-radius:8px"></p>';
+    sc.innerHTML=h;
+  }
+}
+function ar(){
+  const tb=document.querySelector('#step2 .map-tbl tbody');
+  const tr=document.createElement('tr');
+  const num=tb.querySelectorAll('tr').length+1;
+  tr.innerHTML='<td>'+num+'</td><td><input type="text" placeholder="מרכיב מתחום המקור"></td><td><input type="text" placeholder="מרכיב מתחום היעד"></td><td><input type="text" placeholder="הסבר קצר"></td><td><button class="del-row" onclick="rr(this)">✕</button></td>';
+  tb.appendChild(tr);
+  tr.querySelectorAll('input').forEach(inp=>inp.addEventListener('input',()=>{saveL();up();}));
+}
+function rr(b){b.closest('tr').remove();saveL();up();}
+function upp(){
+  const s=document.getElementById('promptSubject').value.trim();
+  const el=document.getElementById('promptElements').value.trim();
+  const bg=document.getElementById('promptBg').value.trim();
+  const co=document.getElementById('promptColors').value.trim();
+  const st=document.querySelector('input[name="artStyle"]:checked');
+  const ex=document.getElementById('promptExtras').value.trim();
+  let p='';
+  if(s)p+='נושא: '+s+'. ';
+  if(el)p+='אלמנטים: '+el+'. ';
+  if(bg)p+='רקע: '+bg+'. ';
+  if(co)p+='צבעים: '+co+'. ';
+  if(st)p+='סגנון: '+st.value+'. ';
+  if(ex)p+=ex;
+  document.getElementById('promptPreview').textContent=p||'התחילו למלא את השדות כדי לראות תצוגה מקדימה...';
+}
+function cp(){
+  const t=document.getElementById('promptPreview').textContent;
+  if(!t||t.includes('התחילו'))return showT('אין פרומפט להעתקה');
+  navigator.clipboard.writeText(t).then(()=>showT('הפרומפט הועתק!')).catch(()=>{
+    const ta=document.createElement('textarea');ta.value=t;document.body.appendChild(ta);ta.select();document.execCommand('copy');document.body.removeChild(ta);showT('הפרומפט הועתק!');
+  });
+}
+function hu(inp,zid,key){
+  const f=inp.files[0];if(!f)return;
+  const r=new FileReader();r.onload=function(e){
+    id[key]=e.target.result;
+    const z=document.getElementById(zid);z.innerHTML='<img src="'+e.target.result+'" style="max-width:100%;border-radius:8px;margin-top:8px"><br><button class="btn" onclick="document.getElementById(\''+zid+'\').innerHTML=\'<p>גררו תמונה או לחצו להעלאה</p><input type=file accept=image/* onchange=hu(this,\\\''+zid+'\\\',\\\''+key+'\\\')>\';id[\''+key+'\']=null;saveL();up();" style="margin-top:8px">הסר תמונה</button>';
+    saveL();up();
+  };r.readAsDataURL(f);
+}
+function hmu(inp,zid){
+  const files=inp.files;if(!files.length)return;
+  Array.from(files).forEach(f=>{
+    const r=new FileReader();r.onload=function(e){
+      id.ex.push(e.target.result);renderExImgs(zid);saveL();up();
+    };r.readAsDataURL(f);
+  });
+}
+function renderExImgs(zid){
+  const z=document.getElementById(zid);
+  let h='';id.ex.forEach((src,i)=>{
+    h+='<div style="display:inline-block;position:relative;margin:4px"><img src="'+src+'" style="max-width:120px;border-radius:6px"><button onclick="id.ex.splice('+i+',1);renderExImgs(\''+zid+'\');saveL();up();" style="position:absolute;top:2px;right:2px;background:var(--e);color:#fff;border:none;border-radius:50%;width:22px;height:22px;cursor:pointer;font-size:12px">✕</button></div>';
+  });
+  h+='<div style="margin-top:8px"><input type="file" accept="image/*" multiple onchange="hmu(this,\''+zid+'\')"></div>';
+  z.innerHTML=h;
+}
+function handleArt(inp){
+  const files=inp.files;if(!files.length)return;
+  Array.from(files).forEach(f=>{
+    const r=new FileReader();r.onload=function(e){
+          id.articles.push({name:f.name,data:e.target.result,type:f.type});renderArts();saveL();up();
+    };r.readAsDataURL(f);
+  });
+}
+function renderArts(){
+  const c=document.getElementById('articlesList');if(!c)return;
+  let h='';id.articles.forEach((a,i)=>{
+    h+='<div class="art-item"><span>📄 '+eh(a.name)+'</span><button class="art-del" onclick="removeArt('+i+')">✕</button></div>';
+  });
+  c.innerHTML=h;
+}
+function removeArt(i){id.articles.splice(i,1);renderArts();saveL();up();}
+function gf(n){
+  const s=document.getElementById('step'+n);if(!s)return{};const d={};
+  s.querySelectorAll('textarea,input[type=text],select').forEach(el=>{if(el.id)d[el.id]=el.value;});
+  s.querySelectorAll('input[type=radio]:checked').forEach(el=>{d[el.name]=el.value;});
+  return d;
+}
+function gm(){
+  const rows=document.querySelectorAll('#step2 .map-tbl tbody tr');
+  return Array.from(rows).map(r=>{
+    const inputs=r.querySelectorAll('input');return[inputs[0]?.value||'',inputs[1]?.value||'',inputs[2]?.value||''];
+  });
+}
+function gr(n){
+  const s=document.getElementById('step'+n);if(!s)return[];
+  return Array.from(s.querySelectorAll('input[type=radio]')).map(r=>({name:r.name,value:r.value,checked:r.checked}));
+}
+function cd(){
+  const d={};
+  for(let i=1;i<=ts;i++)Object.assign(d,gf(i));
+  d.mappings=gm();d.image1=id.image1;d.image2=id.image2;d.ex=id.ex;d.articles=id.articles;
+  d.promptPreviewText=document.getElementById('promptPreview')?.textContent||'';
+  d.currentStep=cs;
+  return d;
+}
+function rd(d){
+  if(!d)return;
+  for(let i=1;i<=ts;i++){
+    const s=document.getElementById('step'+i);if(!s)continue;
+    s.querySelectorAll('textarea,input[type=text],select').forEach(el=>{if(el.id&&d[el.id]!==undefined)el.value=d[el.id];});
+    s.querySelectorAll('input[type=radio]').forEach(el=>{if(d[el.name]&&el.value===d[el.name])el.checked=true;});
+  }
+  if(d.mappings&&d.mappings.length){
+    const tb=document.querySelector('#step2 .map-tbl tbody');tb.innerHTML='';
+    d.mappings.forEach(m=>{ar();const tr=tb.lastElementChild;const inputs=tr.querySelectorAll('input');inputs[0].value=m[0]||'';inputs[1].value=m[1]||'';if(inputs[2])inputs[2].value=m[2]||'';});
+  }
+  if(d.image1){id.image1=d.image1;const z=document.getElementById('uploadZone1');if(z)z.innerHTML='<img src="'+d.image1+'" style="max-width:100%;border-radius:8px"><br><button class="btn" onclick="id.image1=null;document.getElementById(\'uploadZone1\').innerHTML=\'<p>גררו תמונה או לחצו להעלאה</p><input type=file accept=image/* onchange=hu(this,\\\'uploadZone1\\\',\\\'image1\\\')>\';saveL();up();" style="margin-top:8px">הסר</button>';}
+  if(d.image2){id.image2=d.image2;const z=document.getElementById('uploadZone2');if(z)z.innerHTML='<img src="'+d.image2+'" style="max-width:100%;border-radius:8px"><br><button class="btn" onclick="id.image2=null;document.getElementById(\'uploadZone2\').innerHTML=\'<p>גררו תמונה או לחצו להעלאה</p><input type=file accept=image/* onchange=hu(this,\\\'uploadZone2\\\',\\\'image2\\\')>\';saveL();up();" style="margin-top:8px">הסר</button>';}
+  if(d.ex&&d.ex.length){id.ex=d.ex;renderExImgs('extraImgZone');}
+  if(d.articles&&d.articles.length){id.articles=d.articles;renderArts();}
+  if(d.currentStep)go(d.currentStep);
+  upp();up();
+}
+function eh(s){const d=document.createElement('div');d.textContent=s;return d.innerHTML;}
+function saveL(){try{localStorage.setItem('edu_meta_data',JSON.stringify(cd()));}catch(e){}}
+function loadL(){try{const r=localStorage.getItem('edu_meta_data');if(r)return JSON.parse(r);}catch(e){}return null;}
+function as(){
+  const d=cd();const nm=d.studentName||'';
+  const stamp=new Date().toLocaleString('he-IL');
+  showT('נשמר אוטומטית — '+stamp);saveL();
+  document.getElementById('stuNameDisp').textContent=nm?'שלום, '+nm:'';
+}
+function exB(){
+  const d=cd();const b=new Blob([JSON.stringify(d,null,2)],{type:'application/json'});
+  const a=document.createElement('a');a.href=URL.createObjectURL(b);
+  a.download='ניתוח_מטפורה_'+(d.studentName||'ללא_שם')+'_'+new Date().toISOString().slice(0,10)+'.json';
+  a.click();URL.revokeObjectURL(a.href);showT('הקובץ יוצא בהצלחה!');
+}
+function imB(inp){
+  const f=inp.files[0];if(!f)return;
+  const r=new FileReader();r.onload=function(e){
+    try{const d=JSON.parse(e.target.result);rd(d);showT('הנתונים יובאו בהצלחה!');}
+    catch(err){showT('שגיאה בקריאת הקובץ');}
+  };r.readAsText(f);
+}
+function bs(){saveL();as();showT('כל הנתונים נשמרו!');}
+function exH(){
+  const d=cd();let h='<!DOCTYPE html><html dir="rtl" lang="he"><head><meta charset="UTF-8"><title>ניתוח מטפורה — '+(d.studentName||'')+'</title>';
+  h+='<style>body{font-family:sans-serif;max-width:800px;margin:auto;padding:20px;direction:rtl;line-height:1.8}h1{color:#2e6b5e}h2{color:#3d8b7a;border-bottom:2px solid #d5ddd0;padding-bottom:6px}table{border-collapse:collapse;width:100%;margin:12px 0}th,td{border:1px solid #ccc;padding:8px;text-align:right}th{background:#f0f4ee}img{max-width:400px;border-radius:8px;margin:8px 0}.section{margin:20px 0;padding:16px;background:#f9faf8;border-radius:10px;border:1px solid #d5ddd0}</style></head><body>';
+  h+='<h1>תמונה שווה אלף מילים — סיכום ניתוח</h1>';
+  h+='<p><strong>שם:</strong> '+eh(d.studentName||'—')+'</p>';
+  h+='<p><strong>נושא:</strong> '+eh(d.topicSelect||'—')+'</p>';
+  h+='<p><strong>תאריך:</strong> '+new Date().toLocaleDateString('he-IL')+'</p>';
+  h+='<div class="section"><h2>1. '+sn[0]+'</h2>';
+  h+='<p><strong>מטפורה:</strong> '+eh(d.metaphorTopic||'—')+'</p>';
+  h+='<p><strong>מקור:</strong> '+eh(d.metaphorSource||'—')+'</p>';
+  h+='<p><strong>למה בחרתי:</strong> '+eh(d.metaphorWhy||'—')+'</p></div>';
+  h+='<div class="section"><h2>2. '+sn[1]+'</h2>';
+  h+='<p><strong>תחום המקור:</strong> '+eh(d.sourceDomain||'—')+'</p>';
+  h+='<p><strong>תחום היעד:</strong> '+eh(d.targetDomain||'—')+'</p>';
+  h+='<p><strong>המטפורה המושגית:</strong> '+eh(d.conceptualMetaphor||'—')+'</p>';
+  if(d.mappings&&d.mappings.length){h+='<table><tr><th>מקור</th><th>יעד</th><th>הסבר</th></tr>';d.mappings.forEach(m=>{h+='<tr><td>'+eh(m[0])+'</td><td>'+eh(m[1])+'</td><td>'+eh(m[2]||'')+'</td></tr>';});h+='</table>';}
+  h+='<p><strong>הסבר:</strong> '+eh(d.mappingExplain||'—')+'</p></div>';
+  h+='<div class="section"><h2>3. '+sn[2]+'</h2>';
+  h+='<p><strong>פרומפט:</strong> '+eh(d.promptPreviewText||'—')+'</p></div>';
+  h+='<div class="section"><h2>4. '+sn[3]+'</h2>';
+  if(d.image1)h+='<img src="'+d.image1+'">';
+  h+='<p><strong>פרומפט שנוצל:</strong> '+eh(d.usedPrompt||'—')+'</p>';
+  h+='<p><strong>כלי AI:</strong> '+eh(d.aiTool||'—')+'</p>';
+  h+='<p><strong>ייצוג המטפורה:</strong> '+eh(d.imageRepresent||'—')+'</p>';
+  h+='<p><strong>הפתעה:</strong> '+eh(d.imageSurprise||'—')+'</p></div>';
+  h+='<div class="section"><h2>5. '+sn[4]+'</h2>';
+  h+='<p><strong>פרשן:</strong> '+eh(d.commentatorName||'—')+'</p>';
+  h+='<p><strong>תוכן:</strong> '+eh(d.commentaryContent||'—')+'</p>';
+  h+='<p><strong>השפעה:</strong> '+eh(d.commentaryImpact||'—')+'</p>';
+  h+='<p><strong>שינויים:</strong> '+eh(d.commentaryChanges||'—')+'</p>';
+  if(d.image2)h+='<p><strong>תמונה מעודכנת:</strong><br><img src="'+d.image2+'"></p>';
+  h+='</div>';
+  h+='<div class="section"><h2>6. '+sn[5]+'</h2>';
+  const refIds=['reflect1','reflect2','reflect3','reflect4','reflect5'];
+  const refQs=['מה למדתם על המטפורה שבחרתם דרך תהליך ההדמיה?','מה המטפורה חושפת על יחסי הכוח בכיתה?','מה המטפורה מסתירה? אילו היבטים של ההוראה היא לא מכסה?','אם הייתם בוחרים מטפורה חלופית — מה הייתם בוחרים? מדוע?','כיצד ההבנה של המטפורה הזו תשפיע על העבודה שלכם כמורים?'];
+  refIds.forEach((rid,i)=>{h+='<p><strong>'+refQs[i]+'</strong><br>'+eh(d[rid]||'—')+'</p>';});
+  h+='</div>';
+  const nbH=getNbHtml();if(nbH)h+='<div class="section"><h2>פנקס הערות</h2>'+nbH+'</div>';
+  h+='</body></html>';
+  const b=new Blob([h],{type:'text/html;charset=utf-8'});
+  const a=document.createElement('a');a.href=URL.createObjectURL(b);
+  a.download='ניתוח_מטפורה_'+(d.studentName||'ללא_שם')+'_'+new Date().toISOString().slice(0,10)+'.html';
+  a.click();URL.revokeObjectURL(a.href);showT('הסיכום יוצא כ-HTML!');
+}
+function showT(m){
+  const t=document.getElementById('toast');t.textContent=m;t.classList.add('show');
+  setTimeout(()=>t.classList.remove('show'),2500);
+}
+let nb={},nbStep=1;
+const NB_KEY='edu_meta_nb';
+function initNb(){try{const r=localStorage.getItem(NB_KEY);if(r)nb=JSON.parse(r);}catch(e){}renderNbTabs();renderNbNotes();}
+function renderNbTabs(){
+  const c=document.getElementById('nbTabs');c.innerHTML='';
+  for(let i=1;i<=ts;i++){const b=document.createElement('button');b.className='nb-tab'+(i===nbStep?' active':'');b.textContent=i;b.title=sn[i-1];b.onclick=()=>nbGoTab(i);c.appendChild(b);}
+}
+function nbGoTab(i){nbStep=i;renderNbTabs();renderNbNotes();}
+function renderNbNotes(){
+  const c=document.getElementById('nbCnt');const key='s'+nbStep;const notes=nb[key]||[];
+  let h='<h4 style="margin:0 0 8px">'+sn[nbStep-1]+'</h4>';
+  if(!notes.length)h+='<p style="color:var(--tl);font-size:0.9em">אין הערות עדיין</p>';
+  notes.forEach((n,i)=>{
+    h+='<div style="background:var(--bg);padding:8px;border-radius:8px;margin-bottom:6px;position:relative">';
+    h+='<textarea style="width:100%;border:none;background:transparent;resize:vertical;min-height:40px;font-family:inherit" onchange="updNote(\''+key+'\','+i+',this.value)">'+eh(n)+'</textarea>';
+    h+='<button onclick="delNote(\''+key+'\','+i+')" style="position:absolute;top:4px;left:4px;background:none;border:none;color:var(--e);cursor:pointer;font-size:14px">✕</button></div>';
+  });
+  c.innerHTML=h;
+}
+function addNote(){
+  const inp=document.getElementById('nbInp');const v=inp.value.trim();if(!v)return;
+  const key='s'+nbStep;if(!nb[key])nb[key]=[];nb[key].push(v);inp.value='';saveNb();renderNbNotes();updBadge();
+}
+function delNote(key,i){if(!nb[key])return;nb[key].splice(i,1);saveNb();renderNbNotes();updBadge();}
+function updNote(key,i,v){if(!nb[key])return;nb[key][i]=v;saveNb();}
+function saveNb(){try{localStorage.setItem(NB_KEY,JSON.stringify(nb));}catch(e){}}
+function toggleNb(){
+  const ov=document.getElementById('nbOv');const pn=document.getElementById('nbPnl');
+  const open=pn.classList.toggle('open');ov.classList.toggle('show',open);
+  if(open){nbStep=cs;renderNbTabs();renderNbNotes();}
+}
+function updBadge(){
+  const b=document.getElementById('nbBadge');let c=0;Object.values(nb).forEach(a=>{if(Array.isArray(a))c+=a.length;});
+  b.textContent=c;b.style.display=c?'flex':'none';
+}
+function getNbHtml(){
+  let h='';let hasNotes=false;
+  for(let i=1;i<=ts;i++){const key='s'+i;const notes=nb[key]||[];if(notes.length){hasNotes=true;h+='<h4>'+sn[i-1]+'</h4><ul>';notes.forEach(n=>{h+='<li>'+eh(n)+'</li>';});h+='</ul>';}}
+  return hasNotes?h:'';
+}
+const topicArticles={
+  'נושא 1 — מטפורת המורה':[
+    {title:'Teaching Metaphors – ResearchGate',url:'https://www.researchgate.net/publication/Teaching_Metaphors',desc:'מאמר על מטפורות בהוראה ותפקיד המורה'},
+    {title:'Lakoff & Johnson – Metaphors We Live By',url:'https://press.uchicago.edu/ucp/books/book/chicago/M/bo3637992.html',desc:'הספר המכונן על מטפורות מושגיות'}
+  ],
+  'נושא 2 — מטפורת התלמיד':[
+    {title:'Sfard – Two Metaphors for Learning',url:'https://www.avneyrosha.org.il/resourcecenter/pages/item.aspx?docid=1395',desc:'שתי מטפורות ללמידה: רכישה והשתתפות'},
+    {title:'Students as Learners – Metaphorical Analysis',url:'https://doi.org/10.1080/13540602.2016.1211099',desc:'ניתוח מטפורות של תלמידים על תהליך הלמידה'}
+  ],
+  'נושא 3 — מטפורת תהליך הלמידה':[
+    {title:'Pedagogical Power of Metaphor – BYU',url:'https://scholarsarchive.byu.edu/facpub/1073/',desc:'הכוח הפדגוגי של המטפורה בהוראה'},
+    {title:'Metaphor and Learning',url:'https://doi.org/10.1017/CBO9781139173865',desc:'מטפורה כמנגנון קוגניטיבי בלמידה'}
+  ],
+  'נושא 4 — מטפורות להבנה ולשכל':[
+    {title:'Thibodeau & Boroditsky – PLoS ONE',url:'https://doi.org/10.1371/journal.pone.0052961',desc:'מטפורות מעצבות את החשיבה – מחקר אמפירי'},
+    {title:'Conceptual Metaphor in Education',url:'https://doi.org/10.1007/s11165-012-9295-4',desc:'מטפורות מושגיות בהקשר חינוכי'}
+  ],
+  'נושא 5 — זהות מקצועית וחזון':[
+    {title:'Teacher Identity and Metaphor – Teaching & Teacher Education',url:'https://doi.org/10.1016/j.tate.2004.12.009',desc:'מטפורות של מורים על זהותם המקצועית'},
+    {title:'Professional Vision in Teaching',url:'https://doi.org/10.3102/00028312031002029',desc:'חזון מקצועי — גודווין על ראייה מקצועית'}
+  ]
+};
+function showTopicArticles(){
+  const sel=document.getElementById('topicSelect');const v=sel.value;
+  const p=document.getElementById('topicArticlesPanel');
+  const c=document.getElementById('topicArticlesList');
+  if(!v||!topicArticles[v]){p.open=false;return;}
+  const arts=topicArticles[v];
+  let h='';arts.forEach(a=>{
+    h+='<div style="margin-bottom:10px;padding:8px;background:var(--bg);border-radius:8px">';
+    h+='<a href="'+a.url+'" target="_blank" style="color:var(--p);font-weight:600;text-decoration:none">'+eh(a.title)+'</a>';
+    h+='<p style="margin:4px 0 0;font-size:0.85em;color:var(--tl)">'+eh(a.desc)+'</p></div>';
+  });
+  c.innerHTML=h;p.open=true;
+}
+// Event listeners
+document.addEventListener('DOMContentLoaded',function(){
+  // Prompt builder listeners
+  ['promptSubject','promptElements','promptBg','promptColors','promptExtras'].forEach(id=>{
+    const el=document.getElementById(id);if(el)el.addEventListener('input',upp);
+  });
+  document.querySelectorAll('input[name="artStyle"]').forEach(r=>r.addEventListener('change',upp));
+  // Auto-save on input
+  document.querySelectorAll('#appWrap textarea, #appWrap input[type=text], #appWrap select').forEach(el=>{
+    el.addEventListener('input',()=>{saveL();up();});
+  });
+  document.querySelectorAll('#appWrap input[type=radio]').forEach(el=>{
+    el.addEventListener('change',()=>{saveL();up();});
+  });
+  // Topic select change
+  const tSel=document.getElementById('topicSelect');
+  if(tSel)tSel.addEventListener('change',()=>{showTopicArticles();saveL();up();});
+  // Student name sync
+  const snEl=document.getElementById('studentName');
+  if(snEl)snEl.addEventListener('input',()=>{usb();saveL();});
+});
+// Auto-save interval
+setInterval(as,30000);
+// Init notebook after load
+setTimeout(()=>{initNb();updBadge();},100);
+// Escape key closes notebook and consent
+document.addEventListener('keydown',function(e){
+  if(e.key==='Escape'){
+    const pn=document.getElementById('nbPnl');
+    if(pn.classList.contains('open'))toggleNb();
+    const co=document.getElementById('consentOv');
+    if(co.classList.contains('show'))co.classList.remove('show');
+  }
+});
+// Backdrop click closes consent
+document.getElementById('consentOv').addEventListener('click',function(e){
+  if(e.target===this)this.classList.remove('show');
+});
+</script>
+</body>
+</html>
