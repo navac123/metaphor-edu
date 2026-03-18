@@ -1,4 +1,6 @@
-<!DOCTYPE html><html lang="he" dir="rtl"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0"><title>תמונה שווה אלף מילים — מטפורות בהוראה</title><style>
+<!DOCTYPE html><html lang="he" dir="rtl"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0"><title>תמונה שווה אלף מילים — מטפורות בהוראה</title>
+<script data-goatcounter="https://metaphor-edu.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
+<style>
 @import url('https://fonts.googleapis.com/css2?family=Assistant:wght@400;600;700;800&family=Heebo:wght@300;400;500;700&display=swap');
 :root{--p:#2e6b5e;--pl:#3d8b7a;--a:#c9a84c;--al:#f0dfa0;--bg:#f5f7f4;--c:#fff;--t:#2d332a;--tl:#6b7060;--b:#d5ddd0;--s:#4a8c6f;--e:#c45050;--r:12px}
 *{margin:0;padding:0;box-sizing:border-box}body{font-family:'Heebo',sans-serif;background:var(--bg);color:var(--t);line-height:1.7;min-height:100vh}
@@ -195,6 +197,22 @@ h1,h2,h3,h4{font-family:'Assistant',sans-serif;font-weight:700}
 .map-tbl{font-size:.78rem}.map-tbl input{font-size:.78rem;padding:.3rem}
 }
 @media print{.pcon,.nb-fab,.nb-ov,.nb-panel,.toast,.home-btn{display:none!important}.hdr{padding:1rem;-webkit-print-color-adjust:exact;print-color-adjust:exact}}
+/* ===== DISABLED BUTTONS ===== */
+.btn:disabled{opacity:.35;cursor:not-allowed;pointer-events:none}
+/* ===== SLIDE VIEWER ===== */
+.slide-toggle{display:inline-flex;align-items:center;gap:.4rem;padding:.3rem .9rem;border:1px solid var(--p);border-radius:20px;background:rgba(46,107,94,.06);color:var(--p);font-size:.82rem;cursor:pointer;margin-bottom:.8rem;font-family:'Heebo',sans-serif;transition:all .2s}
+.slide-toggle:hover{background:var(--p);color:#fff}
+.slide-viewer{display:none;background:linear-gradient(135deg,var(--p),var(--pl));color:#fff;border-radius:var(--r);padding:1.8rem 1.5rem 1.2rem;margin:.5rem 0 1rem;position:relative}
+.slide-viewer.open{display:block;animation:fi .3s ease}
+.sl-content{min-height:140px;text-align:center;padding:.5rem 1rem 1rem}
+.sl-title{font-family:'Assistant',sans-serif;font-size:1.25rem;font-weight:700;margin-bottom:.8rem;color:#fff}
+.sl-body{font-size:.9rem;line-height:1.9;color:rgba(255,255,255,.92);text-align:right}
+.sl-body ul{margin:.4rem 0 .4rem 1.2rem}.sl-body li{margin-bottom:.2rem}
+.sl-body strong{color:var(--al)}
+.sl-nav{display:flex;justify-content:space-between;align-items:center;margin-top:1rem;padding-top:.8rem;border-top:1px solid rgba(255,255,255,.2)}
+.sl-btn{background:rgba(255,255,255,.15);border:1px solid rgba(255,255,255,.3);color:#fff;padding:.35rem .9rem;border-radius:20px;cursor:pointer;font-family:'Heebo',sans-serif;font-size:.82rem;transition:background .2s}
+.sl-btn:hover{background:rgba(255,255,255,.28)}.sl-btn:disabled{opacity:.28;cursor:not-allowed}
+.sl-counter{font-size:.82rem;color:rgba(255,255,255,.65)}
 </style></head><body>
 <!-- CONSENT -->
 <div class="consent-ov" id="consentOv">
@@ -246,11 +264,15 @@ h1,h2,h3,h4{font-family:'Assistant',sans-serif;font-weight:700}
 <!-- INTRO UNIT -->
 <div class="intro-unit" id="introUnit">
 <div class="iu-ch">
+<button class="slide-toggle" onclick="toggleSlides('ch1')">📊 הצג כמצגת</button>
+<div class="slide-viewer" id="sv_ch1"><div class="sl-content"><div class="sl-title" id="sl_t_ch1"></div><div class="sl-body" id="sl_b_ch1"></div></div><div class="sl-nav"><button class="sl-btn" id="sl_p_ch1" onclick="slideNav('ch1',-1)">→ הקודם</button><span class="sl-counter" id="sl_c_ch1"></span><button class="sl-btn" id="sl_n_ch1" onclick="slideNav('ch1',1)">הבא ←</button></div></div>
 <h2>📖 פרק 1: מהי מטפורה?</h2>
 <p>מטפורה היא תופעה שבה אנו מבינים תחום מושגי אחד (תחום היעד) באמצעות תחום מושגי אחר (תחום המקור). למשל, כאשר אומרים "המורה הוא גנן", אנו מבינים את ההוראה (תחום היעד) דרך עולם הגננות (תחום המקור).</p>
 <p>המטפורה אינה רק כלי רטורי — היא מבנה מחשבתי עמוק שמעצב את הדרך שבה אנו תופסים, חושבים ופועלים. בהקשר של הוראה, המטפורות שבהן מורים משתמשים מכתיבות את ההתנהגות שלהם בכיתה, את יחסם לתלמידים ואת תפיסתם את תהליך הלמידה.</p>
 </div>
 <div class="iu-ch">
+<button class="slide-toggle" onclick="toggleSlides('ch2')">📊 הצג כמצגת</button>
+<div class="slide-viewer" id="sv_ch2"><div class="sl-content"><div class="sl-title" id="sl_t_ch2"></div><div class="sl-body" id="sl_b_ch2"></div></div><div class="sl-nav"><button class="sl-btn" id="sl_p_ch2" onclick="slideNav('ch2',-1)">→ הקודם</button><span class="sl-counter" id="sl_c_ch2"></span><button class="sl-btn" id="sl_n_ch2" onclick="slideNav('ch2',1)">הבא ←</button></div></div>
 <h2>📖 פרק 2: תיאוריית המטפורה המושגית</h2>
 <p>בשנת 1980 חוללו ג'ורג' לייקוף ומארק ג'ונסון מהפכה בהבנת המטפורה בספרם "מטפורות שאנו חיים בהן" (Metaphors We Live By). הם טענו שמטפורות אינן רק כלי שפתי — אלא מבני חשיבה בסיסיים (Conceptual Metaphor Theory — CMT).</p>
 <h3>מרכיבי המטפורה המושגית</h3>
@@ -262,6 +284,8 @@ h1,h2,h3,h4{font-family:'Assistant',sans-serif;font-weight:700}
 <p>לדוגמה, במטפורה "הוראה היא גננות": הגנן ↔ המורה, הצמחים ↔ התלמידים, ההשקיה ↔ ההזנה האינטלקטואלית, הפריחה ↔ הלמידה המוצלחת.</p>
 </div>
 <div class="iu-ch">
+<button class="slide-toggle" onclick="toggleSlides('ch3')">📊 הצג כמצגת</button>
+<div class="slide-viewer" id="sv_ch3"><div class="sl-content"><div class="sl-title" id="sl_t_ch3"></div><div class="sl-body" id="sl_b_ch3"></div></div><div class="sl-nav"><button class="sl-btn" id="sl_p_ch3" onclick="slideNav('ch3',-1)">→ הקודם</button><span class="sl-counter" id="sl_c_ch3"></span><button class="sl-btn" id="sl_n_ch3" onclick="slideNav('ch3',1)">הבא ←</button></div></div>
 <h2>📖 פרק 3: מטפורות בהוראה — סקירת מחקר</h2>
 <p>מחקרים רבים בחנו את המטפורות שמורים משתמשים בהן לתיאור תפקידם. המחקרים מראים שש קטגוריות עיקריות של מטפורות למורה:</p>
 <ul>
@@ -275,6 +299,8 @@ h1,h2,h3,h4{font-family:'Assistant',sans-serif;font-weight:700}
 <p>אנה ספארד (Sfard, 1998) הציגה שתי מטפורות יסוד של למידה: <strong>מטפורת הרכישה</strong> (למידה כצבירת ידע) ו<strong>מטפורת ההשתתפות</strong> (למידה כהשתלבות בקהילה). היא טענה שכל מטפורה חושפת ומסתירה היבטים שונים של הלמידה.</p>
 </div>
 <div class="iu-ch">
+<button class="slide-toggle" onclick="toggleSlides('ch4')">📊 הצג כמצגת</button>
+<div class="slide-viewer" id="sv_ch4"><div class="sl-content"><div class="sl-title" id="sl_t_ch4"></div><div class="sl-body" id="sl_b_ch4"></div></div><div class="sl-nav"><button class="sl-btn" id="sl_p_ch4" onclick="slideNav('ch4',-1)">→ הקודם</button><span class="sl-counter" id="sl_c_ch4"></span><button class="sl-btn" id="sl_n_ch4" onclick="slideNav('ch4',1)">הבא ←</button></div></div>
 <h2>📖 פרק 4: מטפורות ויזואליות וכוחן הפדגוגי</h2>
 <p>מחקר של אוניברסיטת BYU (2020) הראה שמטפורות ויזואליות מעצימות למידה. תהליך תרגום מטפורה לתמונה — ואף יותר לאנימציה — דורש הבנה עמוקה של תחום המקור ותחום היעד.</p>
 <p>התהליך שנעבור באפליקציה זו מבוסס על הרעיון ש<strong>יצירת תמונה מתוך מטפורה</strong> היא פעולה קוגניטיבית עשירה: היא מחייבת לזהות את המיפויים, לבחור פרטים חזותיים שמייצגים אותם, ולקבל החלטות על מה להדגיש ומה להשמיט.</p>
@@ -282,6 +308,8 @@ h1,h2,h3,h4{font-family:'Assistant',sans-serif;font-weight:700}
 <p>כי התהליך של הפיכת מטפורה מילולית לתמונה חזותית מחייב אתכם "לפרוט" את המטפורה לרכיביה, לחשוב על כל מיפוי בנפרד, ולהחליט כיצד לייצג אותו ויזואלית. התוצאה — תמונה שמגלמת הבנה עמוקה של המטפורה.</p>
 </div>
 <div class="iu-ch">
+<button class="slide-toggle" onclick="toggleSlides('ch5')">📊 הצג כמצגת</button>
+<div class="slide-viewer" id="sv_ch5"><div class="sl-content"><div class="sl-title" id="sl_t_ch5"></div><div class="sl-body" id="sl_b_ch5"></div></div><div class="sl-nav"><button class="sl-btn" id="sl_p_ch5" onclick="slideNav('ch5',-1)">→ הקודם</button><span class="sl-counter" id="sl_c_ch5"></span><button class="sl-btn" id="sl_n_ch5" onclick="slideNav('ch5',1)">הבא ←</button></div></div>
 <h2>📖 פרק 5: טבלת השוואה — גישות לניתוח מטפורות</h2>
 <table>
 <tr><th>גישה</th><th>חוקר מרכזי</th><th>עיקרון מנחה</th><th>יישום בהוראה</th></tr>
@@ -293,6 +321,8 @@ h1,h2,h3,h4{font-family:'Assistant',sans-serif;font-weight:700}
 </table>
 </div>
 <div class="iu-ch">
+<button class="slide-toggle" onclick="toggleSlides('ch6')">📊 הצג כמצגת</button>
+<div class="slide-viewer" id="sv_ch6"><div class="sl-content"><div class="sl-title" id="sl_t_ch6"></div><div class="sl-body" id="sl_b_ch6"></div></div><div class="sl-nav"><button class="sl-btn" id="sl_p_ch6" onclick="slideNav('ch6',-1)">→ הקודם</button><span class="sl-counter" id="sl_c_ch6"></span><button class="sl-btn" id="sl_n_ch6" onclick="slideNav('ch6',1)">הבא ←</button></div></div>
 <h2>📖 פרק 6: עקרונות מעשיים — כן ולא</h2>
 <p><strong>✅ כן:</strong></p>
 <ul>
@@ -310,6 +340,8 @@ h1,h2,h3,h4{font-family:'Assistant',sans-serif;font-weight:700}
 <details class="think-box"><summary>🤔 חשבו: מהי המטפורה שאתם משתמשים בה ביותר לתיאור ההוראה שלכם?</summary><div class="answer">אין תשובה אחת נכונה — המטרה היא מודעות. נסו לשים לב לשפה שלכם בימים הקרובים: האם אתם "מזינים" תלמידים? "בונים" ידע? "מובילים" כיתה? כל פועל מטפורי מגלה תפיסת עולם.</div></details>
 </div>
 <div class="iu-ch">
+<button class="slide-toggle" onclick="toggleSlides('ch7')">📊 הצג כמצגת</button>
+<div class="slide-viewer" id="sv_ch7"><div class="sl-content"><div class="sl-title" id="sl_t_ch7"></div><div class="sl-body" id="sl_b_ch7"></div></div><div class="sl-nav"><button class="sl-btn" id="sl_p_ch7" onclick="slideNav('ch7',-1)">→ הקודם</button><span class="sl-counter" id="sl_c_ch7"></span><button class="sl-btn" id="sl_n_ch7" onclick="slideNav('ch7',1)">הבא ←</button></div></div>
 <h2>📖 פרק 7: סיכום ומעבר לעבודה</h2>
 <p>באפליקציה זו תעברו תהליך ניתוח אחדותי בן 7 שלבים. בכל פעם תבחרו מטפורה אחרת מעולם ההוראה — אך מבנה העבודה יישאר זהה. כך תוכלו להעמיק בניתוח מטפורות מגוונות תוך שימוש בשיטה מוכרת ומסודרת.</p>
 <p><strong>7 השלבים:</strong></p>
@@ -581,6 +613,9 @@ h1,h2,h3,h4{font-family:'Assistant',sans-serif;font-weight:700}
 </div>
 <div class="toast" id="toast"></div>
 <script>
+/* ===== ANALYTICS ===== */
+function track(evt){try{if(window.goatcounter&&window.goatcounter.count)window.goatcounter.count({path:evt,event:true});}catch(e){}}
+
 /* ===== STATE ===== */
 let cs=1,ts=7,id={image1:null,image2:null,ex:[],articles:[]};
 const sn=['בחירת מטפורה','חשיפת המטפורה','בניית פרומפט','תמונה ראשונית','פרשנות','רפלקציה','סיכום'];
@@ -591,12 +626,14 @@ setTimeout(()=>{document.getElementById('splash').classList.add('hide');setTimeo
 function startApp(){
   const name=document.getElementById('landingName').value.trim();
   if(!name){showT('אנא הקלידו את שמכם לפני ההתחלה');document.getElementById('landingName').focus();return;}
+  track('app-start');
   if(localStorage.getItem('edu_meta_consent')){showIntro();}
   else{document.getElementById('consentOv').classList.add('show');}
 }
 function acceptConsent(){localStorage.setItem('edu_meta_consent','1');document.getElementById('consentOv').classList.remove('show');showIntro();}
 function showIntro(){document.getElementById('landing').style.display='none';document.getElementById('introUnit').classList.add('show');window.scrollTo({top:0});}
 function enterAppFromIntro(){
+  track('intro-complete');
   document.getElementById('introUnit').classList.remove('show');document.getElementById('introUnit').style.display='none';
   document.getElementById('appWrap').classList.add('show');document.getElementById('nbFab').style.display='flex';
   document.getElementById('homeBtn').style.display='flex';
@@ -624,7 +661,7 @@ function initNav(){
   go(cs);
 }
 function go(n){
-  if(n<1||n>ts)return;saveL();cs=n;
+  if(n<1||n>ts)return;saveL();cs=n;track('step-'+n);
   for(let i=1;i<=ts;i++)document.getElementById('step'+i).classList.toggle('active',i===n);
   const btns=document.querySelectorAll('.nav-btn');btns.forEach((b,i)=>{b.classList.toggle('active',i+1===n);b.classList.toggle('done',i+1<n);});
   document.getElementById('stepLabel').textContent=sn[n-1];
@@ -663,25 +700,29 @@ function sf(n){
   if(n===7){
     const sc=document.getElementById('summaryContent');
     const d=cd();let h='<h3>סיכום הניתוח</h3>';
-    h+='<p><strong>שם:</strong> '+(d.studentName||'—')+'</p>';
-    h+='<p><strong>נושא:</strong> '+(d.topicSelect||'—')+'</p>';
-    h+='<p><strong>מטפורה:</strong> '+(d.metaphorTopic||'—')+'</p>';
-    h+='<p><strong>מקור:</strong> '+(d.metaphorSource||'—')+'</p>';
-    h+='<p><strong>סיבה:</strong> '+(d.metaphorWhy||'—')+'</p>';
-    h+='<hr><p><strong>תחום המקור:</strong> '+(d.sourceDomain||'—')+'</p>';
-    h+='<p><strong>תחום היעד:</strong> '+(d.targetDomain||'—')+'</p>';
-    h+='<p><strong>המטפורה המושגית:</strong> '+(d.conceptualMetaphor||'—')+'</p>';
+    h+='<p><strong>שם:</strong> '+eh(d.studentName||'—')+'</p>';
+    h+='<p><strong>נושא:</strong> '+eh(d.topicSelect||'—')+'</p>';
+    h+='<p><strong>מטפורה:</strong> '+eh(d.metaphorTopic||'—')+'</p>';
+    h+='<p><strong>מקור:</strong> '+eh(d.metaphorSource||'—')+'</p>';
+    h+='<p><strong>סיבה:</strong> '+eh(d.metaphorWhy||'—')+'</p>';
+    h+='<hr><p><strong>תחום המקור:</strong> '+eh(d.sourceDomain||'—')+'</p>';
+    h+='<p><strong>תחום היעד:</strong> '+eh(d.targetDomain||'—')+'</p>';
+    h+='<p><strong>המטפורה המושגית:</strong> '+eh(d.conceptualMetaphor||'—')+'</p>';
     if(d.mappings&&d.mappings.length){h+='<table border="1" style="border-collapse:collapse;width:100%;margin:8px 0"><tr><th style="padding:6px">מקור</th><th style="padding:6px">יעד</th><th style="padding:6px">הסבר</th></tr>';d.mappings.forEach(m=>{h+='<tr><td style="padding:6px">'+eh(m[0])+'</td><td style="padding:6px">'+eh(m[1])+'</td><td style="padding:6px">'+eh(m[2]||'')+'</td></tr>';});h+='</table>';}
-    h+='<p><strong>הסבר:</strong> '+(d.mappingExplain||'—')+'</p>';
-    h+='<hr><p><strong>פרומפט:</strong> '+(d.promptPreviewText||d.usedPrompt||'—')+'</p>';
+    h+='<p><strong>הסבר:</strong> '+eh(d.mappingExplain||'—')+'</p>';
+    h+='<hr><p><strong>פרומפט:</strong> '+eh(d.promptPreviewText||d.usedPrompt||'—')+'</p>';
     if(d.image1)h+='<p><strong>תמונה ראשונית:</strong><br><img src="'+d.image1+'" style="max-width:300px;border-radius:8px"></p>';
-    h+='<p><strong>כלי AI:</strong> '+(d.aiTool||'—')+'</p>';
-    h+='<p><strong>ייצוג:</strong> '+(d.imageRepresent||'—')+'</p>';
-    h+='<p><strong>הפתעה:</strong> '+(d.imageSurprise||'—')+'</p>';
-    h+='<hr><p><strong>פרשן:</strong> '+(d.commentatorName||'—')+'</p>';
-    h+='<p><strong>תוכן הפרשנות:</strong> '+(d.commentaryContent||'—')+'</p>';
-    h+='<p><strong>השפעה:</strong> '+(d.commentaryImpact||'—')+'</p>';
+    if(d.ex&&d.ex.length){h+='<p><strong>תמונות נוספות:</strong><br>';d.ex.forEach(src=>{h+='<img src="'+src+'" style="max-width:110px;border-radius:6px;margin:2px">';});h+='</p>';}
+    h+='<p><strong>כלי AI:</strong> '+eh(d.aiTool||'—')+'</p>';
+    h+='<p><strong>ייצוג:</strong> '+eh(d.imageRepresent||'—')+'</p>';
+    h+='<p><strong>הפתעה:</strong> '+eh(d.imageSurprise||'—')+'</p>';
+    h+='<hr><p><strong>מגיב/ה:</strong> '+eh(d.commentatorName||'—')+'</p>';
+    h+='<p><strong>תוכן הפרשנות:</strong> '+eh(d.commentaryContent||'—')+'</p>';
+    h+='<p><strong>השפעה על ההבנה:</strong> '+eh(d.commentaryImpact||'—')+'</p>';
+    h+='<p><strong>שינויים בפרומפט:</strong> '+eh(d.commentaryChanges||'—')+'</p>';
+    h+='<p><strong>פרומפט מתוקן:</strong> '+eh(d.newPrompt||'—')+'</p>';
     if(d.image2)h+='<p><strong>תמונה מעודכנת:</strong><br><img src="'+d.image2+'" style="max-width:300px;border-radius:8px"></p>';
+    h+='<p><strong>השוואה בין התמונות:</strong> '+eh(d.comparison||'—')+'</p>';
     sc.innerHTML=h;
   }
 }
@@ -719,6 +760,7 @@ function cp(){
 }
 function hu(inp,zid,key){
   const f=inp.files[0];if(!f)return;
+  track('image-uploaded-'+key);
   const r=new FileReader();r.onload=function(e){
     id[key]=e.target.result;
     const z=document.getElementById(zid);z.innerHTML='<img src="'+e.target.result+'" style="max-width:100%;border-radius:8px;margin-top:8px"><br><button class="btn" onclick="document.getElementById(\''+zid+'\').innerHTML=\'<p>גררו תמונה או לחצו להעלאה</p><input type=file accept=image/* onchange=hu(this,\\\''+zid+'\\\',\\\''+key+'\\\')>\';id[\''+key+'\']=null;saveL();up();" style="margin-top:8px">הסר תמונה</button>';
@@ -769,16 +811,13 @@ function gm(){
     const inputs=r.querySelectorAll('input');return[inputs[0]?.value||'',inputs[1]?.value||'',inputs[2]?.value||''];
   });
 }
-function gr(n){
-  const s=document.getElementById('step'+n);if(!s)return[];
-  return Array.from(s.querySelectorAll('input[type=radio]')).map(r=>({name:r.name,value:r.value,checked:r.checked}));
-}
 function cd(){
   const d={};
   for(let i=1;i<=ts;i++)Object.assign(d,gf(i));
   d.mappings=gm();d.image1=id.image1;d.image2=id.image2;d.ex=id.ex;d.articles=id.articles;
   d.promptPreviewText=document.getElementById('promptPreview')?.textContent||'';
   d.currentStep=cs;
+  d.topicSelect=document.getElementById('topicSelect')?.value||'';
   return d;
 }
 function rd(d){
@@ -796,19 +835,22 @@ function rd(d){
   if(d.image2){id.image2=d.image2;const z=document.getElementById('uploadZone2');if(z)z.innerHTML='<img src="'+d.image2+'" style="max-width:100%;border-radius:8px"><br><button class="btn" onclick="id.image2=null;document.getElementById(\'uploadZone2\').innerHTML=\'<p>גררו תמונה או לחצו להעלאה</p><input type=file accept=image/* onchange=hu(this,\\\'uploadZone2\\\',\\\'image2\\\')>\';saveL();up();" style="margin-top:8px">הסר</button>';}
   if(d.ex&&d.ex.length){id.ex=d.ex;renderExImgs('extraImgZone');}
   if(d.articles&&d.articles.length){id.articles=d.articles;renderArts();}
+  if(d.topicSelect){const tSel=document.getElementById('topicSelect');if(tSel){tSel.value=d.topicSelect;showTopicArticles();}}
   if(d.currentStep)go(d.currentStep);
   upp();up();
 }
 function eh(s){const d=document.createElement('div');d.textContent=s;return d.innerHTML;}
-function saveL(){try{localStorage.setItem('edu_meta_data',JSON.stringify(cd()));}catch(e){}}
-function loadL(){try{const r=localStorage.getItem('edu_meta_data');if(r)return JSON.parse(r);}catch(e){}return null;}
+function saveL(){
+  try{localStorage.setItem('edu_meta_data',JSON.stringify(cd()));}
+  catch(e){showT('⚠️ נגמר מקום האחסון — הורידו גיבוי JSON!');}
+}
 function as(){
-  const d=cd();const nm=d.studentName||'';
-  const stamp=new Date().toLocaleString('he-IL');
-  showT('נשמר אוטומטית — '+stamp);saveL();
+  saveL();
+  const nm=document.getElementById('studentName').value.trim();
   document.getElementById('stuNameDisp').textContent=nm?'שלום, '+nm:'';
 }
 function exB(){
+  track('export-json');
   const d=cd();const b=new Blob([JSON.stringify(d,null,2)],{type:'application/json'});
   const a=document.createElement('a');a.href=URL.createObjectURL(b);
   a.download='ניתוח_מטפורה_'+(d.studentName||'ללא_שם')+'_'+new Date().toISOString().slice(0,10)+'.json';
@@ -821,8 +863,8 @@ function imB(inp){
     catch(err){showT('שגיאה בקריאת הקובץ');}
   };r.readAsText(f);
 }
-function bs(){saveL();as();showT('כל הנתונים נשמרו!');}
 function exH(){
+  track('export-html');
   const d=cd();let h='<!DOCTYPE html><html dir="rtl" lang="he"><head><meta charset="UTF-8"><title>ניתוח מטפורה — '+(d.studentName||'')+'</title>';
   h+='<style>body{font-family:sans-serif;max-width:800px;margin:auto;padding:20px;direction:rtl;line-height:1.8}h1{color:#2e6b5e}h2{color:#3d8b7a;border-bottom:2px solid #d5ddd0;padding-bottom:6px}table{border-collapse:collapse;width:100%;margin:12px 0}th,td{border:1px solid #ccc;padding:8px;text-align:right}th{background:#f0f4ee}img{max-width:400px;border-radius:8px;margin:8px 0}.section{margin:20px 0;padding:16px;background:#f9faf8;border-radius:10px;border:1px solid #d5ddd0}</style></head><body>';
   h+='<h1>תמונה שווה אלף מילים — סיכום ניתוח</h1>';
@@ -843,16 +885,19 @@ function exH(){
   h+='<p><strong>פרומפט:</strong> '+eh(d.promptPreviewText||'—')+'</p></div>';
   h+='<div class="section"><h2>4. '+sn[3]+'</h2>';
   if(d.image1)h+='<img src="'+d.image1+'">';
+  if(d.ex&&d.ex.length){h+='<p><strong>תמונות נוספות:</strong><br>';d.ex.forEach(src=>{h+='<img src="'+src+'" style="max-width:150px;border-radius:6px;margin:3px">';});h+='</p>';}
   h+='<p><strong>פרומפט שנוצל:</strong> '+eh(d.usedPrompt||'—')+'</p>';
   h+='<p><strong>כלי AI:</strong> '+eh(d.aiTool||'—')+'</p>';
   h+='<p><strong>ייצוג המטפורה:</strong> '+eh(d.imageRepresent||'—')+'</p>';
   h+='<p><strong>הפתעה:</strong> '+eh(d.imageSurprise||'—')+'</p></div>';
   h+='<div class="section"><h2>5. '+sn[4]+'</h2>';
-  h+='<p><strong>פרשן:</strong> '+eh(d.commentatorName||'—')+'</p>';
-  h+='<p><strong>תוכן:</strong> '+eh(d.commentaryContent||'—')+'</p>';
-  h+='<p><strong>השפעה:</strong> '+eh(d.commentaryImpact||'—')+'</p>';
-  h+='<p><strong>שינויים:</strong> '+eh(d.commentaryChanges||'—')+'</p>';
+  h+='<p><strong>מגיב/ה:</strong> '+eh(d.commentatorName||'—')+'</p>';
+  h+='<p><strong>תוכן הפרשנות:</strong> '+eh(d.commentaryContent||'—')+'</p>';
+  h+='<p><strong>השפעה על ההבנה:</strong> '+eh(d.commentaryImpact||'—')+'</p>';
+  h+='<p><strong>שינויים בפרומפט:</strong> '+eh(d.commentaryChanges||'—')+'</p>';
+  h+='<p><strong>פרומפט מתוקן:</strong> '+eh(d.newPrompt||'—')+'</p>';
   if(d.image2)h+='<p><strong>תמונה מעודכנת:</strong><br><img src="'+d.image2+'"></p>';
+  h+='<p><strong>השוואה בין התמונות:</strong> '+eh(d.comparison||'—')+'</p>';
   h+='</div>';
   h+='<div class="section"><h2>6. '+sn[5]+'</h2>';
   const refIds=['reflect1','reflect2','reflect3','reflect4','reflect5'];
@@ -934,6 +979,7 @@ const topicArticles={
 };
 function showTopicArticles(){
   const sel=document.getElementById('topicSelect');const v=sel.value;
+  if(v)track('topic-'+v.replace(/[^א-ת\w]/g,'-').slice(0,30));
   const p=document.getElementById('topicArticlesPanel');
   const c=document.getElementById('topicArticlesList');
   if(!v||!topicArticles[v]){p.open=false;return;}
@@ -966,6 +1012,70 @@ document.addEventListener('DOMContentLoaded',function(){
   const snEl=document.getElementById('studentName');
   if(snEl)snEl.addEventListener('input',()=>{usb();saveL();});
 });
+/* ===== SLIDE DATA ===== */
+const slidesData={
+  ch1:[
+    {t:'מהי מטפורה?',b:'<p>מטפורה היא <strong>מבנה חשיבה</strong>, לא רק כלי ספרותי.</p><p style="margin-top:.8rem">כשאומרים "המורה הוא גנן" — זה לא קישוט לשון. זה תיאור של <strong>האופן שבו אנו מבינים הוראה</strong> כולה.</p>'},
+    {t:'מטפורה = ראייה + הסתרה',b:'<p>כל מטפורה <strong>מאירה</strong> היבטים מסוימים של המציאות — ובמקביל <strong>מסתירה</strong> היבטים אחרים.</p><p style="margin-top:.8rem">מטפורת "המורה כגנן" מאירה: טיפוח, צמיחה, סבלנות.<br>היא מסתירה: מבחנים, ציונים, לוחות זמנים.</p>'},
+    {t:'מטפורה בשפה היומיומית',b:'<p>רוב המטפורות <strong>שקופות</strong> — איננו מודעים להן:</p><ul><li>״אני <strong>מזין</strong> את הכיתה בידע״</li><li>״אנחנו <strong>בונים</strong> הבנה״</li><li>״ה<strong>מסע</strong> שלנו בחומר הלימוד״</li></ul><p style="margin-top:.6rem">כל פועל כזה — מטפורה שלמה.</p>'},
+    {t:'למה זה חשוב?',b:'<p>המטפורה שבה משתמש מורה <strong>מכתיבה את ההתנהגות שלו</strong> בכיתה:</p><ul><li>גנן → יסבול, יחכה, יטפח</li><li>מנצח תזמורת → ינהל, יתאם, יתבע</li><li>מאמן ספורט → ידרוש, יאמן, ימדוד</li></ul>'}
+  ],
+  ch2:[
+    {t:'לייקוף וג\'ונסון — 1980',b:'<p>בספרם <strong>"Metaphors We Live By"</strong> (מטפורות שאנו חיים בהן) טענו ג\'ורג\' לייקוף ומארק ג\'ונסון:</p><p style="margin-top:.8rem"><strong>מטפורות אינן רק שפה — הן מבנים קוגניטיביים יסודיים שמעצבים חשיבה ופעולה.</strong></p>'},
+    {t:'שני המרכיבים',b:'<p><strong>תחום מקור (Source Domain):</strong><br>התחום המוכר והמוחשי — גן, מסע, בנייה, מכונה.</p><p style="margin-top:.8rem"><strong>תחום יעד (Target Domain):</strong><br>התחום המופשט שאנו מנסים להבין — הוראה, למידה, שכל, זהות.</p>'},
+    {t:'מיפויים — הלב של המטפורה',b:'<p>בין תחום המקור לתחום היעד קיימים <strong>מיפויים (Mappings)</strong>:</p><ul><li>גנן ↔ המורה</li><li>צמח ↔ התלמיד</li><li>גינה ↔ הכיתה</li><li>השקיה ↔ הוראה</li><li>פריחה ↔ הצלחה בלמידה</li></ul>'},
+    {t:'דוגמה: הוראה היא גננות',b:'<p>המטפורה המושגית: <strong>הוראה היא גננות</strong></p><p style="margin-top:.6rem">מה נובע מזה?</p><ul><li>תלמידים זקוקים <strong>לתנאים מתאימים</strong> לגדול</li><li>הצמיחה <strong>אורגנית</strong> — לא ניתן לאלץ אותה</li><li>המורה <strong>מקנה</strong>, לא מחדיר</li></ul>'}
+  ],
+  ch3:[
+    {t:'6 קטגוריות מטפורות למורה',b:'<ul><li><strong>ספק ידע:</strong> מעיין, ספר, כלי קיבול</li><li><strong>בעל מלאכה:</strong> פסלן, אדריכל, אומן</li><li><strong>מנחה:</strong> מלווה, מורה דרך, פנס</li><li><strong>מטפח:</strong> גנן, הורה, רועה</li><li><strong>יועץ:</strong> מראה, רופא, מאזין</li><li><strong>מנהיג:</strong> קפטן, מנצח, מצביא</li></ul>'},
+    {t:'ספארד — שתי מטפורות ללמידה',b:'<p><strong>מטפורת הרכישה (Acquisition):</strong><br>למידה = צבירת ידע. התלמיד כ"כלי" שמתמלא.</p><p style="margin-top:.8rem"><strong>מטפורת ההשתתפות (Participation):</strong><br>למידה = כניסה לקהילת פרקטיקה. התלמיד כ"חבר" שמשתלב.</p>'},
+    {t:'מה מגלה כל מטפורה?',b:'<p>לפי ספארד — <strong>כל מטפורה חד-צדדית</strong>:</p><ul><li>רכישה מניחה ידע ניתן להעברה — מתעלמת מהקשר חברתי</li><li>השתתפות מניחה כיתה כקהילה — מתעלמת ממידע ניתן-להעברה</li></ul><p style="margin-top:.7rem"><strong>פתרון:</strong> לעבור בין המטפורות לפי הצורך.</p>'},
+    {t:'המשמעות המחקרית',b:'<p>מחקרים הראו ש<strong>המטפורה שמורה משתמש בה</strong> משפיעה על:</p><ul><li>דרך הניהול שלו בכיתה</li><li>היחס לתלמידים מתקשים</li><li>תחושת המסוגלות המקצועית שלו</li><li>הזהות המקצועית לאורך הקריירה</li></ul>'}
+  ],
+  ch4:[
+    {t:'מחקר BYU — 2020',b:'<p>מחקר מאוניברסיטת BYU הראה:</p><p style="margin-top:.7rem"><strong>מטפורות ויזואליות מעמיקות הבנה מושגית</strong> יותר ממטפורות מילוליות בלבד.</p><p style="margin-top:.7rem">תרגום מטפורה לתמונה דורש להפוך ידע <em>משתמע</em> לידע <em>מפורש</em>.</p>'},
+    {t:'מה דורש תרגום מטפורה לתמונה?',b:'<ul><li><strong>זיהוי המיפויים</strong> — איזה אלמנט מייצג מה?</li><li><strong>קבלת החלטות ויזואליות</strong> — מה להדגיש?</li><li><strong>הבנת מה נסתר</strong> — מה אי אפשר לתאר?</li><li><strong>פרשנות אישית</strong> — איך אני רואה את המטפורה?</li></ul>'},
+    {t:'למה "תמונה שווה אלף מילים"?',b:'<p>כי תהליך ה<strong>הדמיה</strong> (visualization) של מטפורה:</p><ul><li>מחייב "לפרוט" אותה לרכיבים</li><li>מגלה מיפויים שלא היו ברורים</li><li>יוצר <strong>זיכרון קוגניטיבי</strong> עמוק יותר</li><li>מאפשר <strong>שיח פרשני</strong> עם אחרים</li></ul>'},
+    {t:'7 שלבי האפליקציה',b:'<ol style="text-align:right"><li>בחירת מטפורה</li><li>חשיפת המטפורה (מיפויים)</li><li>בניית פרומפט</li><li>תמונה ראשונית</li><li>פרשנות ומשוב</li><li>רפלקציה</li><li>סיכום וייצוא</li></ol>'}
+  ],
+  ch5:[
+    {t:'מטפורה מושגית (CMT)',b:'<p><strong>חוקר:</strong> Lakoff & Johnson</p><p><strong>עיקרון:</strong> מטפורות הן מבני חשיבה בסיסיים</p><p><strong>יישום בהוראה:</strong> זיהוי מטפורות סמויות בשיח חינוכי</p>'},
+    {t:'מטפורה מכוונת',b:'<p><strong>חוקר:</strong> Steen</p><p><strong>עיקרון:</strong> מטפורות יכולות להיות מודעות ומכוונות</p><p><strong>יישום בהוראה:</strong> בחירה מודעת של מטפורות לשיפור ההוראה</p>'},
+    {t:'שתי מטפורות של למידה',b:'<p><strong>חוקרת:</strong> Sfard</p><p><strong>עיקרון:</strong> רכישה מול השתתפות</p><p><strong>יישום בהוראה:</strong> איזון בין גישות הוראה מגוונות</p>'},
+    {t:'מטפורות ויזואליות + זהות מקצועית',b:'<p><strong>מטפורות ויזואליות (BYU Research):</strong><br>תמונה מחדדת הבנה מושגית — הדמיית מטפורות בכלי AI</p><p style="margin-top:.7rem"><strong>זהות מקצועית (Bullough, Stokes):</strong><br>מטפורות מעצבות זהות — בחינה רפלקטיבית של מטפורות אישיות</p>'}
+  ],
+  ch6:[
+    {t:'✅ כן — מה כדאי לעשות',b:'<ul><li>זהו מטפורות <strong>סמויות</strong> בשפה שלכם</li><li>בחנו מה המטפורה <strong>חושפת</strong> ומה <strong>מסתירה</strong></li><li>נסו מטפורה <strong>חלופית</strong> — האם היא משנה את הפרקטיקה?</li><li>השתמשו ב<strong>ויזואליזציה</strong> לחידוד ההבנה</li></ul>'},
+    {t:'❌ לא — מה להימנע ממנו',b:'<ul><li>אל תתייחסו למטפורה כ<strong>"רק ביטוי"</strong> — היא מעצבת פעולה</li><li>אל תישארו נאמנים ל<strong>מטפורה אחת</strong> בלבד</li><li>אל תתעלמו ממטפורות <strong>שליליות</strong> — גם הן מעצבות</li></ul>'},
+    {t:'שאלה לרפלקציה',b:'<p style="font-size:1.05rem;line-height:2"><strong>מהי המטפורה שאתם משתמשים בה ביותר לתיאור ההוראה שלכם?</strong></p><p style="margin-top:.8rem;font-size:.88rem;opacity:.85">שימו לב לשפה שלכם בימים הקרובים:<br>האם אתם "מזינים" תלמידים? "בונים" ידע? "מובילים" כיתה?<br>כל פועל מטפורי מגלה תפיסת עולם.</p>'}
+  ],
+  ch7:[
+    {t:'7 שלבי העבודה',b:'<ol style="text-align:right"><li><strong>בחירת מטפורה</strong> — זיהוי ומקור</li><li><strong>חשיפת המטפורה</strong> — תחום מקור, יעד, מיפויים</li><li><strong>בניית פרומפט</strong> — תרגום לפרומפט לכלי AI</li><li><strong>תמונה ראשונית</strong> — יצירה והעלאה</li><li><strong>פרשנות</strong> — קבלת משוב ושיפור</li><li><strong>רפלקציה</strong> — חשיבה על התהליך</li><li><strong>סיכום</strong> — ייצוא וגיבוי</li></ol>'},
+    {t:'מה מחכה לכם',b:'<p>בכל פעם תבחרו <strong>מטפורה חדשה</strong> — אך המבנה יישאר זהה.</p><p style="margin-top:.8rem">כך תוכלו להשוות בין מטפורות שונות ולבנות <strong>מפה מושגית אישית</strong> של תפיסת ההוראה שלכם.</p><p style="margin-top:.8rem">בהצלחה! 🌱</p>'}
+  ]
+};
+let slState={};
+function toggleSlides(ch){
+  const v=document.getElementById('sv_'+ch);
+  const open=v.classList.toggle('open');
+  if(open){slState[ch]=0;renderSlide(ch);track('slide-open-'+ch);}
+}
+function renderSlide(ch){
+  const slides=slidesData[ch];const idx=slState[ch]||0;const s=slides[idx];
+  document.getElementById('sl_t_'+ch).textContent=s.t;
+  document.getElementById('sl_b_'+ch).innerHTML=s.b;
+  document.getElementById('sl_c_'+ch).textContent=(idx+1)+' / '+slides.length;
+  document.getElementById('sl_p_'+ch).disabled=idx===0;
+  document.getElementById('sl_n_'+ch).disabled=idx===slides.length-1;
+  const btn=document.querySelector('[onclick="toggleSlides(\''+ch+'\')"]');
+  if(btn)btn.textContent=document.getElementById('sv_'+ch).classList.contains('open')?'✕ סגור מצגת':'📊 הצג כמצגת';
+}
+function slideNav(ch,dir){
+  const slides=slidesData[ch];
+  slState[ch]=Math.max(0,Math.min(slides.length-1,(slState[ch]||0)+dir));
+  renderSlide(ch);
+}
+
 // Auto-save interval
 setInterval(as,30000);
 // Init notebook after load
