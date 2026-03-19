@@ -606,10 +606,31 @@ h1,h2,h3,h4{font-family:'Assistant',sans-serif;font-weight:700}
 </div>
 </div>
 </div>
-<!-- STEP 5: Commentary -->
+<!-- STEP 5: AI Era -->
 <div class="ss" id="step5">
 <div class="sc">
-<h2 class="st2">💬 שלב 5: משוב ושיפור</h2>
+<h2 class="st2">🤖 שלב 5: המטפורה בעידן ה-AI</h2>
+<div class="sd">בחינה מחדש — האם המטפורה שלכם עמידה בפני הבינה המלאכותית?</div>
+<div id="aiChallengeBanner" style="background:linear-gradient(135deg,rgba(46,107,94,.08),rgba(201,168,76,.08));border:2px solid var(--a);border-radius:12px;padding:1.2rem 1.4rem;margin-bottom:1.2rem">
+<div style="font-size:.8rem;font-weight:700;color:var(--a);margin-bottom:.4rem">🧩 אתגר החשיבה</div>
+<div id="aiChallengeQ" style="font-size:1rem;font-weight:600;color:var(--t);line-height:1.7">בחרו נושא בשלב 1 כדי לראות את אתגר החשיבה.</div>
+</div>
+<div class="fg"><label>מה משתנה? — כיצד כלי ה-AI משנים את המטפורה שלכם?</label><textarea id="aiWhatChanges" rows="3" placeholder="אילו היבטים של המטפורה כבר לא רלוונטיים? מה מאבד ממשמעותו?"></textarea></div>
+<div class="fg"><label>מה נשמר? — מה עדיין ייחודי לאדם?</label><textarea id="aiWhatRemains" rows="3" placeholder="אילו היבטים של המטפורה שרידים גם בעולם עם AI? מה לא ניתן לאוטומציה?"></textarea></div>
+<div class="fg"><label>פרומפט לתמונה חדשה — המטפורה בעידן ה-AI</label><textarea id="aiPrompt" rows="3" placeholder="כתבו פרומפט לתמונה שמייצגת את המטפורה שלכם בעולם שבו AI נוכח"></textarea></div>
+<div class="fg"><label>תמונה: המטפורה בעידן ה-AI</label></div>
+<div class="up-zone" id="uploadZoneAI" onclick="document.getElementById('imgInpAI').click()">
+<input type="file" id="imgInpAI" accept="image/*" style="display:none" onchange="hu(this,'uploadZoneAI','imageAI')">
+<div class="up-icon">🤖</div>
+<div class="up-txt">לחצו להעלאת תמונת ה-AI</div>
+</div>
+<div class="fg"><label>השוואה: מה השתנה בין שתי התמונות?</label><textarea id="aiComparison" rows="3" placeholder="השוו בין התמונה המקורית לתמונה החדשה — מה מגלה ההשוואה?"></textarea></div>
+</div>
+</div>
+<!-- STEP 6: Commentary -->
+<div class="ss" id="step6">
+<div class="sc">
+<h2 class="st2">💬 שלב 6: משוב ושיפור</h2>
 <div class="sd">קבלו משוב מעמית/ה או ממרצה, ושפרו את התמונה</div>
 <div class="fg"><label>שם המגיב/ה</label><input type="text" id="commentatorName" placeholder="שם העמית/ה או המרצה שנתנו משוב"></div>
 <div class="fg"><label>תוכן הפרשנות</label><textarea id="commentaryContent" rows="4" placeholder="מה נאמר על התמונה? אילו נקודות עלו?"></textarea></div>
@@ -626,10 +647,10 @@ h1,h2,h3,h4{font-family:'Assistant',sans-serif;font-weight:700}
 </div>
 </div>
 
-<!-- STEP 6: Reflection -->
-<div class="ss" id="step6">
+<!-- STEP 7: Reflection -->
+<div class="ss" id="step7">
 <div class="sc">
-<h2 class="st2">🪞 שלב 6: רפלקציה</h2>
+<h2 class="st2">🪞 שלב 7: רפלקציה</h2>
 <div class="sd">חשבו על התהליך שעברתם ועל מה שלמדתם</div>
 <div class="fg"><label>1. מה למדתם על המטפורה שבחרתם דרך תהליך ההדמיה?</label><textarea id="reflect1" rows="3" placeholder="האם ההדמיה חידדה את ההבנה שלכם? כיצד?"></textarea></div>
 <div class="fg"><label>2. מה המטפורה חושפת על יחסי הכוח בכיתה?</label><textarea id="reflect2" rows="3" placeholder="חשבו על תפקיד המורה, התלמיד ומבנה הכוח שהמטפורה יוצרת"></textarea></div>
@@ -638,10 +659,10 @@ h1,h2,h3,h4{font-family:'Assistant',sans-serif;font-weight:700}
 <div class="fg"><label>5. כיצד ההבנה של המטפורה הזו תשפיע על העבודה שלכם כמורים?</label><textarea id="reflect5" rows="3" placeholder="קשרו את הניתוח לפרקטיקה — מה תעשו אחרת?"></textarea></div>
 </div>
 </div>
-<!-- STEP 7: Summary -->
-<div class="ss" id="step7">
+<!-- STEP 8: Summary -->
+<div class="ss" id="step8">
 <div class="sc">
-<h2 class="st2">📋 שלב 7: סיכום</h2>
+<h2 class="st2">📋 שלב 8: סיכום</h2>
 <div class="sd">צפו בסיכום העבודה וייצאו אותה</div>
 <div id="summaryContent"></div>
 <div class="eb">
@@ -691,8 +712,8 @@ h1,h2,h3,h4{font-family:'Assistant',sans-serif;font-weight:700}
 function track(evt){try{if(window.goatcounter&&window.goatcounter.count)window.goatcounter.count({path:evt,event:true});}catch(e){}}
 
 /* ===== STATE ===== */
-let cs=1,ts=7,id={image1:null,image2:null,ex:[],articles:[]};
-const sn=['רקע תיאורטי','בחירת המטפורה וחשיפתה','בניית פרומפט','תמונה ראשונית','משוב ושיפור','רפלקציה','סיכום'];
+let cs=1,ts=8,id={image1:null,image2:null,imageAI:null,ex:[],articles:[]};
+const sn=['רקע תיאורטי','בחירת המטפורה וחשיפתה','בניית פרומפט','תמונה ראשונית','המטפורה בעידן ה-AI','משוב ושיפור','רפלקציה','סיכום'];
 
 /* ===== SPLASH & LANDING ===== */
 setTimeout(()=>{document.getElementById('splash').classList.add('hide');setTimeout(()=>{document.getElementById('landing').classList.add('show')},800)},2500);
@@ -797,7 +818,7 @@ function sf(n){
     const tb=document.querySelector('#step2 .map-tbl tbody');
     if(!tb.querySelector('tr')){ar();ar();}
   }
-  if(n===7){
+  if(n===8){
     const sc=document.getElementById('summaryContent');
     const d=cd();let h='<h3>סיכום הניתוח</h3>';
     h+='<p><strong>שם:</strong> '+eh(d.studentName||'—')+'</p>';
@@ -816,6 +837,12 @@ function sf(n){
     h+='<p><strong>כלי AI:</strong> '+eh(d.aiTool||'—')+'</p>';
     h+='<p><strong>ייצוג:</strong> '+eh(d.imageRepresent||'—')+'</p>';
     h+='<p><strong>הפתעה:</strong> '+eh(d.imageSurprise||'—')+'</p>';
+    h+='<hr><h3 style="color:var(--p);font-size:.95rem;margin:.8rem 0 .4rem">🤖 המטפורה בעידן ה-AI</h3>';
+    h+='<p><strong>מה משתנה:</strong> '+eh(d.aiWhatChanges||'—')+'</p>';
+    h+='<p><strong>מה נשמר:</strong> '+eh(d.aiWhatRemains||'—')+'</p>';
+    h+='<p><strong>פרומפט ל-AI:</strong> '+eh(d.aiPrompt||'—')+'</p>';
+    if(d.imageAI)h+='<p><strong>תמונת AI:</strong><br><img src="'+d.imageAI+'" style="max-width:300px;border-radius:8px"></p>';
+    h+='<p><strong>השוואה בין התמונות:</strong> '+eh(d.aiComparison||'—')+'</p>';
     h+='<hr><p><strong>מגיב/ה:</strong> '+eh(d.commentatorName||'—')+'</p>';
     h+='<p><strong>תוכן הפרשנות:</strong> '+eh(d.commentaryContent||'—')+'</p>';
     h+='<p><strong>השפעה על ההבנה:</strong> '+eh(d.commentaryImpact||'—')+'</p>';
@@ -923,7 +950,7 @@ function gm(){
 function cd(){
   const d={};
   for(let i=1;i<=ts;i++)Object.assign(d,gf(i));
-  d.mappings=gm();d.image1=id.image1;d.image2=id.image2;d.ex=id.ex;d.articles=id.articles;
+  d.mappings=gm();d.image1=id.image1;d.image2=id.image2;d.imageAI=id.imageAI;d.ex=id.ex;d.articles=id.articles;
   d.promptPreviewText=document.getElementById('promptPreview')?.textContent||'';
   d.currentStep=cs;
   d.topicSelect=document.getElementById('topicSelect')?.value||'';
@@ -942,6 +969,7 @@ function rd(d){
   }
   if(d.image1){id.image1=d.image1;const z=document.getElementById('uploadZone1');if(z)z.innerHTML='<img src="'+d.image1+'" style="max-width:100%;border-radius:8px"><br><button class="btn" onclick="id.image1=null;document.getElementById(\'uploadZone1\').innerHTML=\'<p>גררו תמונה או לחצו להעלאה</p><input type=file accept=image/* onchange=hu(this,\\\'uploadZone1\\\',\\\'image1\\\')>\';saveL();up();" style="margin-top:8px">הסר</button>';}
   if(d.image2){id.image2=d.image2;const z=document.getElementById('uploadZone2');if(z)z.innerHTML='<img src="'+d.image2+'" style="max-width:100%;border-radius:8px"><br><button class="btn" onclick="id.image2=null;document.getElementById(\'uploadZone2\').innerHTML=\'<p>גררו תמונה או לחצו להעלאה</p><input type=file accept=image/* onchange=hu(this,\\\'uploadZone2\\\',\\\'image2\\\')>\';saveL();up();" style="margin-top:8px">הסר</button>';}
+  if(d.imageAI){id.imageAI=d.imageAI;const zai=document.getElementById('uploadZoneAI');if(zai)zai.innerHTML='<img src="'+d.imageAI+'" style="max-width:100%;border-radius:8px"><br><button class="btn" onclick="id.imageAI=null;document.getElementById(\'uploadZoneAI\').innerHTML=\'<div class=\'up-icon\'>🤖</div><div class=\'up-txt\'>לחצו להעלאת תמונת ה-AI</div>\';saveL();up();" style="margin-top:8px">הסר</button>';}
   if(d.ex&&d.ex.length){id.ex=d.ex;renderExImgs('extraImgZone');}
   if(d.articles&&d.articles.length){id.articles=d.articles;renderArts();}
   if(d.topicSelect){const tSel=document.getElementById('topicSelect');if(tSel){tSel.value=d.topicSelect;showTopicArticles();}}
@@ -1000,6 +1028,12 @@ function exH(){
   h+='<p><strong>ייצוג המטפורה:</strong> '+eh(d.imageRepresent||'—')+'</p>';
   h+='<p><strong>הפתעה:</strong> '+eh(d.imageSurprise||'—')+'</p></div>';
   h+='<div class="section"><h2>5. '+sn[4]+'</h2>';
+  h+='<p><strong>מה משתנה:</strong> '+eh(d.aiWhatChanges||'—')+'</p>';
+  h+='<p><strong>מה נשמר:</strong> '+eh(d.aiWhatRemains||'—')+'</p>';
+  h+='<p><strong>פרומפט ל-AI:</strong> '+eh(d.aiPrompt||'—')+'</p>';
+  if(d.imageAI)h+='<img src="'+d.imageAI+'">';
+  h+='<p><strong>השוואה:</strong> '+eh(d.aiComparison||'—')+'</p></div>';
+  h+='<div class="section"><h2>6. '+sn[5]+'</h2>';
   h+='<p><strong>מגיב/ה:</strong> '+eh(d.commentatorName||'—')+'</p>';
   h+='<p><strong>תוכן הפרשנות:</strong> '+eh(d.commentaryContent||'—')+'</p>';
   h+='<p><strong>השפעה על ההבנה:</strong> '+eh(d.commentaryImpact||'—')+'</p>';
@@ -1008,7 +1042,7 @@ function exH(){
   if(d.image2)h+='<p><strong>תמונה מעודכנת:</strong><br><img src="'+d.image2+'"></p>';
   h+='<p><strong>השוואה בין התמונות:</strong> '+eh(d.comparison||'—')+'</p>';
   h+='</div>';
-  h+='<div class="section"><h2>6. '+sn[5]+'</h2>';
+  h+='<div class="section"><h2>7. '+sn[6]+'</h2>';
   const refIds=['reflect1','reflect2','reflect3','reflect4','reflect5'];
   const refQs=['מה למדתם על המטפורה שבחרתם דרך תהליך ההדמיה?','מה המטפורה חושפת על יחסי הכוח בכיתה?','מה המטפורה מסתירה? אילו היבטים של ההוראה היא לא מכסה?','אם הייתם בוחרים מטפורה חלופית — מה הייתם בוחרים? מדוע?','כיצד ההבנה של המטפורה הזו תשפיע על העבודה שלכם כמורים?'];
   refIds.forEach((rid,i)=>{h+='<p><strong>'+refQs[i]+'</strong><br>'+eh(d[rid]||'—')+'</p>';});
@@ -1131,6 +1165,13 @@ const topicArticles={
     {title:'Teaching as a Calling vs. a Job – Metaphor Analysis',url:'https://doi.org/10.1016/j.tate.2008.09.018',desc:'הוראה כשליחות לעומת הוראה כעבודה — ניתוח מטפורי'}
   ]
 };
+const topicAIChallenge={
+  'נושא 1 — מטפורת המורה':'כשה-AI יכול "לספק ידע" ולהסביר כל מושג טוב מכל מורה — מה נותר ייחודי בגנן? מה יש במורה שאין ב-AI, ואיך זה משנה את המטפורה שלכם?',
+  'נושא 2 — מטפורת התלמיד':'כש"רכישת ידע" הופכת מיידית וחינמית עם AI — האם המטפורה "התלמיד רוכש" עדיין הגיונית? מה ערך הלמידה כשהידע זמין תמיד?',
+  'נושא 3 — מטפורת תהליך הלמידה':'מי מוביל את המסע כשיש לכם מדריך AI אישי שזמין תמיד? האם "הלמידה כמסע" משתנה כשה-AI מקצר את הדרך?',
+  'נושא 4 — מטפורות להבנה ולשכל':'אם AI "מבין" ו"מסיק מסקנות" — האם מטפורת המחשב לשכל האנושי הפכה לאיום על הייחודיות האנושית? מה בהבנה שלנו לא ניתן לחיקוי?',
+  'נושא 5 — זהות מקצועית וחזון':'מהי הזהות המקצועית של מורה שה-AI עושה חלק ניכר מעבודתו? כיצד המטפורה המקצועית שלכם ניצבת מול המציאות החדשה?'
+};
 const topicExamples={
   'נושא 1 — מטפורת המורה':[
     {met:'המורה הוא גנן',desc:'מטפורת הטיפוח: הכיתה כגן, התלמידים כצמחים, הידע כהשקיה. משמעות: צמיחה אורגנית, סבלנות, תנאים מתאימים.'},
@@ -1201,6 +1242,9 @@ function showTopicArticles(){
     ec.innerHTML=eh2;if(ep)ep.open=true;
   }
   // Articles now in library modal — nothing to render here
+  // AI challenge banner
+  const aqEl=document.getElementById('aiChallengeQ');
+  if(aqEl){const aqText=topicAIChallenge[v];aqEl.textContent=aqText||'בחרו נושא בשלב 1 כדי לראות את אתגר החשיבה.';}
   // Topic quiz
   const qp=document.getElementById('topicQuizPanel');
   if(qp){qp.style.display='';showTopicQuiz(v);}
@@ -1593,7 +1637,7 @@ function updAnBtn(){
   else{btn.style.display='none';}
 }
 /* ===== PDF PRINT ===== */
-function printSummary(){sf(7);setTimeout(()=>window.print(),200);}
+function printSummary(){sf(8);setTimeout(()=>window.print(),200);}
 // Auto-save interval
 setInterval(as,30000);
 // Init notebook and analyses after load
