@@ -428,6 +428,13 @@ h1,h2,h3,h4{font-family:'Assistant',sans-serif;font-weight:700}
 </div>
 </div>
 </div>
+<!-- LIBRARY MODAL -->
+<div class="an-modal-ov" id="libOv">
+<div class="an-modal" style="max-width:680px">
+<div class="an-hdr"><h3>📚 ספריית מאמרים להרחבה</h3><button class="an-close" onclick="closeLibraryModal()">&times;</button></div>
+<div class="an-list" id="libList" style="max-height:70vh;overflow-y:auto;padding:1rem 1.2rem"></div>
+</div>
+</div>
 <!-- HOME BUTTON -->
 <button class="home-btn" id="homeBtn" onclick="backToLandingFromApp()">🏠 חזרה לדף הבית</button>
 
@@ -462,6 +469,7 @@ h1,h2,h3,h4{font-family:'Assistant',sans-serif;font-weight:700}
 </label>
 <span id="stuNameDisp" style="font-size:0.9em;color:var(--pl);margin-right:auto"></span>
 <button id="anBtn" onclick="showAnModal()" style="display:none;padding:.35rem .8rem;border:1px solid var(--p);border-radius:8px;background:rgba(46,107,94,.06);color:var(--p);font-family:'Heebo',sans-serif;font-size:.82rem;cursor:pointer">📂 ניתוחים שמורים <span id="anCount"></span></button>
+<button onclick="showLibraryModal()" style="padding:.35rem .8rem;border:1px solid var(--a);border-radius:8px;background:rgba(201,168,76,.08);color:var(--p);font-family:'Heebo',sans-serif;font-size:.82rem;cursor:pointer">📚 ספריית מאמרים להרחבה</button>
 </div>
 <div class="pcon">
 <div class="snav" id="navBar"></div>
@@ -498,10 +506,7 @@ h1,h2,h3,h4{font-family:'Assistant',sans-serif;font-weight:700}
 <summary>💡 דוגמאות מטפורות לנושא שנבחר</summary>
 <div class="exp-body" id="topicExList"><p style="color:var(--tl);font-style:italic">בחרו נושא בתפריט למעלה כדי לראות דוגמאות.</p></div>
 </details>
-<details class="exp-panel" id="topicArticlesPanel">
-<summary>📖 מאמרים רלוונטיים לנושא שנבחר</summary>
-<div class="exp-body" id="topicArticlesList"><p style="color:var(--tl);font-style:italic">בחרו נושא בתפריט למעלה כדי לראות מאמרים רלוונטיים.</p></div>
-</details>
+
 <div class="fg"><label>תחום המקור (Source Domain)</label><div class="hn">התחום המוכר שממנו נלקחה המטפורה</div><input type="text" id="sourceDomain" placeholder="למשל: גן, מסע, בנייה, מכונה..."></div>
 <div class="fg"><label>תחום היעד (Target Domain)</label><div class="hn">התחום המופשט שאותו המטפורה מאירה</div><input type="text" id="targetDomain" placeholder="למשל: הוראה, למידה, שכל, זהות מקצועית..."></div>
 <div class="fg"><label>המטפורה המושגית</label><div class="hn">נסחו את המטפורה כמשוואה: X הוא Y</div><input type="text" id="conceptualMetaphor" placeholder="למשל: ההוראה היא גננות / הלמידה היא מסע"></div>
@@ -1195,15 +1200,7 @@ function showTopicArticles(){
     });
     ec.innerHTML=eh2;if(ep)ep.open=true;
   }
-  // Articles
-  if(!topicArticles[v]){p.open=false;return;}
-  const arts=topicArticles[v];
-  let h='';arts.forEach(a=>{
-    h+='<div style="margin-bottom:10px;padding:8px;background:var(--bg);border-radius:8px">';
-    h+='<a href="'+a.url+'" target="_blank" style="color:var(--p);font-weight:600;text-decoration:none">'+eh(a.title)+'</a>';
-    h+='<p style="margin:4px 0 0;font-size:0.85em;color:var(--tl)">'+eh(a.desc)+'</p></div>';
-  });
-  c.innerHTML=h;p.open=true;
+  // Articles now in library modal — nothing to render here
   // Topic quiz
   const qp=document.getElementById('topicQuizPanel');
   if(qp){qp.style.display='';showTopicQuiz(v);}
@@ -1522,8 +1519,8 @@ function clearAnalysis(){
   const ez=document.getElementById('extraImgZone');
   if(ez)ez.innerHTML='<input type="file" id="exInp" accept="image/*" multiple style="display:none" onchange="hmu(this,\'extraImgZone\')"><div class="up-txt">📎 תמונות נוספות</div>';
   document.getElementById('articlesList').innerHTML='';
-  document.getElementById('topicArticlesList').innerHTML='<p style="color:var(--tl);font-style:italic">בחרו נושא בתפריט למעלה כדי לראות מאמרים רלוונטיים.</p>';
-  document.getElementById('topicArticlesPanel').open=false;
+  const tal=document.getElementById('topicArticlesList');if(tal)tal.innerHTML='<p style="color:var(--tl);font-style:italic">בחרו נושא בתפריט למעלה כדי לראות מאמרים רלוונטיים.</p>';
+  const tap=document.getElementById('topicArticlesPanel');if(tap)tap.open=false;
   const tsb=document.getElementById('topicSummaryBox');if(tsb)tsb.style.display='none';
   document.getElementById('topicExList').innerHTML='<p style="color:var(--tl);font-style:italic">בחרו נושא בתפריט למעלה כדי לראות דוגמאות.</p>';
   document.getElementById('topicExPanel').open=false;
@@ -1531,6 +1528,25 @@ function clearAnalysis(){
   document.getElementById('summaryContent').innerHTML='';
   go(1);saveL();up();upp();closeAnModal();showT('ניתוח חדש!');
 }
+function showLibraryModal(){
+  const c=document.getElementById('libList');
+  let h='';
+  Object.keys(topicArticles).forEach(topic=>{
+    const arts=topicArticles[topic];if(!arts||!arts.length)return;
+    h+='<div style="margin-bottom:1.4rem">';
+    h+='<div style="font-size:.82rem;font-weight:700;color:var(--a);letter-spacing:.03em;margin-bottom:.5rem;padding-bottom:.3rem;border-bottom:1px solid var(--b)">'+eh(topic)+'</div>';
+    arts.forEach(a=>{
+      h+='<div style="margin-bottom:.6rem;padding:.6rem .8rem;background:rgba(46,107,94,.04);border-radius:8px">';
+      h+='<a href="'+a.url+'" target="_blank" style="color:var(--p);font-weight:600;text-decoration:none;font-size:.9rem">'+eh(a.title)+'</a>';
+      h+='<p style="margin:3px 0 0;font-size:.82em;color:var(--tl)">'+eh(a.desc)+'</p></div>';
+    });
+    h+='</div>';
+  });
+  c.innerHTML=h||'<p style="color:var(--tl);text-align:center;padding:2rem">אין מאמרים זמינים.</p>';
+  document.getElementById('libOv').classList.add('show');
+  track('library-open');
+}
+function closeLibraryModal(){document.getElementById('libOv').classList.remove('show');}
 function showAnModal(){
   loadSavedAnalyses();renderAnList();
   document.getElementById('anOv').classList.add('show');
@@ -1577,6 +1593,8 @@ document.addEventListener('keydown',function(e){
     if(co.classList.contains('show'))co.classList.remove('show');
     const an=document.getElementById('anOv');
     if(an.classList.contains('show'))closeAnModal();
+    const lb=document.getElementById('libOv');
+    if(lb&&lb.classList.contains('show'))closeLibraryModal();
   }
   // Keyboard navigation between steps (only when app is visible and not in text field)
   if(document.getElementById('appWrap').classList.contains('show')&&!e.target.matches('input,textarea,select')){
@@ -1584,10 +1602,9 @@ document.addEventListener('keydown',function(e){
     if(e.key==='ArrowRight')go(cs-1);
   }
 });
-// Backdrop click closes consent
-document.getElementById('consentOv').addEventListener('click',function(e){
-  if(e.target===this)this.classList.remove('show');
-});
+// Backdrop click closes modals
+document.getElementById('consentOv').addEventListener('click',function(e){if(e.target===this)this.classList.remove('show');});
+document.getElementById('libOv').addEventListener('click',function(e){if(e.target===this)closeLibraryModal();});
 </script>
 </body>
 </html>
