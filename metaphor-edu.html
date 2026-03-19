@@ -476,13 +476,21 @@ h1,h2,h3,h4{font-family:'Assistant',sans-serif;font-weight:700}
 <!-- STEP 1: Choose Metaphor -->
 <div class="ss active" id="step1">
 <div class="sc">
-<h2 class="st2">🔍 שלב 1: בחירת מטפורה</h2>
-<div class="sd">בחרו נושא מעולם ההוראה וזהו מטפורה ספציפית לניתוח</div>
+<h2 class="st2">📚 שלב 1: רקע תיאורטי</h2>
+<div class="sd">בחרו נושא בתפריט למעלה — קראו את הרקע התיאורטי ועברו את הבוחן</div>
 <div id="topicSummaryBox" style="display:none;background:linear-gradient(135deg,rgba(46,107,94,.06),rgba(201,168,76,.05));border:1px solid rgba(46,107,94,.18);border-radius:12px;padding:1.2rem 1.4rem;margin-bottom:1rem"></div>
 <details class="exp-panel" id="topicQuizPanel" style="display:none">
 <summary>✏️ בחן את עצמך — שאלות על הנושא</summary>
 <div class="exp-body" id="topicQuizContent"></div>
 </details>
+</div>
+</div>
+
+<!-- STEP 2: Choose + Reveal Metaphor -->
+<div class="ss" id="step2">
+<div class="sc">
+<h2 class="st2">🔍 שלב 2: בחירת המטפורה וחשיפתה</h2>
+<div class="sd">בחרו מטפורה ספציפית לניתוח — ואז נתחו את מרכיביה</div>
 <div class="fg"><label>תחום המטפורה (בחרו למעלה בתפריט הנושאים)</label><textarea id="metaphorTopic" rows="2" placeholder="למשל: מטפורת המורה כגנן, התלמיד כספוג, הלמידה כמסע..."></textarea></div>
 <div class="fg"><label>מקור המטפורה</label><div class="hn">מאיפה מגיעה המטפורה? מאמר, שיח יומיומי, ספר לימוד?</div><textarea id="metaphorSource" rows="2" placeholder="למשל: שיח מורים נפוץ, מאמר של ספארד 1998..."></textarea></div>
 <div class="fg"><label>מדוע בחרתם במטפורה זו?</label><textarea id="metaphorWhy" rows="3" placeholder="מה מעניין או חשוב במטפורה הזו? מה היא מגלה על ההוראה?"></textarea></div>
@@ -494,14 +502,6 @@ h1,h2,h3,h4{font-family:'Assistant',sans-serif;font-weight:700}
 <summary>📖 מאמרים רלוונטיים לנושא שנבחר</summary>
 <div class="exp-body" id="topicArticlesList"><p style="color:var(--tl);font-style:italic">בחרו נושא בתפריט למעלה כדי לראות מאמרים רלוונטיים.</p></div>
 </details>
-</div>
-</div>
-
-<!-- STEP 2: Reveal Metaphor -->
-<div class="ss" id="step2">
-<div class="sc">
-<h2 class="st2">🔎 שלב 2: חשיפת המטפורה</h2>
-<div class="sd">נתחו את מרכיבי המטפורה — תחום מקור, תחום יעד ומיפויים</div>
 <div class="fg"><label>תחום המקור (Source Domain)</label><div class="hn">התחום המוכר שממנו נלקחה המטפורה</div><input type="text" id="sourceDomain" placeholder="למשל: גן, מסע, בנייה, מכונה..."></div>
 <div class="fg"><label>תחום היעד (Target Domain)</label><div class="hn">התחום המופשט שאותו המטפורה מאירה</div><input type="text" id="targetDomain" placeholder="למשל: הוראה, למידה, שכל, זהות מקצועית..."></div>
 <div class="fg"><label>המטפורה המושגית</label><div class="hn">נסחו את המטפורה כמשוואה: X הוא Y</div><input type="text" id="conceptualMetaphor" placeholder="למשל: ההוראה היא גננות / הלמידה היא מסע"></div>
@@ -687,7 +687,7 @@ function track(evt){try{if(window.goatcounter&&window.goatcounter.count)window.g
 
 /* ===== STATE ===== */
 let cs=1,ts=7,id={image1:null,image2:null,ex:[],articles:[]};
-const sn=['בחירת מטפורה','חשיפת המטפורה','בניית פרומפט','תמונה ראשונית','משוב ושיפור','רפלקציה','סיכום'];
+const sn=['רקע תיאורטי','בחירת המטפורה וחשיפתה','בניית פרומפט','תמונה ראשונית','משוב ושיפור','רפלקציה','סיכום'];
 
 /* ===== SPLASH & LANDING ===== */
 setTimeout(()=>{document.getElementById('splash').classList.add('hide');setTimeout(()=>{document.getElementById('landing').classList.add('show')},800)},2500);
