@@ -818,6 +818,11 @@ function sf(n){
     const tb=document.querySelector('#step2 .map-tbl tbody');
     if(!tb.querySelector('tr')){ar();ar();}
   }
+  if(n===5){
+    const selT=document.getElementById('topicSelect');
+    const aqEl=document.getElementById('aiChallengeQ');
+    if(aqEl&&selT&&selT.value&&topicAIChallenge[selT.value])aqEl.textContent=topicAIChallenge[selT.value];
+  }
   if(n===8){
     const sc=document.getElementById('summaryContent');
     const d=cd();let h='<h3>סיכום הניתוח</h3>';
@@ -969,7 +974,7 @@ function rd(d){
   }
   if(d.image1){id.image1=d.image1;const z=document.getElementById('uploadZone1');if(z)z.innerHTML='<img src="'+d.image1+'" style="max-width:100%;border-radius:8px"><br><button class="btn" onclick="id.image1=null;document.getElementById(\'uploadZone1\').innerHTML=\'<p>גררו תמונה או לחצו להעלאה</p><input type=file accept=image/* onchange=hu(this,\\\'uploadZone1\\\',\\\'image1\\\')>\';saveL();up();" style="margin-top:8px">הסר</button>';}
   if(d.image2){id.image2=d.image2;const z=document.getElementById('uploadZone2');if(z)z.innerHTML='<img src="'+d.image2+'" style="max-width:100%;border-radius:8px"><br><button class="btn" onclick="id.image2=null;document.getElementById(\'uploadZone2\').innerHTML=\'<p>גררו תמונה או לחצו להעלאה</p><input type=file accept=image/* onchange=hu(this,\\\'uploadZone2\\\',\\\'image2\\\')>\';saveL();up();" style="margin-top:8px">הסר</button>';}
-  if(d.imageAI){id.imageAI=d.imageAI;const zai=document.getElementById('uploadZoneAI');if(zai)zai.innerHTML='<img src="'+d.imageAI+'" style="max-width:100%;border-radius:8px"><br><button class="btn" onclick="id.imageAI=null;document.getElementById(\'uploadZoneAI\').innerHTML=\'<div class=\'up-icon\'>🤖</div><div class=\'up-txt\'>לחצו להעלאת תמונת ה-AI</div>\';saveL();up();" style="margin-top:8px">הסר</button>';}
+  if(d.imageAI){id.imageAI=d.imageAI;const zai=document.getElementById('uploadZoneAI');if(zai)zai.innerHTML='<img src="'+d.imageAI+'" style="max-width:100%;border-radius:8px"><br><button class="btn" onclick="id.imageAI=null;document.getElementById(\'uploadZoneAI\').innerHTML=\'<p>לחצו להעלאת תמונת ה-AI</p><input type=file accept=image/* onchange=hu(this,\\\'uploadZoneAI\\\',\\\'imageAI\\\')\>\';saveL();up();" style="margin-top:8px">הסר</button>';}
   if(d.ex&&d.ex.length){id.ex=d.ex;renderExImgs('extraImgZone');}
   if(d.articles&&d.articles.length){id.articles=d.articles;renderArts();}
   if(d.topicSelect){const tSel=document.getElementById('topicSelect');if(tSel){tSel.value=d.topicSelect;showTopicArticles();}}
@@ -1568,12 +1573,14 @@ function clearAnalysis(){
   const defStyle=document.querySelector('input[name="artStyle"][value="digital illustration"]');
   if(defStyle)defStyle.checked=true;
   document.getElementById('topicSelect').value='';
-  id.image1=null;id.image2=null;id.ex=[];id.articles=[];
+  id.image1=null;id.image2=null;id.imageAI=null;id.ex=[];id.articles=[];
   const tb=document.querySelector('#step2 .map-tbl tbody');if(tb)tb.innerHTML='';
   const z1=document.getElementById('uploadZone1');
   if(z1)z1.innerHTML='<input type="file" id="imgInp1" accept="image/*" style="display:none" onchange="hu(this,\'uploadZone1\',\'image1\')"><div class="up-icon">🖼️</div><div class="up-txt">לחצו להעלאת התמונה שיצרתם</div>';
   const z2=document.getElementById('uploadZone2');
   if(z2)z2.innerHTML='<input type="file" id="imgInp2" accept="image/*" style="display:none" onchange="hu(this,\'uploadZone2\',\'image2\')"><div class="up-icon">🖼️</div><div class="up-txt">לחצו להעלאת התמונה המתוקנת</div>';
+  const zai=document.getElementById('uploadZoneAI');
+  if(zai)zai.innerHTML='<input type="file" id="imgInpAI" accept="image/*" style="display:none" onchange="hu(this,\'uploadZoneAI\',\'imageAI\')"><div class="up-icon">🤖</div><div class="up-txt">לחצו להעלאת תמונת ה-AI</div>';
   const ez=document.getElementById('extraImgZone');
   if(ez)ez.innerHTML='<input type="file" id="exInp" accept="image/*" multiple style="display:none" onchange="hmu(this,\'extraImgZone\')"><div class="up-txt">📎 תמונות נוספות</div>';
   document.getElementById('articlesList').innerHTML='';
@@ -1584,6 +1591,7 @@ function clearAnalysis(){
   document.getElementById('topicExPanel').open=false;
   const tqp=document.getElementById('topicQuizPanel');if(tqp){tqp.style.display='none';document.getElementById('topicQuizContent').innerHTML='';}
   document.getElementById('summaryContent').innerHTML='';
+  const aqr=document.getElementById('aiChallengeQ');if(aqr)aqr.textContent='בחרו נושא בשלב 1 כדי לראות את אתגר החשיבה.';
   go(1);saveL();up();upp();closeAnModal();showT('ניתוח חדש!');
 }
 function showLibraryModal(){
