@@ -899,21 +899,43 @@ function cp(){
     const ta=document.createElement('textarea');ta.value=t;document.body.appendChild(ta);ta.select();document.execCommand('copy');document.body.removeChild(ta);showT('הפרומפט הועתק!');
   });
 }
+function compressImg(file,maxW,maxH,quality,cb){
+  const r=new FileReader();r.onload=function(e){
+    const img=new Image();img.onload=function(){
+      let w=img.width,h=img.height;
+      if(w>maxW||h>maxH){const sc=Math.min(maxW/w,maxH/h);w=Math.round(w*sc);h=Math.round(h*sc);}
+      const cv=document.createElement('canvas');cv.width=w;cv.height=h;
+      cv.getContext('2d').drawImage(img,0,0,w,h);
+      cb(cv.toDataURL('image/jpeg',quality));
+    };img.src=e.target.result;
+  };r.readAsDataURL(file);
+}
+const IMG_ZONES={image1:'uploadZone1',image2:'uploadZone2',imageAI:'uploadZoneAI'};
+function removeImg(key){
+  id[key]=null;
+  const zid=IMG_ZONES[key];const z=document.getElementById(zid);
+  if(!z)return;
+  const icon=key==='imageAI'?'🤖':'🖼️';
+  const txt=key==='imageAI'?'לחצו להעלאת תמונת ה-AI':'לחצו להעלאת התמונה';
+  z.innerHTML='<input type="file" id="imgInp'+key+'" accept="image/*" style="display:none" onchange="hu(this,\''+zid+'\',\''+key+'\')"><div class="up-icon">'+icon+'</div><div class="up-txt">'+txt+'</div>';
+  saveL();up();
+}
 function hu(inp,zid,key){
   const f=inp.files[0];if(!f)return;
   track('image-uploaded-'+key);
-  const r=new FileReader();r.onload=function(e){
-    id[key]=e.target.result;
-    const z=document.getElementById(zid);z.innerHTML='<img src="'+e.target.result+'" style="max-width:100%;border-radius:8px;margin-top:8px"><br><button class="btn" onclick="document.getElementById(\''+zid+'\').innerHTML=\'<p>גררו תמונה או לחצו להעלאה</p><input type=file accept=image/* onchange=hu(this,\\\''+zid+'\\\',\\\''+key+'\\\')>\';id[\''+key+'\']=null;saveL();up();" style="margin-top:8px">הסר תמונה</button>';
+  compressImg(f,1000,1000,0.75,function(compressed){
+    id[key]=compressed;
+    const z=document.getElementById(zid);
+    z.innerHTML='<img src="'+compressed+'" style="max-width:100%;border-radius:8px;margin-top:8px"><br><button class="btn" onclick="removeImg(\''+key+'\')" style="margin-top:8px">הסר תמונה</button>';
     saveL();up();
-  };r.readAsDataURL(f);
+  });
 }
 function hmu(inp,zid){
   const files=inp.files;if(!files.length)return;
   Array.from(files).forEach(f=>{
-    const r=new FileReader();r.onload=function(e){
-      id.ex.push(e.target.result);renderExImgs(zid);saveL();up();
-    };r.readAsDataURL(f);
+    compressImg(f,800,800,0.70,function(compressed){
+      id.ex.push(compressed);renderExImgs(zid);saveL();up();
+    });
   });
 }
 function renderExImgs(zid){
@@ -983,9 +1005,15 @@ function rd(d){
 }
 function eh(s){const d=document.createElement('div');d.textContent=s;return d.innerHTML;}
 function saveL(){
-  try{localStorage.setItem('edu_meta_data',JSON.stringify(cd()));}
-  catch(e){showT('⚠️ נגמר מקום האחסון — הורידו גיבוי JSON!');}
+  try{
+    localStorage.setItem('edu_meta_data',JSON.stringify(cd()));
+    window._unsaved=false;
+  }
+  catch(e){showT('⚠️ נגמר מקום אחסון! הורידו גיבוי JSON עכשיו כדי לא לאבד את העבודה!');}
 }
+window.addEventListener('beforeunload',function(e){
+  if(window._unsaved){e.preventDefault();e.returnValue='עבודה לא נשמרה עדיין';}
+});
 function as(){
   saveL();
   const nm=document.getElementById('studentName').value.trim();
@@ -1671,6 +1699,11 @@ document.addEventListener('keydown',function(e){
 // Backdrop click closes modals
 document.getElementById('consentOv').addEventListener('click',function(e){if(e.target===this)this.classList.remove('show');});
 document.getElementById('libOv').addEventListener('click',function(e){if(e.target===this)closeLibraryModal();});
+</script>
+<script>
+document.addEventListener('input',function(e){
+  if(e.target.tagName==='TEXTAREA'||e.target.tagName==='INPUT'){window._unsaved=true;}
+});
 </script>
 </body>
 </html>
