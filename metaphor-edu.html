@@ -51,6 +51,12 @@ h1,h2,h3,h4{font-family:'Assistant',sans-serif;font-weight:700}
 .consent-btn{display:block;margin:1rem auto 0;background:var(--p);color:#fff;border:none;padding:.7rem 2.2rem;border-radius:8px;font-size:1rem;font-family:'Assistant',sans-serif;font-weight:700;cursor:pointer;opacity:.4;pointer-events:none;transition:opacity .3s,transform .15s}
 .consent-btn.enabled{opacity:1;pointer-events:auto}.consent-btn.enabled:hover{transform:scale(1.03)}
 .consent-box .cb-note{text-align:center;font-size:.78rem;color:var(--tl);margin-top:.8rem}
+.consent-research{background:var(--bg);border-radius:8px;padding:.9rem 1rem;margin:.8rem 0;border:1.5px solid var(--b)}
+.consent-research strong{font-size:.88rem;display:block;margin-bottom:.5rem;color:var(--p)}
+.consent-research p{font-size:.84rem;color:var(--tl);margin-bottom:.6rem;line-height:1.6}
+.consent-radio{display:flex;align-items:center;gap:.5rem;margin:.35rem 0;font-size:.87rem;cursor:pointer;padding:.35rem .6rem;border-radius:6px;transition:background .15s}
+.consent-radio:hover{background:rgba(0,0,0,.04)}
+.consent-radio input{accent-color:var(--p);width:16px;height:16px;cursor:pointer}
 /* ===== INTRO UNIT ===== */
 .intro-unit{display:none;max-width:860px;margin:0 auto;padding:2rem 1rem 4rem}
 .intro-unit.show{display:block;animation:fi .5s ease}
@@ -252,18 +258,18 @@ h1,h2,h3,h4{font-family:'Assistant',sans-serif;font-weight:700}
 <!-- CONSENT -->
 <div class="consent-ov" id="consentOv">
 <div class="consent-box">
-<h3>ברוכים הבאים!</h3>
-<div class="cb-sub">תמונה שווה אלף מילים — מטפורות בהוראה</div>
-<p>אפליקציה זו מלווה תהליך ניתוח מטפורות בהוראה באמצעות יצירת תמונות בכלי בינה מלאכותית. התהליך כולל 7 שלבים קבועים שחוזרים על עצמם בכל פעם שבוחרים מטפורה חדשה.</p>
-<div class="cb-list">
-<div>בחירת מטפורה מתוך נושאי ההוראה</div>
-<div>ניתוח תחום מקור, תחום יעד ומיפויים</div>
-<div>בניית פרומפט ויצירת תמונה באמצעות AI</div>
-<div>פרשנות, רפלקציה וסיכום אישי</div>
+<h3>הסכמה מדעת</h3>
+<div class="cb-sub">תמונה שווה אלף מילים | ד״ר נאוה כהן | אוניברסיטת בר-אילן</div>
+<p>אפליקציה זו פותחה על ידי <strong>ד״ר נאוה כהן</strong> במסגרת קורס <strong>תמונה שווה אלף מילים</strong> באוניברסיטת בר-אילן. היא מלווה תהליך ניתוח מטפורות בהוראה באמצעות יצירת תמונות בכלי בינה מלאכותית.</p>
+<label class="consent-lbl"><input type="checkbox" id="consentCb" onchange="updConsentBtn()"><span>אני מסכים/ה שהנתונים יישמרו באופן מקומי בדפדפן שלי בלבד — לא נשלח מידע לשרתים חיצוניים.</span></label>
+<div class="consent-research">
+<strong>השתתפות במחקר</strong>
+<p>האם את/ה מסכים/ה שתגובותיך ישמשו לצורכי מחקר אקדמי? כל הנתונים <strong>אנונימיים לחלוטין</strong> ולא יהיה בהם שימוש אחר.</p>
+<label class="consent-radio"><input type="radio" name="mConsent" value="yes" onchange="updConsentBtn()"> כן, אני מסכים/ה לשימוש לצורכי מחקר</label>
+<label class="consent-radio"><input type="radio" name="mConsent" value="no" onchange="updConsentBtn()"> אני מעדיף/ה לא</label>
 </div>
-<label class="consent-lbl"><input type="checkbox" id="consentCb" onchange="document.getElementById('consentBtn').classList.toggle('enabled',this.checked)"><span>אני מסכים/ה שהנתונים יישמרו באופן מקומי בדפדפן שלי. <strong>הערה:</strong> גופני האפליקציה נטענים מ-Google Fonts (fonts.googleapis.com) בלבד — לא נשמר מידע על תוכן עבודתכם בשרתים חיצוניים.</span></label>
-<button class="consent-btn" id="consentBtn" onclick="acceptConsent()">אישור והתחלה</button>
-<div class="cb-note">ניתן למחוק את הנתונים בכל עת דרך הגדרות הדפדפן</div>
+<button class="consent-btn" id="consentBtn" onclick="acceptConsent()">אישור והתחלה →</button>
+<div class="cb-note">בשני המקרים תוכל/י להשתמש באפליקציה במלואה</div>
 </div>
 </div>
 
@@ -730,7 +736,17 @@ function skipToApp(){
   if(!name){showT('אנא הקלידו את שמכם לפני ההתחלה');document.getElementById('landingName').focus();return;}
   skipIntro();
 }
-function acceptConsent(){localStorage.setItem('edu_meta_consent','1');document.getElementById('consentOv').classList.remove('show');showIntro();}
+function updConsentBtn(){
+  const cb=document.getElementById('consentCb');
+  const r=document.querySelector('input[name="mConsent"]:checked');
+  document.getElementById('consentBtn').classList.toggle('enabled',!!(cb&&cb.checked&&r));
+}
+function acceptConsent(){
+  const r=document.querySelector('input[name="mConsent"]:checked');
+  localStorage.setItem('edu_meta_consent','1');
+  localStorage.setItem('edu_meta_research',r?r.value:'no');
+  document.getElementById('consentOv').classList.remove('show');showIntro();
+}
 function showIntro(){
   document.getElementById('landing').style.display='none';
   document.getElementById('introUnit').classList.add('show');
