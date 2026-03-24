@@ -997,6 +997,9 @@ function cd(){
   d.promptPreviewText=document.getElementById('promptPreview')?.textContent||'';
   d.currentStep=cs;
   d.topicSelect=document.getElementById('topicSelect')?.value||'';
+  d.studentName=document.getElementById('studentName')?.value||'';
+  d.researchConsent=localStorage.getItem('edu_meta_research')||'no';
+  d.timestamp=new Date().toISOString();
   return d;
 }
 function rd(d){

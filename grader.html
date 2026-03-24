@@ -1,0 +1,1356 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>מערכת בדיקה — מטפורות בהוראה</title>
+<link href="https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --p: #2e6b5e;
+    --pl: #3d8b7a;
+    --a: #c9a84c;
+    --bg: #f5f7f4;
+    --card: #ffffff;
+    --border: #d8e4e0;
+    --text: #1a2e28;
+    --muted: #6b8a82;
+    --danger: #c0392b;
+    --success: #27ae60;
+    --sidebar-w: 300px;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'Heebo', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    height: 100vh;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+  }
+
+  /* ===== TOP BAR ===== */
+  .topbar {
+    background: var(--p);
+    color: white;
+    padding: 12px 20px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-shrink: 0;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+    z-index: 100;
+  }
+  .topbar h1 { font-size: 1.2rem; font-weight: 700; letter-spacing: 0.3px; }
+  .topbar .subtitle { font-size: 0.8rem; opacity: 0.8; margin-top: 2px; }
+  .topbar-right { display: flex; align-items: center; gap: 12px; }
+  .stats-badge {
+    background: rgba(255,255,255,0.15);
+    border: 1px solid rgba(255,255,255,0.3);
+    border-radius: 20px;
+    padding: 4px 12px;
+    font-size: 0.82rem;
+    font-weight: 600;
+  }
+
+  /* ===== LAYOUT ===== */
+  .layout {
+    display: flex;
+    flex: 1;
+    overflow: hidden;
+  }
+
+  /* ===== SIDEBAR ===== */
+  .sidebar {
+    width: var(--sidebar-w);
+    background: var(--card);
+    border-left: 1px solid var(--border);
+    display: flex;
+    flex-direction: column;
+    flex-shrink: 0;
+    overflow: hidden;
+  }
+
+  .sidebar-header {
+    padding: 16px;
+    border-bottom: 1px solid var(--border);
+    background: #f0f5f3;
+  }
+
+  /* ===== DRAG DROP ===== */
+  .drop-zone {
+    border: 2.5px dashed var(--pl);
+    border-radius: 12px;
+    padding: 16px 12px;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.2s;
+    background: white;
+    margin-bottom: 12px;
+  }
+  .drop-zone:hover, .drop-zone.drag-over {
+    border-color: var(--a);
+    background: #fffdf5;
+    transform: scale(1.01);
+  }
+  .drop-zone .drop-icon { font-size: 2rem; margin-bottom: 6px; }
+  .drop-zone .drop-title { font-size: 0.9rem; font-weight: 700; color: var(--p); margin-bottom: 3px; }
+  .drop-zone .drop-sub { font-size: 0.75rem; color: var(--muted); line-height: 1.4; }
+  .drop-zone input[type=file] { display: none; }
+
+  .search-box {
+    width: 100%;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 8px 12px;
+    font-family: 'Heebo', sans-serif;
+    font-size: 0.85rem;
+    background: white;
+    color: var(--text);
+    outline: none;
+    transition: border-color 0.2s;
+  }
+  .search-box:focus { border-color: var(--pl); }
+
+  /* ===== STUDENT LIST ===== */
+  .student-list {
+    flex: 1;
+    overflow-y: auto;
+    padding: 8px;
+  }
+  .student-list::-webkit-scrollbar { width: 5px; }
+  .student-list::-webkit-scrollbar-track { background: transparent; }
+  .student-list::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
+
+  .student-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px 12px;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: all 0.15s;
+    border: 1.5px solid transparent;
+    margin-bottom: 4px;
+    gap: 8px;
+  }
+  .student-item:hover { background: #f0f5f3; border-color: var(--border); }
+  .student-item.active { background: #e8f2ef; border-color: var(--pl); }
+
+  .student-info { flex: 1; min-width: 0; }
+  .student-name { font-size: 0.88rem; font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .student-topic { font-size: 0.72rem; color: var(--muted); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; margin-top: 2px; }
+
+  .score-badge {
+    flex-shrink: 0;
+    font-size: 0.75rem;
+    font-weight: 700;
+    padding: 3px 8px;
+    border-radius: 12px;
+    white-space: nowrap;
+  }
+  .score-badge.graded { background: #d4edda; color: #155724; }
+  .score-badge.ungraded { background: #f0f0f0; color: #888; }
+  .score-badge.partial { background: #fff3cd; color: #856404; }
+
+  /* ===== SIDEBAR FOOTER ===== */
+  .sidebar-footer {
+    padding: 12px 16px;
+    border-top: 1px solid var(--border);
+    background: #f0f5f3;
+  }
+  .btn-export {
+    width: 100%;
+    background: var(--a);
+    color: white;
+    border: none;
+    border-radius: 10px;
+    padding: 11px;
+    font-family: 'Heebo', sans-serif;
+    font-size: 0.9rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.2s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+  }
+  .btn-export:hover { background: #b8953e; transform: translateY(-1px); }
+  .btn-export:active { transform: translateY(0); }
+
+  /* ===== MAIN AREA ===== */
+  .main {
+    flex: 1;
+    overflow-y: auto;
+    padding: 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+  .main::-webkit-scrollbar { width: 6px; }
+  .main::-webkit-scrollbar-track { background: transparent; }
+  .main::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
+
+  /* ===== EMPTY STATE ===== */
+  .empty-state {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    color: var(--muted);
+    gap: 12px;
+    text-align: center;
+  }
+  .empty-state .big-icon { font-size: 4rem; opacity: 0.4; }
+  .empty-state h2 { font-size: 1.3rem; font-weight: 700; color: var(--p); }
+  .empty-state p { font-size: 0.9rem; line-height: 1.6; max-width: 340px; }
+
+  /* ===== STUDENT HEADER ===== */
+  .student-header {
+    background: var(--card);
+    border-radius: 14px;
+    padding: 20px 24px;
+    border: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 12px;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.05);
+  }
+  .student-header-left h2 { font-size: 1.35rem; font-weight: 800; color: var(--p); }
+  .student-header-left .topic-label {
+    font-size: 0.85rem;
+    color: var(--muted);
+    margin-top: 4px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .completeness-pill {
+    background: #e8f2ef;
+    color: var(--p);
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    padding: 6px 14px;
+    font-size: 0.82rem;
+    font-weight: 600;
+  }
+
+  /* ===== GRADE CARDS ===== */
+  .grade-card {
+    background: var(--card);
+    border-radius: 14px;
+    border: 1px solid var(--border);
+    overflow: hidden;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.05);
+    transition: box-shadow 0.2s;
+  }
+  .grade-card:hover { box-shadow: 0 3px 12px rgba(0,0,0,0.1); }
+
+  .card-header {
+    padding: 14px 20px;
+    background: linear-gradient(135deg, var(--p) 0%, var(--pl) 100%);
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .card-title { font-size: 1rem; font-weight: 700; }
+  .card-max { font-size: 0.82rem; opacity: 0.85; }
+
+  .card-body { padding: 18px 20px; }
+
+  .field-group { margin-bottom: 14px; }
+  .field-label {
+    font-size: 0.78rem;
+    font-weight: 600;
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-bottom: 5px;
+  }
+
+  /* ===== DETAILS / EXPANDABLE TEXT ===== */
+  details.field-details {
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    overflow: hidden;
+  }
+  details.field-details summary {
+    padding: 9px 13px;
+    cursor: pointer;
+    font-size: 0.85rem;
+    color: var(--text);
+    background: #f8faf9;
+    list-style: none;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    user-select: none;
+    gap: 8px;
+  }
+  details.field-details summary::-webkit-details-marker { display: none; }
+  details.field-details summary .preview { flex: 1; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; color: var(--muted); }
+  details.field-details summary .expand-icon { flex-shrink: 0; font-size: 0.75rem; color: var(--muted); transition: transform 0.2s; }
+  details.field-details[open] summary .expand-icon { transform: rotate(180deg); }
+  details.field-details .full-text {
+    padding: 12px 13px;
+    font-size: 0.87rem;
+    line-height: 1.7;
+    background: white;
+    border-top: 1px solid var(--border);
+    white-space: pre-wrap;
+    word-break: break-word;
+    max-height: 220px;
+    overflow-y: auto;
+  }
+  .empty-field {
+    padding: 9px 13px;
+    font-size: 0.82rem;
+    color: #bbb;
+    background: #fafafa;
+    border: 1px dashed #ddd;
+    border-radius: 8px;
+    font-style: italic;
+  }
+
+  /* ===== MAPPINGS TABLE ===== */
+  .mappings-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.82rem;
+    border-radius: 8px;
+    overflow: hidden;
+    border: 1px solid var(--border);
+  }
+  .mappings-table th {
+    background: #f0f5f3;
+    padding: 8px 10px;
+    font-weight: 600;
+    color: var(--p);
+    border-bottom: 1px solid var(--border);
+    text-align: right;
+  }
+  .mappings-table td {
+    padding: 7px 10px;
+    border-bottom: 1px solid #f0f0f0;
+    line-height: 1.4;
+  }
+  .mappings-table tr:last-child td { border-bottom: none; }
+  .mappings-table tr:nth-child(even) td { background: #fafcfb; }
+
+  /* ===== IMAGE PREVIEW ===== */
+  .img-preview {
+    max-width: 200px;
+    max-height: 160px;
+    border-radius: 8px;
+    border: 2px solid var(--border);
+    object-fit: contain;
+    background: #f8f8f8;
+    display: block;
+    margin-top: 6px;
+  }
+  .no-image { font-size: 0.82rem; color: #bbb; font-style: italic; }
+
+  /* ===== SCORE INPUT ===== */
+  .score-row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-top: 16px;
+    padding-top: 14px;
+    border-top: 2px solid var(--border);
+  }
+  .score-label { font-size: 0.9rem; font-weight: 700; color: var(--text); }
+  .score-controls {
+    display: flex;
+    align-items: center;
+    gap: 0;
+    border: 2px solid var(--border);
+    border-radius: 10px;
+    overflow: hidden;
+    margin-right: auto;
+    transition: border-color 0.2s;
+  }
+  .score-controls.has-score { border-color: var(--success); }
+  .score-btn {
+    width: 40px;
+    height: 44px;
+    border: none;
+    background: #f0f5f3;
+    cursor: pointer;
+    font-size: 1.3rem;
+    font-weight: 700;
+    color: var(--p);
+    transition: background 0.15s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    user-select: none;
+    flex-shrink: 0;
+  }
+  .score-btn:hover { background: #d8eae5; }
+  .score-btn:active { background: #c5dfd8; }
+  .score-input {
+    width: 60px;
+    height: 44px;
+    border: none;
+    border-right: 1px solid var(--border);
+    border-left: 1px solid var(--border);
+    text-align: center;
+    font-family: 'Heebo', sans-serif;
+    font-size: 1.2rem;
+    font-weight: 700;
+    color: var(--text);
+    outline: none;
+    background: white;
+    -moz-appearance: textfield;
+  }
+  .score-input::-webkit-outer-spin-button,
+  .score-input::-webkit-inner-spin-button { -webkit-appearance: none; }
+  .score-out-of { font-size: 0.88rem; color: var(--muted); font-weight: 500; }
+
+  /* ===== AUTO COMPLETENESS CARD ===== */
+  .auto-card {
+    background: var(--card);
+    border-radius: 14px;
+    border: 1px solid var(--border);
+    overflow: hidden;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.05);
+  }
+  .auto-card .card-header { background: linear-gradient(135deg, #5a6a64 0%, #7a8c85 100%); }
+  .auto-score-display {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    padding: 18px 20px;
+  }
+  .auto-score-number {
+    font-size: 2.5rem;
+    font-weight: 800;
+    color: var(--p);
+    line-height: 1;
+    min-width: 60px;
+    text-align: center;
+  }
+  .auto-score-detail { flex: 1; }
+  .auto-score-detail .fields-count { font-size: 0.88rem; color: var(--muted); margin-bottom: 8px; }
+  .progress-bar-wrap {
+    height: 8px;
+    background: var(--border);
+    border-radius: 4px;
+    overflow: hidden;
+  }
+  .progress-bar-fill {
+    height: 100%;
+    background: linear-gradient(90deg, var(--pl), var(--a));
+    border-radius: 4px;
+    transition: width 0.4s ease;
+  }
+
+  /* ===== COMMENT BOX ===== */
+  .comment-card {
+    background: var(--card);
+    border-radius: 14px;
+    border: 1px solid var(--border);
+    overflow: hidden;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.05);
+  }
+  .comment-card .card-header { background: linear-gradient(135deg, #4a5568 0%, #667eea 100%); }
+  .comment-textarea {
+    width: 100%;
+    border: none;
+    padding: 16px 20px;
+    font-family: 'Heebo', sans-serif;
+    font-size: 0.9rem;
+    line-height: 1.7;
+    resize: vertical;
+    min-height: 100px;
+    outline: none;
+    color: var(--text);
+    background: white;
+  }
+  .comment-textarea::placeholder { color: #bbb; }
+
+  /* ===== TOTAL SCORE ===== */
+  .total-card {
+    background: linear-gradient(135deg, var(--p) 0%, var(--pl) 100%);
+    border-radius: 14px;
+    padding: 20px 24px;
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 12px;
+    box-shadow: 0 3px 12px rgba(46,107,94,0.3);
+  }
+  .total-label { font-size: 1.1rem; font-weight: 700; }
+  .total-sublabel { font-size: 0.82rem; opacity: 0.8; margin-top: 3px; }
+  .total-number {
+    font-size: 3rem;
+    font-weight: 800;
+    line-height: 1;
+    display: flex;
+    align-items: baseline;
+    gap: 6px;
+  }
+  .total-denom { font-size: 1.2rem; opacity: 0.7; font-weight: 500; }
+
+  /* ===== NAVIGATION ===== */
+  .nav-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 4px;
+  }
+  .btn-nav {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background: var(--card);
+    border: 1.5px solid var(--border);
+    border-radius: 10px;
+    padding: 9px 16px;
+    font-family: 'Heebo', sans-serif;
+    font-size: 0.88rem;
+    font-weight: 600;
+    color: var(--p);
+    cursor: pointer;
+    transition: all 0.15s;
+  }
+  .btn-nav:hover:not(:disabled) { background: #e8f2ef; border-color: var(--pl); }
+  .btn-nav:disabled { opacity: 0.35; cursor: not-allowed; }
+  .nav-position { font-size: 0.85rem; color: var(--muted); font-weight: 500; }
+
+  /* ===== TOAST ===== */
+  .toast {
+    position: fixed;
+    bottom: 24px;
+    left: 50%;
+    transform: translateX(-50%) translateY(80px);
+    background: var(--p);
+    color: white;
+    padding: 10px 22px;
+    border-radius: 24px;
+    font-size: 0.88rem;
+    font-weight: 600;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.2);
+    transition: transform 0.3s ease;
+    z-index: 9999;
+    pointer-events: none;
+  }
+  .toast.show { transform: translateX(-50%) translateY(0); }
+
+  /* ===== SCROLLBAR for main ===== */
+  .main::-webkit-scrollbar { width: 6px; }
+
+  /* ===== TWO COLUMNS for fields ===== */
+  .fields-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+  }
+  @media (max-width: 800px) { .fields-grid { grid-template-columns: 1fr; } }
+
+  .reflect-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+  }
+  @media (max-width: 800px) { .reflect-grid { grid-template-columns: 1fr; } }
+
+  .image-row {
+    display: flex;
+    gap: 16px;
+    flex-wrap: wrap;
+    margin-top: 4px;
+  }
+  .image-item { display: flex; flex-direction: column; gap: 6px; }
+  .image-item-label { font-size: 0.75rem; color: var(--muted); font-weight: 600; }
+</style>
+</head>
+<body>
+
+<!-- TOP BAR -->
+<div class="topbar">
+  <div>
+    <h1>מערכת בדיקה — מטפורות בהוראה</h1>
+    <div class="subtitle">ד"ר נווה כהן · בדיקת עבודות סטודנטים</div>
+  </div>
+  <div class="topbar-right">
+    <div class="stats-badge" id="statsLabel">0 / 0 נבדקו</div>
+  </div>
+</div>
+
+<!-- LAYOUT -->
+<div class="layout">
+
+  <!-- SIDEBAR -->
+  <div class="sidebar">
+    <div class="sidebar-header">
+
+      <!-- DRAG & DROP ZONE -->
+      <div class="drop-zone" id="dropZone">
+        <label for="fileInput" style="cursor:pointer; display:block;">
+          <div class="drop-icon">📂</div>
+          <div class="drop-title">לחצי כאן לטעינת עבודות</div>
+          <div class="drop-sub">בחרי את קבצי ה-JSON שהסטודנטים שלחו<br>(ניתן לבחור הכל בבת אחת עם Cmd+A)</div>
+          <input type="file" id="fileInput" accept=".json" multiple>
+        </label>
+      </div>
+
+      <!-- SEARCH -->
+      <input type="text" class="search-box" id="searchBox" placeholder="🔍  חיפוש לפי שם סטודנט...">
+    </div>
+
+    <!-- STUDENT LIST -->
+    <div class="student-list" id="studentList"></div>
+
+    <!-- FOOTER -->
+    <div class="sidebar-footer">
+      <button class="btn-export" id="exportBtn">
+        <span>📊</span>
+        <span>ייצוא Excel (CSV)</span>
+      </button>
+    </div>
+  </div>
+
+  <!-- MAIN AREA -->
+  <div class="main" id="mainArea">
+    <div class="empty-state" id="emptyState">
+      <div class="big-icon">📋</div>
+      <h2>ברוכה הבאה למערכת הבדיקה</h2>
+      <p>טעיני קבצי JSON של הסטודנטים מהצד הימני.<br>לחצי על שם סטודנט כדי להתחיל לבדוק.</p>
+      <p style="font-size:0.78rem; color:#aaa; margin-top:8px;">קיצורי מקלדת: ← → מעבר בין סטודנטים</p>
+    </div>
+    <div id="graderArea" style="display:none; flex-direction:column; gap:16px;"></div>
+  </div>
+</div>
+
+<!-- TOAST -->
+<div class="toast" id="toast">✓ נשמר</div>
+
+<script>
+// ============================================================
+//  STATE
+// ============================================================
+let students = [];       // array of { id, data, grade }
+let currentIdx = -1;
+let saveTimer = null;
+const STORAGE_KEY = 'metaphor_grades';
+
+// ============================================================
+//  HELPERS
+// ============================================================
+function uid(data) {
+  const name = (data.studentName || '').trim() || 'ללא שם';
+  const topic = (data.topicSelect || '').trim() || 'ללא נושא';
+  return name + '|||' + topic;
+}
+
+function shortText(str, len = 80) {
+  if (!str) return '';
+  str = str.toString().replace(/\n/g, ' ').trim();
+  return str.length > len ? str.slice(0, len) + '…' : str;
+}
+
+function isTextFilled(val) {
+  return val && val.toString().trim().length > 0;
+}
+
+function computeCompleteness(data) {
+  const textFields = [
+    'metaphorTopic','metaphorSource','metaphorWhy','sourceDomain','targetDomain',
+    'conceptualMetaphor','mappingExplain','usedPrompt','imageRepresent','imageSurprise',
+    'aiWhatChanges','aiWhatRemains','aiPrompt','aiComparison',
+    'commentatorName','commentaryContent','commentaryImpact','commentaryChanges',
+    'newPrompt','comparison',
+    'reflect1','reflect2','reflect3','reflect4','reflect5'
+  ];
+  let filled = 0;
+  textFields.forEach(f => { if (isTextFilled(data[f])) filled++; });
+  const mappingsOk = data.mappings && Array.isArray(data.mappings) && data.mappings.length > 0;
+  if (mappingsOk) filled++;
+  const total = textFields.length + 1;
+  return { filled, total, score: Math.round((filled / total) * 10) };
+}
+
+function totalScore(grade, completeness) {
+  const c1 = grade.c1 !== '' && grade.c1 !== null && grade.c1 !== undefined ? Number(grade.c1) : 0;
+  const c2 = grade.c2 !== '' && grade.c2 !== null && grade.c2 !== undefined ? Number(grade.c2) : 0;
+  const c3 = grade.c3 !== '' && grade.c3 !== null && grade.c3 !== undefined ? Number(grade.c3) : 0;
+  const c4 = grade.c4 !== '' && grade.c4 !== null && grade.c4 !== undefined ? Number(grade.c4) : 0;
+  return c1 + c2 + c3 + c4 + completeness.score;
+}
+
+function isGraded(grade) {
+  return grade.c1 !== '' && grade.c2 !== '' && grade.c3 !== '' && grade.c4 !== '';
+}
+
+function isPartial(grade) {
+  return (grade.c1 !== '' || grade.c2 !== '' || grade.c3 !== '' || grade.c4 !== '') && !isGraded(grade);
+}
+
+function getDisplayName(data) {
+  return (data.studentName || '').trim() || 'ללא שם';
+}
+
+function getTopicShort(data) {
+  const t = (data.topicSelect || '').trim();
+  if (!t) return 'ללא נושא';
+  // Take up to 30 chars
+  return t.length > 40 ? t.slice(0, 40) + '…' : t;
+}
+
+// ============================================================
+//  PERSISTENCE
+// ============================================================
+function loadFromStorage() {
+  try {
+    const raw = localStorage.getItem(STORAGE_KEY);
+    return raw ? JSON.parse(raw) : {};
+  } catch(e) { return {}; }
+}
+
+function saveToStorage() {
+  const out = {};
+  students.forEach(s => { out[s.id] = s.grade; });
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(out));
+}
+
+// ============================================================
+//  FILE LOADING
+// ============================================================
+function loadFiles(files) {
+  const savedGrades = loadFromStorage();
+  let added = 0;
+  Array.from(files).forEach(file => {
+    if (!file.name.endsWith('.json')) return;
+    const reader = new FileReader();
+    reader.onload = e => {
+      try {
+        const data = JSON.parse(e.target.result);
+        const id = uid(data);
+        // avoid duplicates
+        if (!students.find(s => s.id === id)) {
+          const savedGrade = savedGrades[id] || { c1:'', c2:'', c3:'', c4:'', comment:'' };
+          students.push({ id, data, grade: savedGrade });
+          added++;
+        }
+        renderSidebar();
+        updateStats();
+      } catch(err) {
+        console.error('Failed to parse', file.name, err);
+      }
+    };
+    reader.readAsText(file);
+  });
+}
+
+// ============================================================
+//  SIDEBAR RENDER
+// ============================================================
+function renderSidebar() {
+  const search = document.getElementById('searchBox').value.toLowerCase();
+  const list = document.getElementById('studentList');
+  list.innerHTML = '';
+  const filtered = students.filter(s => {
+    if (!search) return true;
+    return getDisplayName(s.data).toLowerCase().includes(search);
+  });
+  filtered.forEach(s => {
+    const idx = students.indexOf(s);
+    const item = document.createElement('div');
+    item.className = 'student-item' + (idx === currentIdx ? ' active' : '');
+    item.dataset.idx = idx;
+
+    const info = document.createElement('div');
+    info.className = 'student-info';
+    info.innerHTML = `<div class="student-name">${escHtml(getDisplayName(s.data))}</div>
+      <div class="student-topic">${escHtml(getTopicShort(s.data))}</div>`;
+
+    const badge = document.createElement('div');
+    const completeness = computeCompleteness(s.data);
+    if (isGraded(s.grade)) {
+      const tot = totalScore(s.grade, completeness);
+      badge.className = 'score-badge graded';
+      badge.textContent = tot + '/100';
+    } else if (isPartial(s.grade)) {
+      badge.className = 'score-badge partial';
+      badge.textContent = 'חלקי';
+    } else {
+      badge.className = 'score-badge ungraded';
+      badge.textContent = 'לא נבדק';
+    }
+
+    item.appendChild(info);
+    item.appendChild(badge);
+    item.addEventListener('click', () => selectStudent(idx));
+    list.appendChild(item);
+  });
+}
+
+function updateStats() {
+  const total = students.length;
+  const graded = students.filter(s => isGraded(s.grade)).length;
+  document.getElementById('statsLabel').textContent = `${graded} / ${total} נבדקו`;
+}
+
+// ============================================================
+//  STUDENT SELECTION
+// ============================================================
+function selectStudent(idx) {
+  currentIdx = idx;
+  renderSidebar();
+  renderGrader();
+}
+
+// ============================================================
+//  ESCAPE HTML
+// ============================================================
+function escHtml(str) {
+  if (!str) return '';
+  return str.toString()
+    .replace(/&/g,'&amp;')
+    .replace(/</g,'&lt;')
+    .replace(/>/g,'&gt;')
+    .replace(/"/g,'&quot;');
+}
+
+// ============================================================
+//  FIELD DISPLAY
+// ============================================================
+function fieldBlock(label, value) {
+  if (!isTextFilled(value)) {
+    return `<div class="field-group">
+      <div class="field-label">${escHtml(label)}</div>
+      <div class="empty-field">לא מולא</div>
+    </div>`;
+  }
+  const preview = shortText(value, 80);
+  const full = escHtml(value.toString());
+  const previewHtml = escHtml(preview);
+  const isShort = value.toString().length <= 80;
+  if (isShort) {
+    return `<div class="field-group">
+      <div class="field-label">${escHtml(label)}</div>
+      <div style="padding:9px 13px;background:#f8faf9;border:1px solid var(--border);border-radius:8px;font-size:0.87rem;line-height:1.6;">${full}</div>
+    </div>`;
+  }
+  return `<div class="field-group">
+    <div class="field-label">${escHtml(label)}</div>
+    <details class="field-details">
+      <summary>
+        <span class="preview">${previewHtml}</span>
+        <span class="expand-icon">▼</span>
+      </summary>
+      <div class="full-text">${full}</div>
+    </details>
+  </div>`;
+}
+
+function imageBlock(label, dataUrl) {
+  if (!dataUrl || dataUrl.length < 20) {
+    return `<div class="image-item"><div class="image-item-label">${escHtml(label)}</div><span class="no-image">אין תמונה</span></div>`;
+  }
+  return `<div class="image-item">
+    <div class="image-item-label">${escHtml(label)}</div>
+    <img class="img-preview" src="${dataUrl}" alt="${escHtml(label)}" loading="lazy">
+  </div>`;
+}
+
+function mappingsBlock(mappings) {
+  if (!mappings || !Array.isArray(mappings) || mappings.length === 0) {
+    return '<div class="empty-field">אין מיפויים</div>';
+  }
+  let rows = '';
+  mappings.forEach(row => {
+    if (!Array.isArray(row)) return;
+    rows += `<tr>
+      <td>${escHtml(row[0] || '')}</td>
+      <td>${escHtml(row[1] || '')}</td>
+      <td>${escHtml(row[2] || '')}</td>
+    </tr>`;
+  });
+  return `<table class="mappings-table">
+    <thead><tr><th>תחום המקור</th><th>תחום היעד</th><th>הסבר</th></tr></thead>
+    <tbody>${rows}</tbody>
+  </table>`;
+}
+
+// ============================================================
+//  SCORE INPUT WIDGET
+// ============================================================
+function scoreWidget(criterionKey, label, max, currentVal) {
+  const val = currentVal !== '' && currentVal !== null && currentVal !== undefined ? currentVal : '';
+  const hasScore = val !== '';
+  return `<div class="score-row">
+    <span class="score-label">${escHtml(label)}</span>
+    <div class="score-controls ${hasScore ? 'has-score' : ''}" id="ctrl_${criterionKey}">
+      <button class="score-btn" onclick="adjustScore('${criterionKey}', ${max}, -1)" title="הפחת">−</button>
+      <input
+        class="score-input"
+        id="score_${criterionKey}"
+        type="number"
+        min="0" max="${max}"
+        value="${val}"
+        placeholder="—"
+        oninput="onScoreInput('${criterionKey}', ${max})"
+      >
+      <button class="score-btn" onclick="adjustScore('${criterionKey}', ${max}, 1)" title="הוסף">+</button>
+    </div>
+    <span class="score-out-of">מתוך ${max}</span>
+  </div>`;
+}
+
+// ============================================================
+//  GRADER RENDER
+// ============================================================
+function renderGrader() {
+  const emptyState = document.getElementById('emptyState');
+  const graderArea = document.getElementById('graderArea');
+
+  if (currentIdx < 0 || currentIdx >= students.length) {
+    emptyState.style.display = 'flex';
+    graderArea.style.display = 'none';
+    return;
+  }
+
+  emptyState.style.display = 'none';
+  graderArea.style.display = 'flex';
+
+  const s = students[currentIdx];
+  const d = s.data;
+  const g = s.grade;
+  const comp = computeCompleteness(d);
+  const tot = totalScore(g, comp);
+  const prevDisabled = currentIdx <= 0 ? 'disabled' : '';
+  const nextDisabled = currentIdx >= students.length - 1 ? 'disabled' : '';
+
+  let html = '';
+
+  // NAV
+  html += `<div class="nav-row">
+    <button class="btn-nav" onclick="navigate(1)" ${nextDisabled}>
+      <span>→</span> הבא
+    </button>
+    <span class="nav-position">${currentIdx + 1} מתוך ${students.length}</span>
+    <button class="btn-nav" onclick="navigate(-1)" ${prevDisabled}>
+      הקודם <span>←</span>
+    </button>
+  </div>`;
+
+  // HEADER
+  html += `<div class="student-header">
+    <div class="student-header-left">
+      <h2>${escHtml(getDisplayName(d))}</h2>
+      <div class="topic-label">
+        <span>📌</span>
+        <span>${escHtml(d.topicSelect || 'ללא נושא')}</span>
+      </div>
+      ${d.metaphorTopic ? `<div style="font-size:0.82rem;color:var(--muted);margin-top:3px;">מטפורה: <strong>${escHtml(d.metaphorTopic)}</strong></div>` : ''}
+    </div>
+    <div class="completeness-pill">שלמות: ${comp.filled}/${comp.total} שדות (${comp.score}/10)</div>
+  </div>`;
+
+  // CRITERION 1 — ניתוח המטפורה (0-30)
+  html += `<div class="grade-card">
+    <div class="card-header">
+      <span class="card-title">1. ניתוח המטפורה</span>
+      <span class="card-max">עד 30 נקודות</span>
+    </div>
+    <div class="card-body">
+      <div class="fields-grid">
+        ${fieldBlock('תחום המקור (Source Domain)', d.sourceDomain)}
+        ${fieldBlock('תחום היעד (Target Domain)', d.targetDomain)}
+        ${fieldBlock('המטפורה הקונספטואלית', d.conceptualMetaphor)}
+        ${fieldBlock('מקור הבחירה', d.metaphorSource)}
+      </div>
+      <div style="margin-top:12px;">
+        <div class="field-label">טבלת מיפויים</div>
+        ${mappingsBlock(d.mappings)}
+      </div>
+      ${fieldBlock('הסבר המיפויים', d.mappingExplain)}
+      ${fieldBlock('מדוע המטפורה', d.metaphorWhy)}
+      ${scoreWidget('c1', 'ציון — ניתוח המטפורה', 30, g.c1)}
+    </div>
+  </div>`;
+
+  // CRITERION 2 — תהליך יצירת התמונה (0-20)
+  html += `<div class="grade-card">
+    <div class="card-header">
+      <span class="card-title">2. תהליך יצירת התמונה</span>
+      <span class="card-max">עד 20 נקודות</span>
+    </div>
+    <div class="card-body">
+      ${fieldBlock('הפרומפט ששימש ליצירה', d.usedPrompt)}
+      ${d.aiTool ? `<div class="field-group"><div class="field-label">כלי AI ששימש</div>
+        <div style="padding:6px 12px;background:#f0f5f3;border-radius:8px;font-size:0.87rem;font-weight:600;color:var(--p);display:inline-block;">${escHtml(d.aiTool)}</div></div>` : ''}
+      <div class="fields-grid">
+        ${fieldBlock('מה התמונה מייצגת?', d.imageRepresent)}
+        ${fieldBlock('מה הפתיע בתמונה?', d.imageSurprise)}
+      </div>
+      ${d.commentatorName || d.commentaryContent ? `<div style='margin-top:12px;padding:12px;background:#fffdf5;border:1px solid #f0e0a0;border-radius:10px;'><div class='field-label' style='color:#856404;font-weight:700;margin-bottom:6px;'>📝 משוב ושיפור (שלב 6)</div>${d.commentatorName ? '<div style="font-size:.85rem;font-weight:700;margin-bottom:4px;">מגיב/ה: '+escHtml(d.commentatorName)+'</div>' : ''}${fieldBlock('תוכן המשוב', d.commentaryContent)}${fieldBlock('השפעת המשוב', d.commentaryImpact)}${fieldBlock('שינויים בפרומפט', d.commentaryChanges)}${d.newPrompt ? fieldBlock('פרומפט מתוקן', d.newPrompt) : ''}</div>` : ''}
+      <div class="image-row">
+        ${imageBlock('תמונה ראשונה', d.image1)}
+        ${imageBlock('תמונה מתוקנת (לאחר משוב)', d.image2)}
+      </div>
+      ${d.comparison ? fieldBlock('השוואה בין התמונות', d.comparison) : ''}
+      ${scoreWidget('c2', 'ציון — תהליך יצירת התמונה', 20, g.c2)}
+    </div>
+  </div>`;
+
+  // CRITERION 3 — המטפורה בעידן ה-AI (0-20)
+  html += `<div class="grade-card">
+    <div class="card-header">
+      <span class="card-title">3. המטפורה בעידן ה-AI</span>
+      <span class="card-max">עד 20 נקודות</span>
+    </div>
+    <div class="card-body">
+      <div class="fields-grid">
+        ${fieldBlock('מה השתנה בעידן ה-AI?', d.aiWhatChanges)}
+        ${fieldBlock('מה נשאר?', d.aiWhatRemains)}
+      </div>
+      ${fieldBlock('הפרומפט לתמונת עידן ה-AI', d.aiPrompt)}
+      ${fieldBlock('השוואה: לפני ואחרי AI', d.aiComparison)}
+      <div class="image-row">
+        ${imageBlock('תמונת עידן ה-AI', d.imageAI)}
+      </div>
+      ${scoreWidget('c3', 'ציון — עידן ה-AI', 20, g.c3)}
+    </div>
+  </div>`;
+
+  // CRITERION 4 — רפלקציה (0-20)
+  html += `<div class="grade-card">
+    <div class="card-header">
+      <span class="card-title">4. רפלקציה</span>
+      <span class="card-max">עד 20 נקודות</span>
+    </div>
+    <div class="card-body">
+      <div class="reflect-grid">
+        ${fieldBlock('מה למדתם על המטפורה דרך תהליך ההדמיה?', d.reflect1)}
+        ${fieldBlock('מה המטפורה חושפת על יחסי הכוח בכיתה?', d.reflect2)}
+        ${fieldBlock('מה המטפורה מסתירה?', d.reflect3)}
+        ${fieldBlock('מטפורה חלופית — מה הייתם בוחרים ומדוע?', d.reflect4)}
+      </div>
+      ${fieldBlock('כיצד ההבנה תשפיע על עבודתכם כמורים?', d.reflect5)}
+      ${scoreWidget('c4', 'ציון — רפלקציה', 20, g.c4)}
+    </div>
+  </div>`;
+
+  // AUTO COMPLETENESS
+  const barPct = Math.round((comp.filled / comp.total) * 100);
+  html += `<div class="auto-card">
+    <div class="card-header">
+      <span class="card-title">5. שלמות ההגשה (אוטומטי)</span>
+      <span class="card-max">עד 10 נקודות</span>
+    </div>
+    <div class="auto-score-display">
+      <div class="auto-score-number">${comp.score}</div>
+      <div class="auto-score-detail">
+        <div class="fields-count">${comp.filled} מתוך ${comp.total} שדות טקסטואליים מולאו (${barPct}%)</div>
+        <div class="progress-bar-wrap">
+          <div class="progress-bar-fill" style="width:${barPct}%"></div>
+        </div>
+      </div>
+    </div>
+  </div>`;
+
+  // COMMENT
+  html += `<div class="comment-card">
+    <div class="card-header">
+      <span class="card-title">הערות המרצה</span>
+    </div>
+    <textarea
+      class="comment-textarea"
+      id="commentArea"
+      placeholder="כתבי הערות לסטודנט כאן..."
+      oninput="onCommentInput()"
+    >${escHtml(g.comment || '')}</textarea>
+  </div>`;
+
+  // TOTAL
+  html += `<div class="total-card">
+    <div>
+      <div class="total-label">ציון סופי</div>
+      <div class="total-sublabel">30 + 20 + 20 + 20 + 10</div>
+    </div>
+    <div class="total-number" id="totalDisplay">
+      ${tot}<span class="total-denom">/100</span>
+    </div>
+  </div>
+  <button onclick="exportStudentPDF()" style="background:linear-gradient(135deg,#2e6b5e,#1d4a3e);color:#fff;border:none;border-radius:8px;padding:.6rem 1.2rem;font-family:'Heebo',sans-serif;font-size:.88rem;font-weight:600;cursor:pointer;margin-top:.5rem;display:flex;align-items:center;gap:.4rem">📄 ייצוא PDF לסטודנט</button>
+  `;
+
+  // NAV BOTTOM
+  html += `<div class="nav-row" style="margin-top:4px;margin-bottom:8px;">
+    <button class="btn-nav" onclick="navigate(1)" ${nextDisabled}>
+      <span>→</span> הסטודנט הבא
+    </button>
+    <span class="nav-position">${currentIdx + 1} מתוך ${students.length}</span>
+    <button class="btn-nav" onclick="navigate(-1)" ${prevDisabled}>
+      הסטודנט הקודם <span>←</span>
+    </button>
+  </div>`;
+
+  graderArea.innerHTML = html;
+
+  // Scroll to top
+  document.getElementById('mainArea').scrollTop = 0;
+}
+
+// ============================================================
+//  SCORE INTERACTIONS
+// ============================================================
+window.adjustScore = function(key, max, delta) {
+  const input = document.getElementById('score_' + key);
+  if (!input) return;
+  let val = input.value === '' ? 0 : parseInt(input.value, 10);
+  if (isNaN(val)) val = 0;
+  val = Math.max(0, Math.min(max, val + delta));
+  input.value = val;
+  commitScore(key, max);
+};
+
+window.onScoreInput = function(key, max) {
+  const input = document.getElementById('score_' + key);
+  if (!input) return;
+  let val = parseInt(input.value, 10);
+  if (isNaN(val)) { input.value = ''; commitScore(key, max); return; }
+  if (val < 0) { input.value = 0; val = 0; }
+  if (val > max) { input.value = max; val = max; }
+  commitScore(key, max);
+};
+
+function commitScore(key, max) {
+  if (currentIdx < 0) return;
+  const input = document.getElementById('score_' + key);
+  const ctrl = document.getElementById('ctrl_' + key);
+  const val = input ? input.value : '';
+  students[currentIdx].grade[key] = val;
+  if (ctrl) {
+    ctrl.classList.toggle('has-score', val !== '');
+  }
+  updateTotalDisplay();
+  scheduleSave();
+}
+
+window.onCommentInput = function() {
+  if (currentIdx < 0) return;
+  const ta = document.getElementById('commentArea');
+  students[currentIdx].grade.comment = ta ? ta.value : '';
+  scheduleSave();
+};
+
+function updateTotalDisplay() {
+  if (currentIdx < 0) return;
+  const s = students[currentIdx];
+  const comp = computeCompleteness(s.data);
+  const tot = totalScore(s.grade, comp);
+  const el = document.getElementById('totalDisplay');
+  if (el) el.innerHTML = `${tot}<span class="total-denom">/100</span>`;
+}
+
+function scheduleSave() {
+  clearTimeout(saveTimer);
+  saveTimer = setTimeout(() => {
+    saveToStorage();
+    updateStats();
+    renderSidebar();
+    showToast('✓ נשמר');
+  }, 600);
+}
+
+// ============================================================
+//  NAVIGATION
+// ============================================================
+window.navigate = function(delta) {
+  const newIdx = currentIdx + delta;
+  if (newIdx >= 0 && newIdx < students.length) {
+    selectStudent(newIdx);
+  }
+};
+
+document.addEventListener('keydown', e => {
+  if (e.target.tagName === 'TEXTAREA' || e.target.tagName === 'INPUT') return;
+  if (e.key === 'ArrowRight') navigate(1);
+  if (e.key === 'ArrowLeft') navigate(-1);
+});
+
+// ============================================================
+//  TOAST
+// ============================================================
+let toastTimer = null;
+function showToast(msg) {
+  const el = document.getElementById('toast');
+  el.textContent = msg;
+  el.classList.add('show');
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(() => el.classList.remove('show'), 2000);
+}
+
+// ============================================================
+//  DRAG & DROP
+// ============================================================
+const dropZone = document.getElementById('dropZone');
+const fileInput = document.getElementById('fileInput');
+
+dropZone.addEventListener('dragover', e => {
+  e.preventDefault();
+  dropZone.classList.add('drag-over');
+});
+dropZone.addEventListener('dragleave', () => dropZone.classList.remove('drag-over'));
+dropZone.addEventListener('drop', e => {
+  e.preventDefault();
+  dropZone.classList.remove('drag-over');
+  loadFiles(e.dataTransfer.files);
+});
+fileInput.addEventListener('change', e => {
+  loadFiles(e.target.files);
+  e.target.value = '';
+});
+
+// ============================================================
+//  SEARCH
+// ============================================================
+document.getElementById('searchBox').addEventListener('input', renderSidebar);
+
+// ============================================================
+
+// === PDF EXPORT PER STUDENT ===
+function exportStudentPDF(){
+  if(currentIdx<0)return;
+  const s=students[currentIdx];
+  const d=s.data;
+  const g=s.grade||{};
+  const comp=computeCompleteness(d);
+  const total=totalScore(g,comp);
+  const date=new Date().toLocaleDateString('he-IL',{year:'numeric',month:'long',day:'numeric'});
+  const criteria=[
+    {label:'ניתוח המטפורה',icon:'📖',score:Number(g.c1)||0,max:30},
+    {label:'תמונה ותהליך',icon:'🖼️',score:Number(g.c2)||0,max:20},
+    {label:'פרשנות ועיבוד',icon:'📜',score:Number(g.c3)||0,max:20},
+    {label:'רפלקציה',icon:'💭',score:Number(g.c4)||0,max:20},
+    {label:'שלמות הגשה',icon:'✅',score:comp.score,max:10}
+  ];
+  const rows=criteria.map(cr=>{
+    const bar=Math.round((cr.score/cr.max)*100);
+    return '<tr><td style="padding:.6rem .8rem;border-bottom:1px solid #e8e0d6;font-weight:600;color:#2e6b5e">'+cr.icon+' '+cr.label+'</td>'
+      +'<td style="padding:.6rem .8rem;border-bottom:1px solid #e8e0d6;text-align:center;font-weight:700;color:#2e6b5e">'+cr.score+'</td>'
+      +'<td style="padding:.6rem .8rem;border-bottom:1px solid #e8e0d6;text-align:center;color:#888">/ '+cr.max+'</td>'
+      +'<td style="padding:.6rem .8rem;border-bottom:1px solid #e8e0d6;width:120px"><div style="background:#e8e0d6;border-radius:4px;height:8px">'
+      +'<div style="background:'+(cr.score>=cr.max*0.85?'#4a8c6f':cr.score>=cr.max*0.6?'#c9a84c':'#c45050')+';width:'+bar+'%;height:8px;border-radius:4px"></div></div></td></tr>';
+  }).join('');
+  const comment=escHtml(g.comment||'');
+  const name=escHtml(getDisplayName(d));
+  const topic=escHtml(d.topicSelect||'');
+  const w=window.open('','_blank');
+  w.document.write('<!DOCTYPE html><html lang="he" dir="rtl"><head><meta charset="UTF-8">'
+    +'<title>פירוט ציון — '+name+'</title>'
+    +'<style>@import url("https://fonts.googleapis.com/css2?family=Assistant:wght@400;600;700;800&family=Heebo:wght@300;400;500;700&display=swap");'
+    +'*{margin:0;padding:0;box-sizing:border-box}body{font-family:Heebo,sans-serif;background:#fff;color:#2d2a26;padding:2.5rem;max-width:720px;margin:0 auto}'
+    +'h1,h2,h3{font-family:Assistant,sans-serif}@media print{body{padding:1.5rem}button{display:none!important}}</style></head><body>'
+    +'<div style="background:linear-gradient(135deg,#2e6b5e,#1d4a3e);color:#fff;border-radius:10px;padding:1.8rem 2rem;margin-bottom:2rem">'
+    +'<div style="font-size:.85rem;color:rgba(255,255,255,.75);margin-bottom:.3rem">אוניברסיטת בר-אילן | ד״ר נאוה כהן | מטפורות בהוראה</div>'
+    +'<h1 style="font-size:1.6rem;font-weight:800;margin-bottom:.3rem">פירוט ציון</h1>'
+    +'<div style="font-size:.82rem;color:rgba(255,255,255,.6)">'+date+'</div></div>'
+    +'<div style="display:flex;align-items:flex-start;justify-content:space-between;gap:1.5rem;margin-bottom:2rem;flex-wrap:wrap">'
+    +'<div><h2 style="font-size:1.4rem;color:#2e6b5e;margin-bottom:.3rem">'+name+'</h2>'
+    +(topic?'<div style="color:#6b6560;font-size:.9rem;margin-bottom:.4rem">'+topic+'</div>':'')+'</div>'
+    +'<div style="background:#2e6b5e;color:#fff;border-radius:12px;padding:1rem 1.8rem;text-align:center;min-width:110px">'
+    +'<div style="font-size:2.8rem;font-weight:800;line-height:1">'+total+'</div>'
+    +'<div style="font-size:.8rem;color:rgba(255,255,255,.75);margin-top:.2rem">/ 100</div></div></div>'
+    +'<h3 style="color:#2e6b5e;margin-bottom:.8rem;font-size:1rem">פירוט קריטריונים</h3>'
+    +'<table style="width:100%;border-collapse:collapse;border:1px solid #e8e0d6;margin-bottom:2rem">'
+    +'<thead><tr style="background:#f0f7f5"><th style="padding:.7rem .8rem;text-align:right;font-size:.82rem;color:#6b6560">קריטריון</th>'
+    +'<th style="padding:.7rem .8rem;text-align:center;font-size:.82rem;color:#6b6560">ציון</th>'
+    +'<th style="padding:.7rem .8rem;text-align:center;font-size:.82rem;color:#6b6560">מקסימום</th>'
+    +'<th style="padding:.7rem .8rem;font-size:.82rem;color:#6b6560">רמה</th></tr></thead>'
+    +'<tbody>'+rows+'</tbody></table>'
+    +(comment?'<div style="background:#f5fbf8;border:2px solid #4a8c6f;border-radius:10px;padding:1.2rem 1.5rem;margin-bottom:2rem">'
+      +'<h3 style="color:#2e6b5e;margin-bottom:.7rem;font-size:1rem">הערה כללית</h3>'
+      +'<p style="line-height:1.9;font-size:.95rem;white-space:pre-wrap">'+comment+'</p></div>':'')
+    +'<div style="text-align:center;margin-top:2rem">'
+    +'<button onclick="window.print()" style="background:#2e6b5e;color:#fff;border:none;border-radius:8px;padding:.7rem 2rem;font-family:Heebo,sans-serif;font-size:1rem;font-weight:600;cursor:pointer">'
+    +'שמירה כקובץ PDF / הדפסה</button></div></body></html>');
+  w.document.close();
+}
+
+//  EXPORT CSV
+// ============================================================
+document.getElementById('exportBtn').addEventListener('click', exportCSV);
+
+function exportCSV() {
+  if (students.length === 0) {
+    showToast('⚠️ אין סטודנטים לייצא');
+    return;
+  }
+
+  const BOM = '\uFEFF';
+  const cols = ['שם','נושא','מטפורה','ניתוח מטפורה (/30)','תמונה (/20)','עידן AI (/20)','רפלקציה (/20)','שלמות (/10)','ציון כולל (/100)','הערות'];
+
+  let csv = BOM + cols.map(c => '"' + c + '"').join(',') + '\r\n';
+
+  students.forEach(s => {
+    const d = s.data;
+    const g = s.grade;
+    const comp = computeCompleteness(d);
+    const c1 = g.c1 !== '' ? g.c1 : '';
+    const c2 = g.c2 !== '' ? g.c2 : '';
+    const c3 = g.c3 !== '' ? g.c3 : '';
+    const c4 = g.c4 !== '' ? g.c4 : '';
+    const tot = isGraded(g) ? totalScore(g, comp) : '';
+
+    const row = [
+      getDisplayName(d),
+      d.topicSelect || '',
+      d.metaphorTopic || '',
+      c1,
+      c2,
+      c3,
+      c4,
+      comp.score,
+      tot,
+      g.comment || ''
+    ];
+    csv += row.map(v => '"' + v.toString().replace(/"/g, '""') + '"').join(',') + '\r\n';
+  });
+
+  const today = new Date();
+  const dateStr = today.getFullYear() + '-' + String(today.getMonth()+1).padStart(2,'0') + '-' + String(today.getDate()).padStart(2,'0');
+  const filename = `ציונים_מטפורות_${dateStr}.csv`;
+
+  const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = filename;
+  a.click();
+  URL.revokeObjectURL(url);
+
+  showToast('📊 הקובץ הורד');
+}
+
+// ============================================================
+//  INIT — restore from localStorage on page load
+// ============================================================
+function init() {
+  // Show empty state
+  document.getElementById('emptyState').style.display = 'flex';
+  document.getElementById('graderArea').style.display = 'none';
+  renderSidebar();
+  updateStats();
+}
+
+init();
+</script>
+</body>
+</html>
