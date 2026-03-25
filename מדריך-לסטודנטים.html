@@ -1,0 +1,415 @@
+<!DOCTYPE html><html lang="he" dir="rtl"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>מדריך שימוש — מטפורות בהוראה</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Assistant:wght@400;600;700;800&family=Heebo:wght@300;400;500;700&display=swap');
+:root{--p:#2e6b5e;--pl:#3a8b7a;--a:#c9a84c;--al:#d8efe9;--bg:#f4f8f6;--c:#fff;--t:#2d2a26;--tl:#6b6560;--b:#d0ddd8;--r:14px}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Heebo',sans-serif;background:#1a1a2e;color:#fff;min-height:100vh;overflow:hidden}
+h1,h2,h3{font-family:'Assistant',sans-serif}
+
+/* Presentation container */
+.pres{width:100%;height:100vh;position:relative;display:flex;align-items:center;justify-content:center}
+.slide{display:none;width:90%;max-width:960px;min-height:70vh;background:var(--c);color:var(--t);border-radius:var(--r);padding:3rem;box-shadow:0 20px 60px rgba(0,0,0,.4);animation:fadeIn .4s ease;overflow-y:auto;max-height:90vh}
+.slide.active{display:block}
+@keyframes fadeIn{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
+
+/* Navigation */
+.nav{position:fixed;bottom:2rem;left:50%;transform:translateX(-50%);display:flex;align-items:center;gap:1rem;background:rgba(0,0,0,.7);padding:.6rem 1.5rem;border-radius:30px;z-index:10;backdrop-filter:blur(10px)}
+.nav button{background:var(--p);color:#fff;border:none;padding:.5rem 1.2rem;border-radius:20px;font-family:'Heebo',sans-serif;font-size:.9rem;cursor:pointer;transition:all .2s}
+.nav button:hover{background:var(--pl);transform:scale(1.05)}
+.nav button:disabled{opacity:.3;cursor:default;transform:none}
+.nav .counter{color:rgba(255,255,255,.7);font-size:.85rem;min-width:60px;text-align:center}
+
+/* Progress bar */
+.progress{position:fixed;top:0;left:0;height:4px;background:var(--p);transition:width .3s;z-index:10}
+
+/* Slide styles */
+.slide-hero{text-align:center;display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:65vh}
+.slide-hero h1{font-size:2.8rem;font-weight:800;color:var(--p);margin-bottom:.5rem}
+.slide-hero .sub{font-size:1.2rem;color:var(--tl);margin-bottom:2rem}
+.slide-hero .badge{display:inline-block;background:var(--al);color:var(--p);padding:.4rem 1.2rem;border-radius:20px;font-size:.88rem;font-weight:600}
+
+.step-num{display:inline-flex;align-items:center;justify-content:center;width:48px;height:48px;border-radius:50%;background:var(--p);color:#fff;font-size:1.4rem;font-weight:800;margin-bottom:1rem}
+.slide h2{font-size:1.6rem;color:var(--p);margin-bottom:.3rem}
+.slide .step-sub{font-size:.95rem;color:var(--tl);margin-bottom:1.5rem}
+.slide h3{font-size:1.1rem;color:var(--pl);margin:1.2rem 0 .5rem;display:flex;align-items:center;gap:.4rem}
+
+.slide p,.slide li{line-height:1.9;font-size:.95rem}
+.slide ul,.slide ol{padding-right:1.5rem;margin-bottom:.8rem}
+.slide li{margin-bottom:.4rem}
+
+.action-box{background:linear-gradient(135deg,rgba(46,107,94,.06),rgba(201,168,76,.06));border:1px solid var(--b);border-radius:10px;padding:1.2rem 1.5rem;margin:.8rem 0}
+.action-box strong{color:var(--p)}
+
+.tip{background:#fff8e1;border:1px solid #ffc107;border-radius:8px;padding:.8rem 1rem;font-size:.88rem;margin:.8rem 0;display:flex;align-items:flex-start;gap:.5rem}
+.tip .tip-ic{font-size:1.1rem;flex-shrink:0}
+
+.warn{background:#fce4ec;border:1px solid #e57373;border-radius:8px;padding:.8rem 1rem;font-size:.88rem;margin:.8rem 0}
+
+.field-list{display:flex;flex-direction:column;gap:.4rem;margin:.6rem 0}
+.field-item{background:var(--bg);padding:.5rem .8rem;border-radius:6px;font-size:.88rem;display:flex;align-items:center;gap:.5rem;border-right:3px solid var(--p)}
+.field-item .fi-icon{font-size:1rem}
+
+.cols{display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin:.8rem 0}
+@media(max-width:700px){.cols{grid-template-columns:1fr}}
+.col-card{background:var(--bg);border-radius:8px;padding:1rem;border:1px solid var(--b)}
+.col-card strong{color:var(--p);display:block;margin-bottom:.3rem}
+
+.export-btn{display:inline-flex;align-items:center;gap:.4rem;padding:.6rem 1.2rem;border-radius:8px;font-size:.9rem;font-weight:600;margin:.3rem}
+.export-json{background:var(--p);color:#fff}
+.export-pdf{background:#c45050;color:#fff}
+.export-html{background:var(--pl);color:#fff}
+
+/* Keyboard hint */
+.kb-hint{position:fixed;bottom:5rem;left:50%;transform:translateX(-50%);color:rgba(255,255,255,.4);font-size:.75rem;text-align:center}
+</style>
+</head><body>
+
+<div class="progress" id="progress"></div>
+
+<div class="pres" id="pres">
+
+<!-- SLIDE 0: Title -->
+<div class="slide slide-hero active">
+  <div style="font-size:4rem;margin-bottom:1rem">🎭</div>
+  <h1>מטפורות בהוראה</h1>
+  <div class="sub">מדריך שימוש מלא — שלב אחרי שלב</div>
+  <div class="badge">8 שלבים • כלי AI • ניתוח מטפורי</div>
+  <p style="margin-top:2rem;color:var(--tl);font-size:.9rem">ד״ר נאוה כהן | אוניברסיטת בר-אילן</p>
+</div>
+
+<!-- SLIDE 1: Overview -->
+<div class="slide">
+  <h2>🗺️ מבט-על: מסלול העבודה</h2>
+  <div class="step-sub">בכל פעם תבחרו מטפורה אחת מעולם ההוראה ותעברו תהליך ניתוח שלם</div>
+
+  <div class="field-list">
+    <div class="field-item"><span class="fi-icon">📚</span> <strong>שלב 1:</strong> רקע תיאורטי — קראו מאמר ועברו בוחן</div>
+    <div class="field-item"><span class="fi-icon">🔍</span> <strong>שלב 2:</strong> בחירת מטפורה — זהו מטפורה, מקור, יעד ומיפויים</div>
+    <div class="field-item"><span class="fi-icon">🎨</span> <strong>שלב 3:</strong> בניית פרומפט — תרגמו את הניתוח להנחיה לכלי AI</div>
+    <div class="field-item"><span class="fi-icon">🖼️</span> <strong>שלב 4:</strong> תמונה ראשונית — צרו תמונה בכלי AI ונתחו</div>
+    <div class="field-item"><span class="fi-icon">🤖</span> <strong>שלב 5:</strong> המטפורה בעידן ה-AI — בחינה מחדש</div>
+    <div class="field-item"><span class="fi-icon">💬</span> <strong>שלב 6:</strong> משוב ושיפור — קבלו משוב וצרו תמונה מתוקנת</div>
+    <div class="field-item"><span class="fi-icon">🪞</span> <strong>שלב 7:</strong> רפלקציה — חשבו על התהליך ועל מה שלמדתם</div>
+    <div class="field-item"><span class="fi-icon">📋</span> <strong>שלב 8:</strong> סיכום וייצוא — PDF + JSON להגשה</div>
+  </div>
+
+  <div class="tip"><span class="tip-ic">💡</span> <span>האפליקציה שומרת אוטומטית! אבל מומלץ להוריד גיבוי JSON מדי פעם.</span></div>
+</div>
+
+<!-- SLIDE 2: Getting Started -->
+<div class="slide">
+  <h2>🚀 איך מתחילים?</h2>
+  <div class="step-sub">כניסה ראשונה לאפליקציה</div>
+
+  <div class="action-box">
+    <strong>1. פתחו את הקישור:</strong><br>
+    <a href="https://navac123.github.io/metaphor-edu/" target="_blank" style="color:var(--p);font-weight:700;font-size:1.05rem">navac123.github.io/metaphor-edu</a>
+  </div>
+
+  <div class="action-box">
+    <strong>2. מסך הסכמה:</strong><br>
+    סמנו את תיבת האישור ובחרו אם להשתתף במחקר (אין חובה). לחצו <strong>אישור והמשך</strong>.
+  </div>
+
+  <div class="action-box">
+    <strong>3. הזינו שם:</strong><br>
+    כתבו את שמכם המלא — זה יופיע בקובץ ההגשה.
+  </div>
+
+  <div class="action-box">
+    <strong>4. בחרו נושא:</strong><br>
+    בתפריט הנפתח למעלה, בחרו את הנושא שקיבלתם: מטפורת המורה, התלמיד, הלמידה, השכל, או הזהות המקצועית.
+  </div>
+
+  <div class="tip"><span class="tip-ic">💡</span> <span>עבדו ב-Chrome לתוצאות הטובות ביותר.</span></div>
+</div>
+
+<!-- SLIDE 3: Step 1 -->
+<div class="slide">
+  <span class="step-num">1</span>
+  <h2>📚 רקע תיאורטי</h2>
+  <div class="step-sub">הכרות עם החומר הנלמד לפני שמתחילים</div>
+
+  <h3>📖 מה עושים?</h3>
+  <ul>
+    <li>קוראים את <strong>הסיכום התיאורטי</strong> שמופיע בדף</li>
+    <li>קוראים את <strong>המאמר האקדמי</strong> שמוצמד לנושא שבחרתם</li>
+    <li>עוברים <strong>בוחן קצר</strong> (5 שאלות) על המאמר</li>
+  </ul>
+
+  <div class="tip"><span class="tip-ic">⚠️</span> <span><strong>חובה</strong> לעבור את הבוחן לפני שממשיכים — ציון עובר: 4 מתוך 5.</span></div>
+
+  <h3>🎯 למה?</h3>
+  <p>הרקע התיאורטי נותן לכם את הכלים לניתוח מטפורי: מהי מטפורה מושגית, מהם תחום מקור ותחום יעד, ומה משמעות המיפויים. בלי הבסיס הזה — השלבים הבאים יהיו קשים.</p>
+</div>
+
+<!-- SLIDE 4: Step 2 -->
+<div class="slide">
+  <span class="step-num">2</span>
+  <h2>🔍 בחירת מטפורה וחשיפתה</h2>
+  <div class="step-sub">הלב של הניתוח — זיהוי ופירוק המטפורה</div>
+
+  <h3>📝 שדות למילוי:</h3>
+  <div class="field-list">
+    <div class="field-item"><span class="fi-icon">💬</span> <strong>תחום המטפורה</strong> — למשל: "מטפורת המורה כגנן"</div>
+    <div class="field-item"><span class="fi-icon">📖</span> <strong>מקור המטפורה</strong> — מאיפה? מאמר, שיח יומיומי, ספר?</div>
+    <div class="field-item"><span class="fi-icon">❓</span> <strong>מדוע בחרתם?</strong> — מה מעניין בה?</div>
+    <div class="field-item"><span class="fi-icon">🔵</span> <strong>תחום מקור (Source)</strong> — התחום המוכר (גן, מסע, בנייה...)</div>
+    <div class="field-item"><span class="fi-icon">🔴</span> <strong>תחום יעד (Target)</strong> — התחום המופשט (הוראה, למידה...)</div>
+    <div class="field-item"><span class="fi-icon">⚡</span> <strong>המטפורה המושגית</strong> — "ההוראה היא גננות"</div>
+    <div class="field-item"><span class="fi-icon">📊</span> <strong>טבלת מיפויים</strong> — התאמות בין מקור ליעד</div>
+    <div class="field-item"><span class="fi-icon">🔎</span> <strong>מה חושפת / מסתירה?</strong></div>
+  </div>
+
+  <div class="tip"><span class="tip-ic">💡</span> <span>הוסיפו לפחות 3 שורות בטבלת המיפויים — ככל שיותר, כך הניתוח עמוק יותר.</span></div>
+</div>
+
+<!-- SLIDE 5: Step 3 -->
+<div class="slide">
+  <span class="step-num">3</span>
+  <h2>🎨 בניית פרומפט</h2>
+  <div class="step-sub">תרגום הניתוח שלכם להנחיה לכלי AI — <strong>באנגלית!</strong></div>
+
+  <h3>📝 שדות למילוי:</h3>
+  <div class="cols">
+    <div class="col-card">
+      <strong>נושא התמונה</strong>
+      <p style="font-size:.85rem;color:var(--tl)">e.g.: a teacher as a gardener nurturing young minds</p>
+    </div>
+    <div class="col-card">
+      <strong>אלמנטים ויזואליים</strong>
+      <p style="font-size:.85rem;color:var(--tl)">e.g.: gardener, seedlings, books as seeds</p>
+    </div>
+    <div class="col-card">
+      <strong>רקע וסביבה</strong>
+      <p style="font-size:.85rem;color:var(--tl)">e.g.: warm greenhouse, soft morning light</p>
+    </div>
+    <div class="col-card">
+      <strong>צבעים ואווירה</strong>
+      <p style="font-size:.85rem;color:var(--tl)">e.g.: warm earth tones, hopeful mood</p>
+    </div>
+  </div>
+
+  <ul>
+    <li>בחרו <strong>סגנון אמנותי</strong> (איור דיגיטלי, צבעי מים, סוריאליסטי...)</li>
+    <li>הפרומפט נבנה אוטומטית → לחצו <strong>📋 העתיקו פרומפט</strong></li>
+  </ul>
+
+  <div class="warn"><strong>⚠️ חשוב:</strong> כתבו את כל השדות <strong>באנגלית</strong> — כלי ה-AI עובדים טוב יותר עם אנגלית.</div>
+</div>
+
+<!-- SLIDE 6: Step 4 -->
+<div class="slide">
+  <span class="step-num">4</span>
+  <h2>🖼️ תמונה ראשונית</h2>
+  <div class="step-sub">יצירת תמונה בכלי AI וניתוח ראשוני</div>
+
+  <h3>🔧 איך יוצרים תמונה?</h3>
+  <ol>
+    <li>פתחו כלי AI ליצירת תמונות (Gemini, ChatGPT, DALL·E, Midjourney...)</li>
+    <li>הדביקו את הפרומפט שהעתקתם</li>
+    <li>שמרו את התמונה למחשב</li>
+    <li>חזרו לאפליקציה ולחצו <strong>להעלאת התמונה</strong></li>
+  </ol>
+
+  <h3>📝 ענו על השאלות:</h3>
+  <ul>
+    <li><strong>איזה פרומפט השתמשתם?</strong> (הדביקו את הגרסה הסופית)</li>
+    <li><strong>באיזה כלי AI?</strong> (DALL·E, Midjourney, Gemini...)</li>
+    <li><strong>כיצד התמונה מייצגת את המטפורה?</strong></li>
+    <li><strong>מה הפתיע אתכם?</strong></li>
+  </ul>
+
+  <div class="tip"><span class="tip-ic">💡</span> <span>אפשר להעלות גם תמונות נוספות מניסיונות שונים — זה מעשיר את הניתוח.</span></div>
+</div>
+
+<!-- SLIDE 7: Step 5 -->
+<div class="slide">
+  <span class="step-num">5</span>
+  <h2>🤖 המטפורה בעידן ה-AI</h2>
+  <div class="step-sub">בחינה מחדש — האם המטפורה שלכם עמידה?</div>
+
+  <h3>🧩 אתגר החשיבה</h3>
+  <p>לכל נושא יש אתגר חשיבה ייחודי שמופיע בראש הדף. למשל: אם המורה הוא "גנן" — מה קורה כש-AI יכול "לטפח" תלמידים?</p>
+
+  <h3>📝 ענו על השאלות:</h3>
+  <ul>
+    <li><strong>מה משתנה?</strong> — אילו היבטים של המטפורה כבר לא רלוונטיים?</li>
+    <li><strong>מה נשמר?</strong> — מה עדיין ייחודי לאדם?</li>
+    <li><strong>פרומפט חדש</strong> — כתבו פרומפט לתמונה שמייצגת את המטפורה בעולם עם AI</li>
+    <li>צרו <strong>תמונה חדשה</strong> והעלו</li>
+    <li><strong>השוואה</strong> — מה השתנה בין שתי התמונות?</li>
+  </ul>
+</div>
+
+<!-- SLIDE 8: Step 6 -->
+<div class="slide">
+  <span class="step-num">6</span>
+  <h2>💬 משוב ושיפור</h2>
+  <div class="step-sub">קבלו משוב מעמית/ה ושפרו את התמונה</div>
+
+  <h3>👥 התהליך:</h3>
+  <ol>
+    <li>הציגו את העבודה לעמית/ה או למרצה</li>
+    <li>תעדו את <strong>שם המגיב/ה</strong></li>
+    <li>רשמו את <strong>תוכן המשוב</strong></li>
+    <li>הסבירו <strong>כיצד המשוב השפיע</strong> על ההבנה שלכם</li>
+    <li>שנו את הפרומפט לאור המשוב</li>
+    <li>צרו <strong>תמונה מתוקנת</strong> והעלו</li>
+    <li>כתבו <strong>השוואה</strong> בין התמונה המקורית למתוקנת</li>
+  </ol>
+
+  <div class="tip"><span class="tip-ic">💡</span> <span>משוב טוב מתמקד במה שהמטפורה חושפת ומסתירה — לא רק ב"יפה" או "לא יפה".</span></div>
+</div>
+
+<!-- SLIDE 9: Step 7 -->
+<div class="slide">
+  <span class="step-num">7</span>
+  <h2>🪞 רפלקציה</h2>
+  <div class="step-sub">חשבו על התהליך ועל מה שלמדתם</div>
+
+  <h3>📝 5 שאלות לתשובה:</h3>
+  <div class="field-list">
+    <div class="field-item"><span class="fi-icon">1️⃣</span> מה למדתם על המטפורה דרך תהליך ההדמיה?</div>
+    <div class="field-item"><span class="fi-icon">2️⃣</span> מה המטפורה חושפת על <strong>יחסי כוח</strong> בכיתה?</div>
+    <div class="field-item"><span class="fi-icon">3️⃣</span> מה המטפורה <strong>מסתירה</strong>? אילו היבטים היא לא מכסה?</div>
+    <div class="field-item"><span class="fi-icon">4️⃣</span> אם הייתם בוחרים <strong>מטפורה חלופית</strong> — מה ומדוע?</div>
+    <div class="field-item"><span class="fi-icon">5️⃣</span> כיצד ההבנה תשפיע על <strong>העבודה שלכם כמורים</strong>?</div>
+  </div>
+
+  <div class="tip"><span class="tip-ic">💡</span> <span>כתבו לפחות 3-4 שורות לכל שאלה. הרפלקציה היא חלק משמעותי מהציון.</span></div>
+</div>
+
+<!-- SLIDE 10: Step 8 -->
+<div class="slide">
+  <span class="step-num">8</span>
+  <h2>📋 סיכום וייצוא</h2>
+  <div class="step-sub">בדקו את העבודה וייצאו להגשה</div>
+
+  <h3>📊 בדקו שלמות:</h3>
+  <p>בראש הדף יופיע <strong>סרגל שלמות</strong> — ודאו שהוא קרוב ל-100% ככל האפשר.</p>
+
+  <h3>📤 ייצוא — שני קבצים:</h3>
+  <div style="margin:1rem 0;display:flex;flex-wrap:wrap;gap:.5rem">
+    <span class="export-btn export-json">💾 גיבוי JSON</span>
+    <span class="export-btn export-pdf">🖨️ הדפס / PDF</span>
+  </div>
+  <ol>
+    <li>לחצו <strong>💾 גיבוי JSON</strong> — הקובץ יורד אוטומטית</li>
+    <li>לחצו <strong>🖨️ הדפס / PDF</strong> → בחרו <strong>"שמור כ-PDF"</strong></li>
+    <li>העלו את <strong>שני הקבצים</strong> למטלה ב-Moodle</li>
+  </ol>
+
+  <div class="warn"><strong>⚠️ חשוב:</strong> העלו גם PDF וגם JSON — שניהם נדרשים להגשה!</div>
+
+  <div class="tip"><span class="tip-ic">💡</span> <span>אם שכחתם להזין שם — חזרו לסרגל הצד, הזינו שם, ולחצו גיבוי JSON שוב.</span></div>
+</div>
+
+<!-- SLIDE 11: Tips -->
+<div class="slide">
+  <h2>💡 טיפים חשובים</h2>
+  <div class="step-sub">כדי שהעבודה תצליח</div>
+
+  <div class="cols">
+    <div class="col-card">
+      <strong>✅ כן</strong>
+      <ul style="font-size:.88rem;margin-top:.5rem">
+        <li>עבדו ב-Chrome</li>
+        <li>כתבו פרומפטים באנגלית</li>
+        <li>היו ספציפיים בפרומפט</li>
+        <li>העלו תמונות נוספות</li>
+        <li>הורידו גיבוי JSON מדי פעם</li>
+        <li>כתבו רפלקציה מעמיקה</li>
+      </ul>
+    </div>
+    <div class="col-card">
+      <strong>❌ לא</strong>
+      <ul style="font-size:.88rem;margin-top:.5rem">
+        <li>אל תעבדו בכמה דפדפנים</li>
+        <li>אל תמחקו cookies</li>
+        <li>אל תפתחו את ה-JSON</li>
+        <li>אל תגישו רק PDF בלי JSON</li>
+        <li>אל תשאירו שדות ריקים</li>
+        <li>אל תעתיקו מחברים</li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<!-- SLIDE 12: FAQ -->
+<div class="slide">
+  <h2>❓ שאלות נפוצות</h2>
+
+  <div class="action-box">
+    <strong>מה זה JSON ולמה צריך?</strong><br>
+    קובץ שבו ארוזה כל העבודה — מאפשר למרצה לבדוק אוטומטית. אל תפתחו, רק העלו.
+  </div>
+
+  <div class="action-box">
+    <strong>שכחתי לשמור — אבדו הנתונים?</strong><br>
+    לא! האפליקציה שומרת אוטומטית בדפדפן. פתחו שוב באותו דפדפן.
+  </div>
+
+  <div class="action-box">
+    <strong>עברתי מחשב — מה עושים?</strong><br>
+    הורידו גיבוי JSON לפני שעוברים. במחשב החדש — לחצו "ייבוא גיבוי".
+  </div>
+
+  <div class="action-box">
+    <strong>איזה כלי AI מומלץ?</strong><br>
+    Gemini (חינמי), ChatGPT (עם DALL·E), או Ideogram. בחרו מה שנוח לכם.
+  </div>
+
+  <div class="action-box">
+    <strong>מותר לנסות כמה תמונות?</strong><br>
+    כן! אפשר להעלות תמונות נוספות. ככל שתנסו יותר — תלמדו יותר.
+  </div>
+</div>
+
+<!-- SLIDE 13: End -->
+<div class="slide slide-hero">
+  <div style="font-size:4rem;margin-bottom:1rem">🎉</div>
+  <h1>בהצלחה!</h1>
+  <div class="sub">פתחו את האפליקציה והתחילו לעבוד</div>
+  <a href="https://navac123.github.io/metaphor-edu/" target="_blank" style="display:inline-block;margin-top:1.5rem;background:var(--p);color:#fff;text-decoration:none;padding:.8rem 2rem;border-radius:10px;font-weight:700;font-size:1.1rem;transition:all .2s">🚀 פתח את האפליקציה</a>
+  <p style="margin-top:2rem;color:var(--tl);font-size:.85rem">ד״ר נאוה כהן | אוניברסיטת בר-אילן | 2026</p>
+</div>
+
+</div><!-- /pres -->
+
+<div class="nav">
+  <button id="nextBtn" onclick="nav(1)">→ הבא</button>
+  <span class="counter" id="counter">1 / 14</span>
+  <button id="prevBtn" onclick="nav(-1)">הקודם ←</button>
+</div>
+
+<div class="kb-hint">← → לניווט • רווח להבא</div>
+
+<script>
+let cur=0;
+const slides=document.querySelectorAll('.slide');
+const total=slides.length;
+
+function show(n){
+  if(n<0||n>=total)return;
+  slides[cur].classList.remove('active');
+  cur=n;
+  slides[cur].classList.add('active');
+  document.getElementById('counter').textContent=(cur+1)+' / '+total;
+  document.getElementById('prevBtn').disabled=cur===0;
+  document.getElementById('nextBtn').disabled=cur===total-1;
+  document.getElementById('progress').style.width=((cur+1)/total*100)+'%';
+}
+
+function nav(d){show(cur+d);}
+
+document.addEventListener('keydown',function(e){
+  if(e.key==='ArrowLeft'||e.key===' ')nav(1);
+  if(e.key==='ArrowRight')nav(-1);
+});
+
+show(0);
+</script>
+
+</body></html>
