@@ -1,0 +1,250 @@
+<!DOCTYPE html><html lang="he" dir="rtl"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>מטפורות בהוראה — ייצוא והגשה</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Assistant:wght@400;600;700;800&family=Heebo:wght@300;400;500;700&display=swap');
+:root{--p:#2e6b5e;--pl:#3a8b7a;--a:#c9a84c;--al:#d8efe9;--bg:#f4f8f6;--c:#fff;--t:#2d2a26;--tl:#6b6560;--b:#d0ddd8}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Heebo',sans-serif;background:linear-gradient(135deg,#1a4a3e,#2e6b5e,#1a4a3e);min-height:100vh;overflow:hidden}
+h1,h2,h3{font-family:'Assistant',sans-serif}
+.pres{width:100%;height:100vh;display:flex;align-items:center;justify-content:center}
+.slide{display:none;width:88%;max-width:900px;min-height:500px;background:var(--c);color:var(--t);border-radius:16px;padding:3.5rem;box-shadow:0 20px 60px rgba(0,0,0,.3);animation:fi .5s ease;overflow-y:auto;max-height:88vh}
+.slide.active{display:flex;flex-direction:column;justify-content:center}
+@keyframes fi{from{opacity:0;transform:scale(.97)}to{opacity:1;transform:scale(1)}}
+.nav{position:fixed;bottom:1.8rem;left:50%;transform:translateX(-50%);display:flex;align-items:center;gap:1rem;background:rgba(0,0,0,.6);padding:.5rem 1.2rem;border-radius:30px;z-index:10;backdrop-filter:blur(10px)}
+.nav button{background:var(--p);color:#fff;border:none;padding:.45rem 1rem;border-radius:20px;font-family:'Heebo',sans-serif;font-size:.85rem;cursor:pointer;transition:all .2s}
+.nav button:hover{background:var(--pl)}
+.nav button:disabled{opacity:.3;cursor:default}
+.nav .ct{color:rgba(255,255,255,.6);font-size:.8rem;min-width:50px;text-align:center}
+.prog{position:fixed;top:0;left:0;height:3px;background:var(--a);transition:width .3s;z-index:10}
+.slide h1{font-size:2.6rem;font-weight:800;color:var(--p);line-height:1.3}
+.slide h2{font-size:1.7rem;font-weight:800;color:var(--p);margin-bottom:.6rem}
+.slide .sub{font-size:1.05rem;color:var(--tl);line-height:1.8;margin-top:.3rem}
+.slide p{font-size:1rem;line-height:2;margin-bottom:.5rem}
+.center{text-align:center}
+
+/* Step card */
+.step-card{background:var(--bg);border-radius:14px;padding:1.5rem 2rem;margin:.8rem 0;border:1px solid var(--b);display:flex;align-items:flex-start;gap:1.2rem}
+.step-card .sc-num{background:var(--p);color:#fff;border-radius:50%;width:44px;height:44px;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:1.2rem;flex-shrink:0;font-family:'Assistant',sans-serif}
+.step-card .sc-body{flex:1}
+.step-card .sc-body strong{color:var(--p);font-size:1.05rem;display:block;margin-bottom:.3rem}
+.step-card .sc-body p{font-size:.92rem;color:var(--tl);line-height:1.7;margin:0}
+
+/* File cards */
+.files{display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin:1rem 0}
+.file-card{border-radius:14px;padding:1.5rem;text-align:center;border:2px solid}
+.file-card.json{background:linear-gradient(135deg,rgba(46,107,94,.06),rgba(46,107,94,.02));border-color:var(--p)}
+.file-card.pdf{background:linear-gradient(135deg,rgba(196,80,80,.06),rgba(196,80,80,.02));border-color:#c45050}
+.file-card .fc-icon{font-size:2.5rem;margin-bottom:.5rem}
+.file-card strong{display:block;font-size:1.1rem;margin-bottom:.3rem}
+.file-card.json strong{color:var(--p)}
+.file-card.pdf strong{color:#c45050}
+.file-card p{font-size:.85rem;color:var(--tl);line-height:1.5;margin:0}
+
+/* Mock button */
+.mock-btn{display:inline-flex;align-items:center;gap:.4rem;padding:.7rem 1.5rem;border-radius:10px;font-size:1rem;font-weight:700;font-family:'Assistant',sans-serif;border:none;margin:.3rem}
+.mock-btn.json{background:var(--p);color:#fff}
+.mock-btn.pdf{background:#c45050;color:#fff}
+.mock-btn.html{background:var(--pl);color:#fff}
+
+/* File name example */
+.fname{background:var(--bg);border:1px solid var(--b);border-radius:8px;padding:.6rem 1rem;font-size:.95rem;text-align:center;margin:.5rem 0;font-family:monospace;direction:ltr;color:var(--p);font-weight:600}
+
+/* Tip & Warning */
+.tip{background:#fff8e1;border:1px solid #ffc107;border-radius:10px;padding:.7rem 1rem;font-size:.88rem;margin:.8rem 0;display:flex;align-items:flex-start;gap:.5rem}
+.warn{background:#fce4ec;border:1px solid #e57373;border-radius:10px;padding:.7rem 1rem;font-size:.88rem;margin:.8rem 0;display:flex;align-items:flex-start;gap:.5rem}
+
+/* FAQ */
+.faq{background:var(--bg);border-radius:10px;padding:1rem 1.2rem;margin:.6rem 0;border:1px solid var(--b)}
+.faq strong{display:block;color:var(--p);margin-bottom:.2rem;font-size:.95rem}
+.faq p{font-size:.88rem;color:var(--tl);margin:0;line-height:1.7}
+
+.pill{display:inline-block;background:var(--al);color:var(--p);padding:.4rem 1.2rem;border-radius:20px;font-size:.88rem;font-weight:600;margin:.3rem}
+
+@media(max-width:700px){.slide{padding:2rem 1.5rem}.slide h1{font-size:1.8rem}.step-card{flex-direction:column;gap:.6rem}.files{grid-template-columns:1fr}}
+</style>
+</head><body>
+<div class="prog" id="prog"></div>
+<div class="pres">
+
+<!-- 1: Title -->
+<div class="slide active center">
+  <div style="font-size:3rem;margin-bottom:.5rem">📤</div>
+  <h1>ייצוא והגשה</h1>
+  <div class="sub">איך מסיימים את העבודה ומגישים ב-Moodle</div>
+  <p style="margin-top:1.5rem;color:var(--tl);font-size:.88rem">מצגת 4 מתוך 4 — האחרונה!</p>
+</div>
+
+<!-- 2: What to submit -->
+<div class="slide center">
+  <h2>מה מגישים?</h2>
+  <div class="sub" style="margin-bottom:1.5rem">שני קבצים — לא אחד!</div>
+  <div class="files">
+    <div class="file-card json">
+      <div class="fc-icon">📦</div>
+      <strong>קובץ JSON</strong>
+      <p>גיבוי של כל העבודה —<br>לבדיקה אוטומטית</p>
+    </div>
+    <div class="file-card pdf">
+      <div class="fc-icon">📄</div>
+      <strong>קובץ PDF</strong>
+      <p>תיעוד מעוצב —<br>לעיון ולקריאה</p>
+    </div>
+  </div>
+  <div class="warn"><span>⚠️</span> <span><strong>חובה להגיש את שניהם!</strong> PDF בלבד — לא מספיק. JSON בלבד — לא מספיק.</span></div>
+</div>
+
+<!-- 3: Step by step export -->
+<div class="slide">
+  <h2>📋 שלב 8 באפליקציה — סיכום</h2>
+  <div class="sub" style="margin-bottom:1rem">הגיעו לשלב האחרון — שם מייצאים</div>
+  <div class="step-card">
+    <div class="sc-num">1</div>
+    <div class="sc-body">
+      <strong>ודאו שהשם שלכם מופיע</strong>
+      <p>בסרגל הצד — שדה "שם". אם ריק — מלאו עכשיו.</p>
+    </div>
+  </div>
+  <div class="step-card">
+    <div class="sc-num">2</div>
+    <div class="sc-body">
+      <strong>בדקו את סרגל השלמות</strong>
+      <p>ודאו שהוא קרוב ל-100%. אם חסרים שדות — חזרו והשלימו.</p>
+    </div>
+  </div>
+  <div class="step-card">
+    <div class="sc-num">3</div>
+    <div class="sc-body">
+      <strong>קראו את הסיכום</strong>
+      <p>בשלב 8 מופיע סיכום של כל מה שכתבתם. בדקו שהכל נכון.</p>
+    </div>
+  </div>
+</div>
+
+<!-- 4: Export JSON -->
+<div class="slide">
+  <h2>💾 ייצוא JSON</h2>
+  <div class="step-card">
+    <div class="sc-num">4</div>
+    <div class="sc-body">
+      <strong>לחצו על הכפתור:</strong>
+      <p style="margin-top:.5rem"><span class="mock-btn json">💾 גיבוי JSON</span></p>
+    </div>
+  </div>
+  <p>הקובץ יורד אוטומטית למחשב שלכם:</p>
+  <div class="fname">ניתוח_מטפורה_ישראל_ישראלי_2026-03-25.json</div>
+  <div class="faq">
+    <strong>מה זה JSON?</strong>
+    <p>ארגז שבו ארוזה כל העבודה שלכם — כל מה שכתבתם, בחרתם והעליתם. <strong>אין צורך לפתוח אותו</strong> — רק להעלות ל-Moodle. אם תפתחו בטעות ותראו "קוד" — זה תקין!</p>
+  </div>
+</div>
+
+<!-- 5: Export PDF -->
+<div class="slide">
+  <h2>🖨️ ייצוא PDF</h2>
+  <div class="step-card">
+    <div class="sc-num">5</div>
+    <div class="sc-body">
+      <strong>לחצו על הכפתור:</strong>
+      <p style="margin-top:.5rem"><span class="mock-btn pdf">🖨️ הדפס / PDF</span></p>
+    </div>
+  </div>
+  <div class="step-card">
+    <div class="sc-num">6</div>
+    <div class="sc-body">
+      <strong>בחלון ההדפסה:</strong>
+      <p>במקום לבחור מדפסת — בחרו <strong>"שמור כ-PDF"</strong> (או "Save as PDF").</p>
+    </div>
+  </div>
+  <div class="step-card">
+    <div class="sc-num">7</div>
+    <div class="sc-body">
+      <strong>שמרו את הקובץ:</strong>
+      <p>בחרו מיקום במחשב ושמרו.</p>
+    </div>
+  </div>
+  <div class="tip"><span>💡</span> <span>אם ה-PDF ריק או חתוך — נסו להקטין את זום הדפדפן ל-80% ולהדפיס שוב.</span></div>
+</div>
+
+<!-- 6: Upload to Moodle -->
+<div class="slide">
+  <h2>📤 העלאה ל-Moodle</h2>
+  <div class="step-card">
+    <div class="sc-num">8</div>
+    <div class="sc-body">
+      <strong>היכנסו למטלה ב-Moodle</strong>
+      <p>פתחו את מטלת ההגשה בקורס.</p>
+    </div>
+  </div>
+  <div class="step-card">
+    <div class="sc-num">9</div>
+    <div class="sc-body">
+      <strong>העלו את שני הקבצים יחד</strong>
+      <p>גררו או בחרו את ה-JSON <strong>וגם</strong> את ה-PDF.</p>
+    </div>
+  </div>
+  <div class="step-card">
+    <div class="sc-num">10</div>
+    <div class="sc-body">
+      <strong>לחצו "שלח"</strong>
+      <p>ודאו שרואים את שני הקבצים לפני שמגישים.</p>
+    </div>
+  </div>
+  <div class="warn"><span>⚠️</span> <span>בדקו שהקבצים נטענו — לפעמים Moodle לא מעלה קבצים גדולים מ-5MB.</span></div>
+</div>
+
+<!-- 7: FAQ -->
+<div class="slide">
+  <h2>❓ שאלות נפוצות</h2>
+  <div class="faq">
+    <strong>שכחתי להזין שם — מה עושים?</strong>
+    <p>חזרו לאפליקציה, מלאו שם בסרגל הצד, ולחצו "גיבוי JSON" שוב. הקובץ החדש יכיל את השם.</p>
+  </div>
+  <div class="faq">
+    <strong>עברתי מחשב ואין לי את הנתונים?</strong>
+    <p>אם הורדתם גיבוי JSON קודם — פתחו את האפליקציה, לחצו "ייבוא גיבוי", וטענו את הקובץ.</p>
+  </div>
+  <div class="faq">
+    <strong>Moodle לא מקבל את הקובץ?</strong>
+    <p>בדקו שגודל הקובץ מתחת ל-5MB. אם גדול — נסו להשתמש בתמונות קטנות יותר.</p>
+  </div>
+  <div class="faq">
+    <strong>פתחתי את ה-JSON ונבהלתי מ"קוד"</strong>
+    <p>הכל תקין! ככה JSON נראה. סגרו והעלו אותו כמו שהוא.</p>
+  </div>
+</div>
+
+<!-- 8: Final -->
+<div class="slide center">
+  <div style="font-size:3.5rem;margin-bottom:.8rem">🎉</div>
+  <h1 style="font-size:2.2rem">מוכנים להתחיל!</h1>
+  <div class="sub" style="margin-bottom:1.5rem">ראיתם את הרציונל, את התהליך, את הרישום ואת ההגשה.<br>עכשיו הגיע הזמן לעבוד!</div>
+  <a href="https://navac123.github.io/metaphor-edu/" target="_blank" style="display:inline-block;background:var(--p);color:#fff;text-decoration:none;padding:1rem 2.5rem;border-radius:12px;font-weight:800;font-size:1.2rem;font-family:'Assistant',sans-serif;transition:all .2s;box-shadow:0 4px 15px rgba(46,107,94,.3)">🚀 פתחו את האפליקציה</a>
+  <div style="margin-top:1.5rem;display:flex;justify-content:center;gap:.5rem;flex-wrap:wrap">
+    <span class="pill">📚 מצגת 1 — רציונל</span>
+    <span class="pill">📐 מצגת 2 — תהליך</span>
+    <span class="pill">🚀 מצגת 3 — רישום</span>
+    <span class="pill" style="background:var(--p);color:#fff">📤 מצגת 4 — הגשה ✓</span>
+  </div>
+  <p style="margin-top:1.5rem;font-size:1rem;color:var(--p);font-weight:600">בהצלחה!</p>
+  <p style="margin-top:.5rem;color:var(--tl);font-size:.85rem">ד״ר נאוה כהן | אוניברסיטת בר-אילן | 2026</p>
+</div>
+
+</div>
+
+<div class="nav">
+  <button id="nb" onclick="nv(1)">→ הבא</button>
+  <span class="ct" id="ct"></span>
+  <button id="pb" onclick="nv(-1)">הקודם ←</button>
+</div>
+
+<script>
+let c=0;const sl=document.querySelectorAll('.slide'),t=sl.length;
+function sh(n){if(n<0||n>=t)return;sl[c].classList.remove('active');c=n;sl[c].classList.add('active');
+document.getElementById('ct').textContent=(c+1)+' / '+t;
+document.getElementById('pb').disabled=c===0;document.getElementById('nb').disabled=c===t-1;
+document.getElementById('prog').style.width=((c+1)/t*100)+'%';}
+function nv(d){sh(c+d);}
+document.addEventListener('keydown',e=>{if(e.key==='ArrowLeft'||e.key===' '){e.preventDefault();nv(1);}if(e.key==='ArrowRight')nv(-1);});
+sh(0);
+</script>
+</body></html>
