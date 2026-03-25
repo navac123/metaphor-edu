@@ -1,0 +1,267 @@
+<!DOCTYPE html><html lang="he" dir="rtl"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>מטפורות בהוראה — תהליך העבודה</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Assistant:wght@400;600;700;800&family=Heebo:wght@300;400;500;700&display=swap');
+:root{--p:#2e6b5e;--pl:#3a8b7a;--a:#c9a84c;--al:#d8efe9;--bg:#f4f8f6;--c:#fff;--t:#2d2a26;--tl:#6b6560;--b:#d0ddd8}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Heebo',sans-serif;background:linear-gradient(135deg,#1a4a3e,#2e6b5e,#1a4a3e);min-height:100vh;overflow:hidden}
+h1,h2,h3{font-family:'Assistant',sans-serif}
+.pres{width:100%;height:100vh;display:flex;align-items:center;justify-content:center}
+.slide{display:none;width:88%;max-width:900px;min-height:500px;background:var(--c);color:var(--t);border-radius:16px;padding:3.5rem;box-shadow:0 20px 60px rgba(0,0,0,.3);animation:fi .5s ease;overflow-y:auto;max-height:88vh}
+.slide.active{display:flex;flex-direction:column;justify-content:center}
+@keyframes fi{from{opacity:0;transform:scale(.97)}to{opacity:1;transform:scale(1)}}
+.nav{position:fixed;bottom:1.8rem;left:50%;transform:translateX(-50%);display:flex;align-items:center;gap:1rem;background:rgba(0,0,0,.6);padding:.5rem 1.2rem;border-radius:30px;z-index:10;backdrop-filter:blur(10px)}
+.nav button{background:var(--p);color:#fff;border:none;padding:.45rem 1rem;border-radius:20px;font-family:'Heebo',sans-serif;font-size:.85rem;cursor:pointer;transition:all .2s}
+.nav button:hover{background:var(--pl)}
+.nav button:disabled{opacity:.3;cursor:default}
+.nav .ct{color:rgba(255,255,255,.6);font-size:.8rem;min-width:50px;text-align:center}
+.prog{position:fixed;top:0;left:0;height:3px;background:var(--a);transition:width .3s;z-index:10}
+.slide h1{font-size:2.6rem;font-weight:800;color:var(--p);line-height:1.3}
+.slide h2{font-size:1.7rem;font-weight:800;color:var(--p);margin-bottom:.6rem}
+.slide .sub{font-size:1.05rem;color:var(--tl);line-height:1.8;margin-top:.3rem}
+.slide p{font-size:1rem;line-height:2;margin-bottom:.5rem}
+.center{text-align:center}
+
+/* Step badge */
+.step-badge{display:inline-flex;align-items:center;justify-content:center;width:56px;height:56px;border-radius:50%;background:var(--p);color:#fff;font-size:1.6rem;font-weight:800;margin-bottom:.8rem}
+
+/* Flow */
+.flow{display:flex;align-items:center;justify-content:center;gap:.3rem;flex-wrap:wrap;margin:1.5rem 0}
+.flow-item{background:var(--al);color:var(--p);padding:.5rem .8rem;border-radius:10px;font-size:.82rem;font-weight:600;text-align:center;min-width:80px}
+.flow-arrow{color:var(--a);font-size:1.2rem;font-weight:800}
+
+/* What/Why boxes */
+.wx{display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin:1rem 0}
+.wx-box{border-radius:12px;padding:1.2rem;border:1px solid var(--b)}
+.wx-box.what{background:linear-gradient(135deg,rgba(46,107,94,.06),rgba(46,107,94,.02))}
+.wx-box.why{background:linear-gradient(135deg,rgba(201,168,76,.08),rgba(201,168,76,.02))}
+.wx-box h3{font-size:1rem;margin-bottom:.5rem;display:flex;align-items:center;gap:.3rem}
+.wx-box ul{padding-right:1.2rem;font-size:.9rem;line-height:1.8}
+.wx-box p{font-size:.9rem;line-height:1.8;margin:0}
+
+/* Tip */
+.tip{background:#fff8e1;border:1px solid #ffc107;border-radius:10px;padding:.7rem 1rem;font-size:.88rem;margin:.8rem 0;display:flex;align-items:flex-start;gap:.5rem}
+
+/* Pill */
+.pill{display:inline-block;background:var(--al);color:var(--p);padding:.4rem 1.2rem;border-radius:20px;font-size:.88rem;font-weight:600;margin:.3rem}
+
+@media(max-width:700px){.slide{padding:2rem 1.5rem}.slide h1{font-size:1.8rem}.wx{grid-template-columns:1fr}}
+</style>
+</head><body>
+<div class="prog" id="prog"></div>
+<div class="pres">
+
+<!-- 1: Title -->
+<div class="slide active center">
+  <div style="font-size:3rem;margin-bottom:.5rem">📐</div>
+  <h1>תהליך העבודה</h1>
+  <div class="sub">מה עושים בכל שלב באפליקציה</div>
+  <div class="flow" style="margin-top:2rem">
+    <span class="flow-item">📚 רקע</span><span class="flow-arrow">←</span>
+    <span class="flow-item">🔍 חשיפה</span><span class="flow-arrow">←</span>
+    <span class="flow-item">🎨 פרומפט</span><span class="flow-arrow">←</span>
+    <span class="flow-item">🖼️ תמונה</span><span class="flow-arrow">←</span>
+    <span class="flow-item">🤖 AI</span><span class="flow-arrow">←</span>
+    <span class="flow-item">💬 משוב</span><span class="flow-arrow">←</span>
+    <span class="flow-item">🪞 רפלקציה</span>
+  </div>
+  <p style="margin-top:1.5rem;color:var(--tl);font-size:.88rem">מצגת 2 מתוך 4</p>
+</div>
+
+<!-- 2: Step 1 -->
+<div class="slide">
+  <div class="center"><span class="step-badge">1</span></div>
+  <h2 class="center">📚 רקע תיאורטי</h2>
+  <div class="wx">
+    <div class="wx-box what">
+      <h3>📝 מה עושים?</h3>
+      <ul>
+        <li>בוחרים נושא מהתפריט</li>
+        <li>קוראים סיכום תיאורטי קצר</li>
+        <li>קוראים מאמר אקדמי</li>
+        <li>עוברים בוחן (5 שאלות)</li>
+      </ul>
+    </div>
+    <div class="wx-box why">
+      <h3>💡 למה?</h3>
+      <p>בלי הבסיס התיאורטי לא תדעו מה לחפש. מה זו מטפורה מושגית? מהם תחום מקור ותחום יעד? מה זה מיפוי? הרקע נותן לכם את השפה והכלים.</p>
+    </div>
+  </div>
+  <div class="tip"><span>⚠️</span> <span>ציון עובר בבוחן: <strong>4 מתוך 5</strong>. חובה לעבור לפני שממשיכים.</span></div>
+</div>
+
+<!-- 3: Step 2 -->
+<div class="slide">
+  <div class="center"><span class="step-badge">2</span></div>
+  <h2 class="center">🔍 בחירת מטפורה וחשיפתה</h2>
+  <div class="sub center" style="margin-bottom:1rem">הלב של הניתוח</div>
+  <div class="wx">
+    <div class="wx-box what">
+      <h3>📝 מה עושים?</h3>
+      <ul>
+        <li>בוחרים מטפורה ספציפית</li>
+        <li>מגדירים <strong>תחום מקור</strong> (גן, מסע...)</li>
+        <li>מגדירים <strong>תחום יעד</strong> (הוראה, למידה...)</li>
+        <li>מנסחים מטפורה מושגית:<br>"ההוראה היא גננות"</li>
+        <li>ממלאים <strong>טבלת מיפויים</strong></li>
+        <li>כותבים מה המטפורה חושפת ומסתירה</li>
+      </ul>
+    </div>
+    <div class="wx-box why">
+      <h3>💡 למה?</h3>
+      <p>פירוק המטפורה לרכיבים חושף את ההנחות שמסתתרות בה. כשכותבים "הגנן = המורה" — פתאום שואלים: ומי הצמח? ומי בוחר מה לשתול?</p>
+    </div>
+  </div>
+  <div class="tip"><span>💡</span> <span>מלאו לפחות <strong>3 שורות</strong> בטבלת המיפויים — ככל שיותר, כך עמוק יותר.</span></div>
+</div>
+
+<!-- 4: Step 3 -->
+<div class="slide">
+  <div class="center"><span class="step-badge">3</span></div>
+  <h2 class="center">🎨 בניית פרומפט</h2>
+  <div class="sub center" style="margin-bottom:1rem">תרגום הניתוח להנחיה לכלי AI</div>
+  <div class="wx">
+    <div class="wx-box what">
+      <h3>📝 מה עושים?</h3>
+      <ul>
+        <li>ממלאים: נושא, אלמנטים, רקע, צבעים</li>
+        <li>בוחרים סגנון אמנותי</li>
+        <li>הפרומפט נבנה אוטומטית</li>
+        <li>לוחצים <strong>"העתיקו פרומפט"</strong></li>
+      </ul>
+    </div>
+    <div class="wx-box why">
+      <h3>💡 למה?</h3>
+      <p>ניסוח הפרומפט מאלץ אתכם להפוך רעיון מופשט לתיאור קונקרטי. מה <em>צבע</em> הטיפוח? מה <em>גודל</em> התלמיד-צמח? התהליך עצמו הוא הלמידה.</p>
+    </div>
+  </div>
+  <div class="tip"><span>⚠️</span> <span>כתבו את כל השדות <strong>באנגלית</strong> — כלי ה-AI עובדים טוב יותר כך.</span></div>
+</div>
+
+<!-- 5: Step 4 -->
+<div class="slide">
+  <div class="center"><span class="step-badge">4</span></div>
+  <h2 class="center">🖼️ תמונה ראשונית</h2>
+  <div class="sub center" style="margin-bottom:1rem">יצירה בכלי AI וניתוח ראשוני</div>
+  <div class="wx">
+    <div class="wx-box what">
+      <h3>📝 מה עושים?</h3>
+      <ul>
+        <li>פותחים כלי AI (Gemini, ChatGPT...)</li>
+        <li>מדביקים את הפרומפט</li>
+        <li>שומרים ומעלים את התמונה</li>
+        <li>כותבים: מה רואים? מה מפתיע?</li>
+      </ul>
+    </div>
+    <div class="wx-box why">
+      <h3>💡 למה?</h3>
+      <p>כשמטפורה הופכת לתמונה, בחירות שנשארות חבויות בשפה — הופכות לגלויות. התמונה מאלצת תשובות שלא חשבתם לשאול.</p>
+    </div>
+  </div>
+  <div class="tip"><span>💡</span> <span>אפשר וכדאי לנסות כמה פעמים — העלו גם ניסיונות נוספים!</span></div>
+</div>
+
+<!-- 6: Step 5 -->
+<div class="slide">
+  <div class="center"><span class="step-badge">5</span></div>
+  <h2 class="center">🤖 המטפורה בעידן ה-AI</h2>
+  <div class="sub center" style="margin-bottom:1rem">בחינה מחדש — האם המטפורה שלכם עמידה?</div>
+  <div class="wx">
+    <div class="wx-box what">
+      <h3>📝 מה עושים?</h3>
+      <ul>
+        <li>קוראים את <strong>אתגר החשיבה</strong> שמופיע</li>
+        <li>כותבים: מה משתנה? מה נשמר?</li>
+        <li>כותבים פרומפט חדש — המטפורה + AI</li>
+        <li>יוצרים תמונה חדשה ומשווים</li>
+      </ul>
+    </div>
+    <div class="wx-box why">
+      <h3>💡 למה?</h3>
+      <p>אם המורה הוא "גנן" — מה קורה כש-AI יכול "לטפח" תלמידים? האם המטפורה עדיין רלוונטית? השלב הזה מאתגר את החשיבה שלכם.</p>
+    </div>
+  </div>
+</div>
+
+<!-- 7: Step 6 -->
+<div class="slide">
+  <div class="center"><span class="step-badge">6</span></div>
+  <h2 class="center">💬 משוב ושיפור</h2>
+  <div class="sub center" style="margin-bottom:1rem">עיניים חדשות על העבודה שלכם</div>
+  <div class="wx">
+    <div class="wx-box what">
+      <h3>📝 מה עושים?</h3>
+      <ul>
+        <li>מציגים את העבודה לעמית/ה</li>
+        <li>מתעדים את המשוב</li>
+        <li>משנים את הפרומפט</li>
+        <li>יוצרים תמונה מתוקנת</li>
+        <li>משווים: מה השתנה?</li>
+      </ul>
+    </div>
+    <div class="wx-box why">
+      <h3>💡 למה?</h3>
+      <p>אנחנו לא תמיד רואים את ההנחות של עצמנו. מבט חיצוני חושף נקודות עיוורות — גם במטפורה וגם בהוראה.</p>
+    </div>
+  </div>
+  <div class="tip"><span>💡</span> <span>משוב טוב מתמקד ב<strong>מה המטפורה חושפת ומסתירה</strong> — לא ב"יפה" או "לא".</span></div>
+</div>
+
+<!-- 8: Step 7 -->
+<div class="slide">
+  <div class="center"><span class="step-badge">7</span></div>
+  <h2 class="center">🪞 רפלקציה</h2>
+  <div class="sub center" style="margin-bottom:1rem">החלק הכי חשוב — מה למדתם?</div>
+  <div class="wx" style="grid-template-columns:1fr">
+    <div class="wx-box what">
+      <h3>📝 5 שאלות לתשובה:</h3>
+      <ul>
+        <li><strong>מה למדתם</strong> על המטפורה דרך תהליך ההדמיה?</li>
+        <li>מה המטפורה חושפת על <strong>יחסי כוח</strong> בכיתה?</li>
+        <li>מה המטפורה <strong>מסתירה</strong>?</li>
+        <li>אם הייתם בוחרים <strong>מטפורה חלופית</strong> — מה ומדוע?</li>
+        <li>כיצד זה ישפיע על <strong>העבודה שלכם כמורים</strong>?</li>
+      </ul>
+    </div>
+  </div>
+  <div class="tip"><span>⚠️</span> <span>הרפלקציה היא חלק משמעותי מהציון — כתבו <strong>3-4 שורות לפחות</strong> לכל שאלה.</span></div>
+</div>
+
+<!-- 9: End -->
+<div class="slide center">
+  <div style="font-size:3rem;margin-bottom:.5rem">✨</div>
+  <h1 style="font-size:2rem">זהו התהליך!</h1>
+  <div class="sub" style="margin-bottom:1.5rem">7 שלבים — מרקע תיאורטי ועד רפלקציה אישית</div>
+  <div class="flow">
+    <span class="flow-item">📚</span><span class="flow-arrow">←</span>
+    <span class="flow-item">🔍</span><span class="flow-arrow">←</span>
+    <span class="flow-item">🎨</span><span class="flow-arrow">←</span>
+    <span class="flow-item">🖼️</span><span class="flow-arrow">←</span>
+    <span class="flow-item">🤖</span><span class="flow-arrow">←</span>
+    <span class="flow-item">💬</span><span class="flow-arrow">←</span>
+    <span class="flow-item">🪞</span>
+  </div>
+  <p style="margin-top:1.5rem;font-size:1.05rem;color:var(--p);font-weight:600">במצגת הבאה — איך נרשמים ומתחילים לעבוד</p>
+  <div class="pill" style="font-size:1rem;padding:.6rem 1.5rem;margin-top:.5rem">המשיכו למצגת הבאה →</div>
+  <p style="margin-top:1.5rem;color:var(--tl);font-size:.85rem">ד״ר נאוה כהן | אוניברסיטת בר-אילן | 2026</p>
+</div>
+
+</div>
+
+<div class="nav">
+  <button id="nb" onclick="nv(1)">→ הבא</button>
+  <span class="ct" id="ct"></span>
+  <button id="pb" onclick="nv(-1)">הקודם ←</button>
+</div>
+
+<script>
+let c=0;const sl=document.querySelectorAll('.slide'),t=sl.length;
+function sh(n){if(n<0||n>=t)return;sl[c].classList.remove('active');c=n;sl[c].classList.add('active');
+document.getElementById('ct').textContent=(c+1)+' / '+t;
+document.getElementById('pb').disabled=c===0;document.getElementById('nb').disabled=c===t-1;
+document.getElementById('prog').style.width=((c+1)/t*100)+'%';}
+function nv(d){sh(c+d);}
+document.addEventListener('keydown',e=>{if(e.key==='ArrowLeft'||e.key===' '){e.preventDefault();nv(1);}if(e.key==='ArrowRight')nv(-1);});
+sh(0);
+</script>
+</body></html>
