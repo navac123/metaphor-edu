@@ -1,0 +1,226 @@
+<!DOCTYPE html><html lang="he" dir="rtl"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>מטפורות בהוראה — כניסה ורישום</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Assistant:wght@400;600;700;800&family=Heebo:wght@300;400;500;700&display=swap');
+:root{--p:#2e6b5e;--pl:#3a8b7a;--a:#c9a84c;--al:#d8efe9;--bg:#f4f8f6;--c:#fff;--t:#2d2a26;--tl:#6b6560;--b:#d0ddd8}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Heebo',sans-serif;background:linear-gradient(135deg,#1a4a3e,#2e6b5e,#1a4a3e);min-height:100vh;overflow:hidden}
+h1,h2,h3{font-family:'Assistant',sans-serif}
+.pres{width:100%;height:100vh;display:flex;align-items:center;justify-content:center}
+.slide{display:none;width:88%;max-width:900px;min-height:500px;background:var(--c);color:var(--t);border-radius:16px;padding:3.5rem;box-shadow:0 20px 60px rgba(0,0,0,.3);animation:fi .5s ease;overflow-y:auto;max-height:88vh}
+.slide.active{display:flex;flex-direction:column;justify-content:center}
+@keyframes fi{from{opacity:0;transform:scale(.97)}to{opacity:1;transform:scale(1)}}
+.nav{position:fixed;bottom:1.8rem;left:50%;transform:translateX(-50%);display:flex;align-items:center;gap:1rem;background:rgba(0,0,0,.6);padding:.5rem 1.2rem;border-radius:30px;z-index:10;backdrop-filter:blur(10px)}
+.nav button{background:var(--p);color:#fff;border:none;padding:.45rem 1rem;border-radius:20px;font-family:'Heebo',sans-serif;font-size:.85rem;cursor:pointer;transition:all .2s}
+.nav button:hover{background:var(--pl)}
+.nav button:disabled{opacity:.3;cursor:default}
+.nav .ct{color:rgba(255,255,255,.6);font-size:.8rem;min-width:50px;text-align:center}
+.prog{position:fixed;top:0;left:0;height:3px;background:var(--a);transition:width .3s;z-index:10}
+.slide h1{font-size:2.6rem;font-weight:800;color:var(--p);line-height:1.3}
+.slide h2{font-size:1.7rem;font-weight:800;color:var(--p);margin-bottom:.6rem}
+.slide .sub{font-size:1.05rem;color:var(--tl);line-height:1.8;margin-top:.3rem}
+.slide p{font-size:1rem;line-height:2;margin-bottom:.5rem}
+.center{text-align:center}
+
+/* Step card */
+.step-card{background:var(--bg);border-radius:14px;padding:1.5rem 2rem;margin:1rem 0;border:1px solid var(--b);display:flex;align-items:flex-start;gap:1.2rem}
+.step-card .sc-num{background:var(--p);color:#fff;border-radius:50%;width:44px;height:44px;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:1.2rem;flex-shrink:0;font-family:'Assistant',sans-serif}
+.step-card .sc-body{flex:1}
+.step-card .sc-body strong{color:var(--p);font-size:1.05rem;display:block;margin-bottom:.3rem}
+.step-card .sc-body p{font-size:.92rem;color:var(--tl);line-height:1.7;margin:0}
+
+/* Mock UI elements */
+.mock{background:var(--bg);border:2px dashed var(--b);border-radius:12px;padding:1.2rem 1.5rem;margin:.8rem 0;text-align:center}
+.mock-label{font-size:.78rem;color:var(--tl);margin-bottom:.5rem;text-transform:uppercase;letter-spacing:1px}
+.mock-input{background:var(--c);border:1px solid var(--b);border-radius:8px;padding:.6rem 1rem;font-size:1rem;color:var(--t);width:80%;max-width:400px;text-align:center;font-family:'Heebo',sans-serif}
+.mock-select{background:var(--c);border:1px solid var(--b);border-radius:8px;padding:.6rem 1rem;font-size:.95rem;color:var(--p);font-weight:600;font-family:'Heebo',sans-serif}
+.mock-btn{display:inline-block;background:var(--p);color:#fff;border:none;padding:.6rem 1.5rem;border-radius:8px;font-size:.95rem;font-weight:600;font-family:'Heebo',sans-serif;margin-top:.5rem}
+
+/* Tip & Warning */
+.tip{background:#fff8e1;border:1px solid #ffc107;border-radius:10px;padding:.7rem 1rem;font-size:.88rem;margin:.8rem 0;display:flex;align-items:flex-start;gap:.5rem}
+.warn{background:#fce4ec;border:1px solid #e57373;border-radius:10px;padding:.7rem 1rem;font-size:.88rem;margin:.8rem 0;display:flex;align-items:flex-start;gap:.5rem}
+
+/* Checklist */
+.check{display:flex;flex-direction:column;gap:.5rem;margin:.8rem 0}
+.check-item{display:flex;align-items:center;gap:.6rem;font-size:.95rem;padding:.5rem .8rem;background:var(--bg);border-radius:8px}
+.check-item .ci{width:22px;height:22px;border-radius:50%;background:var(--p);color:#fff;display:flex;align-items:center;justify-content:center;font-size:.75rem;flex-shrink:0}
+
+.pill{display:inline-block;background:var(--al);color:var(--p);padding:.4rem 1.2rem;border-radius:20px;font-size:.88rem;font-weight:600;margin:.3rem}
+
+@media(max-width:700px){.slide{padding:2rem 1.5rem}.slide h1{font-size:1.8rem}.step-card{flex-direction:column;gap:.6rem}}
+</style>
+</head><body>
+<div class="prog" id="prog"></div>
+<div class="pres">
+
+<!-- 1: Title -->
+<div class="slide active center">
+  <div style="font-size:3rem;margin-bottom:.5rem">🚀</div>
+  <h1>כניסה ורישום</h1>
+  <div class="sub">איך נכנסים לאפליקציה ומתחילים לעבוד</div>
+  <p style="margin-top:1.5rem;color:var(--tl);font-size:.88rem">מצגת 3 מתוך 4</p>
+</div>
+
+<!-- 2: Open the app -->
+<div class="slide">
+  <h2>🌐 פתיחת האפליקציה</h2>
+  <div class="step-card">
+    <div class="sc-num">1</div>
+    <div class="sc-body">
+      <strong>פתחו את הקישור בדפדפן Chrome</strong>
+      <p>האפליקציה עובדת הכי טוב ב-Chrome. פתחו את הקישור שקיבלתם מהמרצה.</p>
+    </div>
+  </div>
+  <div class="mock">
+    <div class="mock-label">שורת הכתובת בדפדפן</div>
+    <div class="mock-input" style="direction:ltr">navac123.github.io/metaphor-edu</div>
+  </div>
+  <div class="tip"><span>💡</span> <span>האפליקציה שומרת אוטומטית <strong>בדפדפן הזה במחשב הזה</strong>. אם תחליפו דפדפן או מחשב — הנתונים לא יעברו (אלא אם הורדתם גיבוי).</span></div>
+</div>
+
+<!-- 3: Consent -->
+<div class="slide">
+  <h2>✅ מסך הסכמה</h2>
+  <div class="sub" style="margin-bottom:1rem">מופיע פעם אחת בלבד — בכניסה הראשונה</div>
+  <div class="step-card">
+    <div class="sc-num">2</div>
+    <div class="sc-body">
+      <strong>סמנו את תיבת האישור</strong>
+      <p>אישור שקראתם והבנתם את תנאי השימוש.</p>
+    </div>
+  </div>
+  <div class="step-card">
+    <div class="sc-num">3</div>
+    <div class="sc-body">
+      <strong>בחרו: השתתפות במחקר</strong>
+      <p>בחרו "כן" או "לא" — <strong>אין חובה</strong> להשתתף. זה לא משפיע על הציון.</p>
+    </div>
+  </div>
+  <div class="step-card">
+    <div class="sc-num">4</div>
+    <div class="sc-body">
+      <strong>לחצו "אישור והמשך"</strong>
+      <p>הכפתור הופך פעיל רק אחרי שסימנתם את שני הפריטים.</p>
+    </div>
+  </div>
+</div>
+
+<!-- 4: Enter name -->
+<div class="slide">
+  <h2>👤 הזנת שם</h2>
+  <div class="sub" style="margin-bottom:1rem">חשוב — השם שלכם יופיע בקובץ ההגשה</div>
+  <div class="mock">
+    <div class="mock-label">שדה שם הסטודנט</div>
+    <div class="mock-input">ישראל ישראלי</div>
+  </div>
+  <p style="margin-top:1rem">השם מופיע <strong>בשני מקומות</strong>:</p>
+  <div class="check">
+    <div class="check-item"><span class="ci">✓</span> בדף הפתיחה — למעלה</div>
+    <div class="check-item"><span class="ci">✓</span> בסרגל הצד — תמיד נגיש</div>
+  </div>
+  <div class="warn"><span>⚠️</span> <span>אם לא תזינו שם — הקובץ ייצא בשם "ללא_שם". <strong>מלאו לפני שמייצאים!</strong></span></div>
+</div>
+
+<!-- 5: Choose topic -->
+<div class="slide">
+  <h2>📌 בחירת נושא</h2>
+  <div class="sub" style="margin-bottom:1rem">בתפריט הנפתח למעלה — בחרו את הנושא שקיבלתם</div>
+  <div class="mock">
+    <div class="mock-label">תפריט נושאים</div>
+    <div class="mock-select">▾ מטפורות למורה</div>
+  </div>
+  <p style="margin-top:1rem">הנושאים האפשריים:</p>
+  <div class="check">
+    <div class="check-item"><span class="ci">🌱</span> מטפורות למורה</div>
+    <div class="check-item"><span class="ci">📖</span> מטפורות לתלמיד</div>
+    <div class="check-item"><span class="ci">🧭</span> מטפורות לתהליך הלמידה</div>
+    <div class="check-item"><span class="ci">🧠</span> מטפורות לשכל ולידע</div>
+    <div class="check-item"><span class="ci">🪞</span> מטפורות לזהות מקצועית</div>
+  </div>
+  <div class="tip"><span>💡</span> <span>בחירת הנושא קובעת אוטומטית: סיכום תיאורטי, מאמר, בוחן, ודוגמאות מטפורות.</span></div>
+</div>
+
+<!-- 6: Navigation -->
+<div class="slide">
+  <h2>🧭 ניווט באפליקציה</h2>
+  <div class="sub" style="margin-bottom:1rem">איך עוברים בין השלבים</div>
+  <div class="step-card">
+    <div class="sc-num">←</div>
+    <div class="sc-body">
+      <strong>כפתור "הבא" ו"הקודם"</strong>
+      <p>בראש הדף — מעבר בין שלבים. אפשר תמיד לחזור אחורה ולתקן.</p>
+    </div>
+  </div>
+  <div class="step-card">
+    <div class="sc-num">💾</div>
+    <div class="sc-body">
+      <strong>שמירה אוטומטית</strong>
+      <p>האפליקציה שומרת כל 30 שניות. אבל מומלץ ללחוץ <strong>"שמירה"</strong> בסרגל העליון מדי פעם.</p>
+    </div>
+  </div>
+  <div class="step-card">
+    <div class="sc-num">📓</div>
+    <div class="sc-body">
+      <strong>מחברת אישית</strong>
+      <p>כפתור עגול למטה — פותח מחברת. כתבו רעיונות, הערות, שאלות — בכל שלב.</p>
+    </div>
+  </div>
+  <div class="tip"><span>💡</span> <span>אם סגרתם את הדפדפן בטעות — אל דאגה! פתחו שוב באותו דפדפן והנתונים יחזרו.</span></div>
+</div>
+
+<!-- 7: Common mistakes -->
+<div class="slide">
+  <h2>🚧 טעויות נפוצות — הימנעו!</h2>
+  <div class="check" style="gap:.7rem">
+    <div class="check-item" style="background:#fce4ec;border:1px solid #e57373">
+      <span class="ci" style="background:#c45050">✕</span>
+      <span>עבודה בכמה דפדפנים — הנתונים <strong>לא מסתנכרנים</strong></span>
+    </div>
+    <div class="check-item" style="background:#fce4ec;border:1px solid #e57373">
+      <span class="ci" style="background:#c45050">✕</span>
+      <span>מחיקת cookies / היסטוריה — <strong>מוחקת את העבודה</strong></span>
+    </div>
+    <div class="check-item" style="background:#fce4ec;border:1px solid #e57373">
+      <span class="ci" style="background:#c45050">✕</span>
+      <span>שכחת שם לפני ייצוא — הקובץ ייצא <strong>"ללא_שם"</strong></span>
+    </div>
+    <div class="check-item" style="background:#fce4ec;border:1px solid #e57373">
+      <span class="ci" style="background:#c45050">✕</span>
+      <span>פרומפט בעברית — כלי AI <strong>עובדים טוב יותר באנגלית</strong></span>
+    </div>
+    <div class="check-item" style="background:var(--al);border:1px solid var(--p)">
+      <span class="ci">✓</span>
+      <span><strong>הפתרון:</strong> הורידו גיבוי JSON מדי פעם — זו רשת הביטחון שלכם</span>
+    </div>
+  </div>
+</div>
+
+<!-- 8: End -->
+<div class="slide center">
+  <div style="font-size:3rem;margin-bottom:.5rem">👍</div>
+  <h1 style="font-size:2rem">מוכנים!</h1>
+  <div class="sub" style="margin-bottom:1rem">עכשיו אתם יודעים איך להיכנס ולהתחיל</div>
+  <p style="font-size:1.05rem;color:var(--p);font-weight:600">במצגת האחרונה — איך מגישים את העבודה</p>
+  <div class="pill" style="font-size:1rem;padding:.6rem 1.5rem;margin-top:.8rem">המשיכו למצגת הבאה →</div>
+  <p style="margin-top:1.5rem;color:var(--tl);font-size:.85rem">ד״ר נאוה כהן | אוניברסיטת בר-אילן | 2026</p>
+</div>
+
+</div>
+
+<div class="nav">
+  <button id="nb" onclick="nv(1)">→ הבא</button>
+  <span class="ct" id="ct"></span>
+  <button id="pb" onclick="nv(-1)">הקודם ←</button>
+</div>
+
+<script>
+let c=0;const sl=document.querySelectorAll('.slide'),t=sl.length;
+function sh(n){if(n<0||n>=t)return;sl[c].classList.remove('active');c=n;sl[c].classList.add('active');
+document.getElementById('ct').textContent=(c+1)+' / '+t;
+document.getElementById('pb').disabled=c===0;document.getElementById('nb').disabled=c===t-1;
+document.getElementById('prog').style.width=((c+1)/t*100)+'%';}
+function nv(d){sh(c+d);}
+document.addEventListener('keydown',e=>{if(e.key==='ArrowLeft'||e.key===' '){e.preventDefault();nv(1);}if(e.key==='ArrowRight')nv(-1);});
+sh(0);
+</script>
+</body></html>
