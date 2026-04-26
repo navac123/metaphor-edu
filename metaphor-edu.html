@@ -672,7 +672,13 @@ h1,h2,h3,h4{font-family:'Assistant',sans-serif;font-weight:700}
 <h2 class="st2">📋 שלב 8: סיכום</h2>
 <div class="sd">צפו בסיכום העבודה וייצאו אותה</div>
 <div id="summaryContent"></div>
+<div style="background:linear-gradient(135deg,rgba(46,107,94,.08),rgba(201,168,76,.1));border:2px solid var(--p);border-radius:14px;padding:1.2rem 1.4rem;margin-bottom:1.2rem;text-align:center">
+<div style="font-size:1.1rem;font-weight:700;color:var(--p);margin-bottom:.6rem">🎓 הגשת העבודה</div>
+<div style="font-size:.88rem;color:var(--t);margin-bottom:.8rem;line-height:1.7">לחצו על הכפתור להורדת קובץ JSON + פתיחת PDF להדפסה.<br>העלו את שני הקבצים למודל.</div>
+<button class="btn bp" onclick="exportSubmission()" style="font-size:1rem;padding:.7rem 2rem;min-width:200px">🎓 הגשה למודל</button>
+</div>
 <div class="eb">
+<button class="btn bp" onclick="exportFullPDF()">📄 ייצוא PDF מלא</button>
 <button class="btn bp" onclick="exH()">📄 ייצוא HTML</button>
 <button class="btn bs-btn" onclick="printSummary()">🖨️ הדפס / PDF</button>
 <div style="background:linear-gradient(135deg,rgba(46,107,94,.06),rgba(201,168,76,.08));border:2px solid var(--a);border-radius:12px;padding:1rem 1.2rem;margin-bottom:1rem;font-size:.88rem;line-height:1.8;text-align:right">
@@ -729,7 +735,7 @@ let cs=1,ts=8,id={image1:null,image2:null,imageAI:null,ex:[],articles:[]};
 const sn=['רקע תיאורטי','בחירת המטפורה וחשיפתה','בניית פרומפט','תמונה ראשונית','המטפורה בעידן ה-AI','משוב ושיפור','רפלקציה','סיכום'];
 
 /* ===== SPLASH & LANDING ===== */
-setTimeout(()=>{document.getElementById('splash').classList.add('hide');setTimeout(()=>{try{const saved=localStorage.getItem('edu_meta_data');if(saved){const d=JSON.parse(saved);if(d&&Object.keys(d).length>1){enterApp();if(d.studentName){document.getElementById('studentName').value=d.studentName;}showT('העבודה השמורה שוחזרה בהצלחה');return;}}}catch(e){}document.getElementById('landing').classList.add('show')},800)},2500);
+setTimeout(()=>{document.getElementById('splash').classList.add('hide');setTimeout(()=>{try{let saved=localStorage.getItem('edu_meta_data');if(!saved||saved==='{}'){saved=localStorage.getItem('edu_meta_backup');}if(saved){const d=JSON.parse(saved);if(d&&Object.keys(d).length>1){enterApp();if(d.studentName){document.getElementById('studentName').value=d.studentName;}showT('העבודה השמורה שוחזרה בהצלחה');return;}}}catch(e){}document.getElementById('landing').classList.add('show')},800)},2500);
 
 function startApp(){
   const name=document.getElementById('landingName').value.trim();
@@ -775,7 +781,7 @@ function enterApp(){
   if(ln)document.getElementById('studentName').value=ln;
   loadSavedAnalyses();updAnBtn();
   initNav();up();
-  try{const r=localStorage.getItem('edu_meta_data');if(r)rd(JSON.parse(r));}catch(e){}
+  try{let r=localStorage.getItem('edu_meta_data');if(!r||r==='{}')r=localStorage.getItem('edu_meta_backup');if(r)rd(JSON.parse(r));}catch(e){}
 }
 function enterAppFromIntro(){
   if(!introQuizPassed()){showIntroQuizRequired();return;}
@@ -1700,8 +1706,122 @@ function updAnBtn(){
 }
 /* ===== PDF PRINT ===== */
 function printSummary(){sf(8);setTimeout(()=>window.print(),200);}
+/* ===== FULL PDF EXPORT ===== */
+function exportFullPDF(){
+  track('export-full-pdf');
+  const d=cd();
+  const name=eh(d.studentName||'ללא שם');
+  const topic=eh(d.topicSelect||'לא נבחר');
+  const date=new Date().toLocaleDateString('he-IL');
+  let h='';
+  // Step 1
+  h+='<div class="pdf-step"><h2>שלב 1: '+sn[0]+'</h2>';
+  h+='<div class="field"><span class="fl">תחום המטפורה:</span> '+eh(d.metaphorTopic||'—')+'</div>';
+  h+='<div class="field"><span class="fl">מקור המטפורה:</span> '+eh(d.metaphorSource||'—')+'</div>';
+  h+='<div class="field"><span class="fl">מדוע בחרתם במטפורה זו:</span> '+eh(d.metaphorWhy||'—')+'</div>';
+  h+='</div>';
+  // Step 2
+  h+='<div class="pdf-step"><h2>שלב 2: '+sn[1]+'</h2>';
+  h+='<div class="field"><span class="fl">תחום המקור:</span> '+eh(d.sourceDomain||'—')+'</div>';
+  h+='<div class="field"><span class="fl">תחום היעד:</span> '+eh(d.targetDomain||'—')+'</div>';
+  h+='<div class="field"><span class="fl">המטפורה המושגית:</span> '+eh(d.conceptualMetaphor||'—')+'</div>';
+  if(d.mappings&&d.mappings.length){
+    h+='<table><tr><th>מקור</th><th>יעד</th><th>הסבר</th></tr>';
+    d.mappings.forEach(m=>{h+='<tr><td>'+eh(m[0])+'</td><td>'+eh(m[1])+'</td><td>'+eh(m[2]||'')+'</td></tr>';});
+    h+='</table>';
+  }
+  h+='<div class="field"><span class="fl">הסבר - מה המטפורה חושפת ומסתירה:</span> '+eh(d.mappingExplain||'—')+'</div>';
+  h+='</div>';
+  // Step 3
+  h+='<div class="pdf-step"><h2>שלב 3: '+sn[2]+'</h2>';
+  h+='<div class="field"><span class="fl">נושא התמונה:</span> '+eh(d.promptSubject||'—')+'</div>';
+  h+='<div class="field"><span class="fl">אלמנטים ויזואליים:</span> '+eh(d.promptElements||'—')+'</div>';
+  h+='<div class="field"><span class="fl">רקע וסביבה:</span> '+eh(d.promptBg||'—')+'</div>';
+  h+='<div class="field"><span class="fl">צבעים ואווירה:</span> '+eh(d.promptColors||'—')+'</div>';
+  h+='<div class="field"><span class="fl">תוספות:</span> '+eh(d.promptExtras||'—')+'</div>';
+  h+='<div class="field"><span class="fl">פרומפט סופי:</span> '+eh(d.promptPreviewText||'—')+'</div>';
+  h+='</div>';
+  // Step 4
+  h+='<div class="pdf-step"><h2>שלב 4: '+sn[3]+'</h2>';
+  if(d.image1)h+='<div class="img-wrap"><img src="'+d.image1+'"></div>';
+  if(d.ex&&d.ex.length){h+='<div class="img-row">';d.ex.forEach(src=>{h+='<img src="'+src+'" class="img-sm">';});h+='</div>';}
+  h+='<div class="field"><span class="fl">פרומפט שנוצל:</span> '+eh(d.usedPrompt||'—')+'</div>';
+  h+='<div class="field"><span class="fl">ייצוג המטפורה בתמונה:</span> '+eh(d.imageRepresent||'—')+'</div>';
+  h+='<div class="field"><span class="fl">מה הפתיע אתכם:</span> '+eh(d.imageSurprise||'—')+'</div>';
+  h+='</div>';
+  // Step 5
+  h+='<div class="pdf-step"><h2>שלב 5: '+sn[4]+'</h2>';
+  h+='<div class="field"><span class="fl">מה משתנה בעידן ה-AI:</span> '+eh(d.aiWhatChanges||'—')+'</div>';
+  h+='<div class="field"><span class="fl">מה נשמר:</span> '+eh(d.aiWhatRemains||'—')+'</div>';
+  h+='<div class="field"><span class="fl">פרומפט לתמונה חדשה:</span> '+eh(d.aiPrompt||'—')+'</div>';
+  if(d.imageAI)h+='<div class="img-wrap"><img src="'+d.imageAI+'"></div>';
+  h+='<div class="field"><span class="fl">השוואה בין התמונות:</span> '+eh(d.aiComparison||'—')+'</div>';
+  h+='</div>';
+  // Step 6
+  h+='<div class="pdf-step"><h2>שלב 6: '+sn[5]+'</h2>';
+  h+='<div class="field"><span class="fl">שם המגיב/ה:</span> '+eh(d.commentatorName||'—')+'</div>';
+  h+='<div class="field"><span class="fl">תוכן הפרשנות:</span> '+eh(d.commentaryContent||'—')+'</div>';
+  h+='<div class="field"><span class="fl">השפעה על ההבנה:</span> '+eh(d.commentaryImpact||'—')+'</div>';
+  h+='<div class="field"><span class="fl">שינויים בפרומפט:</span> '+eh(d.commentaryChanges||'—')+'</div>';
+  h+='<div class="field"><span class="fl">פרומפט מתוקן:</span> '+eh(d.newPrompt||'—')+'</div>';
+  if(d.image2)h+='<div class="img-wrap"><img src="'+d.image2+'"></div>';
+  h+='<div class="field"><span class="fl">השוואה בין התמונות:</span> '+eh(d.comparison||'—')+'</div>';
+  h+='</div>';
+  // Step 7
+  h+='<div class="pdf-step"><h2>שלב 7: '+sn[6]+'</h2>';
+  const refIds=['reflect1','reflect2','reflect3','reflect4','reflect5'];
+  const refQs=['מה למדתם על המטפורה שבחרתם דרך תהליך ההדמיה?','מה המטפורה חושפת על יחסי הכוח בכיתה?','מה המטפורה מסתירה? אילו היבטים של ההוראה היא לא מכסה?','אם הייתם בוחרים מטפורה חלופית - מה הייתם בוחרים? מדוע?','כיצד ההבנה של המטפורה הזו תשפיע על העבודה שלכם כמורים?'];
+  refIds.forEach((rid,i)=>{h+='<div class="field"><span class="fl">'+refQs[i]+'</span><br>'+eh(d[rid]||'—')+'</div>';});
+  h+='</div>';
+  // Step 8 - summary
+  h+='<div class="pdf-step"><h2>שלב 8: '+sn[7]+'</h2>';
+  const nbH=getNbHtml();
+  if(nbH)h+='<div class="field"><span class="fl">פנקס הערות:</span>'+nbH+'</div>';
+  h+='</div>';
+  // Build print window
+  const pw=window.open('','_blank');
+  pw.document.write('<!DOCTYPE html><html dir="rtl" lang="he"><head><meta charset="UTF-8">');
+  pw.document.write('<title>ניתוח מטפורה - '+name+'</title>');
+  pw.document.write('<link href="https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;600;700&display=swap" rel="stylesheet">');
+  pw.document.write('<style>');
+  pw.document.write('*{box-sizing:border-box;margin:0;padding:0}');
+  pw.document.write('body{font-family:"Heebo",sans-serif;direction:rtl;padding:30px 40px;color:#1a1a1a;line-height:1.8;max-width:900px;margin:auto}');
+  pw.document.write('.pdf-header{text-align:center;margin-bottom:30px;padding-bottom:20px;border-bottom:3px solid #2e6b5e}');
+  pw.document.write('.pdf-header h1{color:#2e6b5e;font-size:1.6rem;margin-bottom:8px}');
+  pw.document.write('.pdf-header .meta{color:#555;font-size:.95rem}');
+  pw.document.write('.pdf-step{page-break-inside:avoid;margin-bottom:24px;padding:20px;background:#f9faf8;border-radius:10px;border:1px solid #d5ddd0}');
+  pw.document.write('.pdf-step h2{color:#2e6b5e;font-size:1.15rem;border-bottom:2px solid #d5ddd0;padding-bottom:8px;margin-bottom:14px}');
+  pw.document.write('.field{margin-bottom:10px;font-size:.95rem}');
+  pw.document.write('.fl{font-weight:600;color:#3d8b7a}');
+  pw.document.write('table{border-collapse:collapse;width:100%;margin:10px 0}');
+  pw.document.write('th,td{border:1px solid #ccc;padding:8px;text-align:right}');
+  pw.document.write('th{background:#e8ede6;font-weight:600}');
+  pw.document.write('.img-wrap{text-align:center;margin:12px 0}');
+  pw.document.write('img{max-width:100%;max-height:500px;border-radius:8px}');
+  pw.document.write('.img-sm{max-width:150px;border-radius:6px;margin:4px}');
+  pw.document.write('.img-row{display:flex;flex-wrap:wrap;gap:6px;justify-content:center;margin:10px 0}');
+  pw.document.write('@media print{.pdf-step{break-inside:avoid;page-break-inside:avoid}.no-print{display:none}}');
+  pw.document.write('</style></head><body>');
+  pw.document.write('<div class="pdf-header"><h1>תמונה שווה אלף מילים - ניתוח מטפורה</h1>');
+  pw.document.write('<div class="meta"><strong>שם:</strong> '+name+' | <strong>נושא:</strong> '+topic+' | <strong>תאריך:</strong> '+date+'</div></div>');
+  pw.document.write(h);
+  pw.document.write('<div class="no-print" style="text-align:center;margin-top:30px"><button onclick="window.print()" style="padding:10px 30px;font-size:1rem;background:#2e6b5e;color:#fff;border:none;border-radius:8px;cursor:pointer;font-family:Heebo,sans-serif">הדפסה / שמירה כ-PDF</button></div>');
+  pw.document.write('</body></html>');
+  pw.document.close();
+}
+/* ===== SUBMISSION ===== */
+function exportSubmission(){
+  track('export-submission');
+  exB();
+  setTimeout(()=>{exportFullPDF();},300);
+  setTimeout(()=>{showT('קובץ JSON הורד. שמרו גם את ה-PDF ואז העלו את שניהם למודל');},600);
+}
 // Auto-save interval
 setInterval(as,30000);
+// Backup save every 5 minutes
+setInterval(function(){
+  try{localStorage.setItem('edu_meta_backup',JSON.stringify(cd()));}catch(e){}
+},300000);
 // Init notebook and analyses after load
 setTimeout(()=>{initNb();updBadge();loadSavedAnalyses();updAnBtn();},100);
 // Escape key closes notebook, consent, and analyses modal
