@@ -729,7 +729,7 @@ let cs=1,ts=8,id={image1:null,image2:null,imageAI:null,ex:[],articles:[]};
 const sn=['רקע תיאורטי','בחירת המטפורה וחשיפתה','בניית פרומפט','תמונה ראשונית','המטפורה בעידן ה-AI','משוב ושיפור','רפלקציה','סיכום'];
 
 /* ===== SPLASH & LANDING ===== */
-setTimeout(()=>{document.getElementById('splash').classList.add('hide');setTimeout(()=>{document.getElementById('landing').classList.add('show')},800)},2500);
+setTimeout(()=>{document.getElementById('splash').classList.add('hide');setTimeout(()=>{try{const saved=localStorage.getItem('edu_meta_data');if(saved){const d=JSON.parse(saved);if(d&&Object.keys(d).length>1){enterApp();if(d.studentName){document.getElementById('studentName').value=d.studentName;}showT('העבודה השמורה שוחזרה בהצלחה');return;}}}catch(e){}document.getElementById('landing').classList.add('show')},800)},2500);
 
 function startApp(){
   const name=document.getElementById('landingName').value.trim();
